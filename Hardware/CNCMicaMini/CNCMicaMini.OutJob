@@ -15,7 +15,7 @@ LifeCycleDefinitionGUID=
 RevisionNamingSchemeGUID=
 
 [OutputGroup1]
-Name=Job1.OutJob
+Name=CNCMicaMini.OutJob
 Description=
 TargetOutputMedium=PDF
 VariantName=[No Variations]
@@ -113,11 +113,33 @@ OutputDefault5=0
 PageOptions5=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=2.61|XCorrection=1.00|YCorrection=1.00|PrintKind=0|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 Configuration5_Name1=OutputConfigurationParameter1
 Configuration5_Item1=Record=Pcb3DPrintView|ResX=150|ResY=150|ViewX=29950001|ViewY=31700000|LookAtX=24375000|LookAtY=34150000|LookAtZ=0|UpX=0|UpY=1|UpZ=0|FOV=0|QuatX=0|QuatY=0|QuatZ=0|QuatW=1|Zoom=2.02523659305994E-5|UnitsPercent=True|UnitsDPI=True|LockResAspect=True|ViewConfigType=.config_3d|CustomCamera=False|ViewFromTop=False|ScreenWidth=0|ScreenHeight=0|ImageOutputType=1|ViewConfig= |DocumentPath=E:\Project\CNCMicaMini\Hardware\CNCMicaMini\CNCMicaMini.PcbDoc
+OutputType6=BOM_PartType
+OutputName6=Bill of Materials
+OutputCategory6=Report
+OutputDocumentPath6=CNCMicaMini.SchDoc
+OutputVariantName6=
+OutputEnabled6=0
+OutputEnabled6_OutputMedium1=0
+OutputEnabled6_OutputMedium2=0
+OutputEnabled6_OutputMedium3=0
+OutputEnabled6_OutputMedium4=0
+OutputDefault6=0
+PageOptions6=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
+Configuration6_Name1=ColumnNameFormat
+Configuration6_Item1=CaptionAsName
+Configuration6_Name2=General
+Configuration6_Item2=OpenExported=False|AddToProject=False|ReportBOMViolationsInMessages=False|ForceFit=False|NotFitted=False|Database=False|DatabasePriority=False|IncludePcbData=False|IncludeVaultData=False|IncludeCloudData=False|IncludeDocumentData=True|IncludeAlternatives=False|ShowExportOptions=True|TemplateFilename=|TemplateVaultGuid=|TemplateItemGuid=|TemplateRevisionGuid=|BatchMode=5|FormWidth=1200|FormHeight=710|SupplierProdQty=1|SupplierAutoQty=False|SupplierUseCachedPricing=False|SupplierCurrency=USD|SolutionsPerItem=1|SuppliersPerSolution=1|ViewType=0|UseDirectApi=False|BomSetName=
+Configuration6_Name3=GroupOrder
+Configuration6_Item3=Comment=True|Footprint=True
+Configuration6_Name4=SortOrder
+Configuration6_Item4=Designator=Up|Comment=Up|Footprint=Up
+Configuration6_Name5=VisibleOrder
+Configuration6_Item5=Comment=120|Description=120|Designator=120|Footprint=120|LibRef=120|Quantity=120
 
 [PublishSettings]
 OutputFilePath2=Project Outputs for Free Documents\Job1.PDF
 ReleaseManaged2=1
-OutputBasePath2=Project Outputs for Free Documents
+OutputBasePath2=Project Outputs for CNCMicaMini
 OutputPathMedia2==CNCMicaMini+'('+CurrentDate+')'
 OutputPathMediaValue2==CNCMicaMini+'('+CurrentDate+')'
 OutputPathOutputer2=[Output Type]
@@ -144,7 +166,7 @@ PDFACompliance2=Disabled
 PDFVersion2=Default
 OutputFilePath3=
 ReleaseManaged3=1
-OutputBasePath3=
+OutputBasePath3=Project Outputs for CNCMicaMini
 OutputPathMedia3=
 OutputPathMediaValue3=
 OutputPathOutputer3=[Output Type]
@@ -157,7 +179,7 @@ OutputFileNameSpecial3=
 OpenOutput3=1
 OutputFilePath4=
 ReleaseManaged4=1
-OutputBasePath4=
+OutputBasePath4=Project Outputs for CNCMicaMini
 OutputPathMedia4=
 OutputPathMediaValue4=
 OutputPathOutputer4=[Output Type]
