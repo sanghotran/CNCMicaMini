@@ -1,0 +1,15 @@
+Change Component Designator: OldDesignator=B1 NewDesignator=BLUEPILL
+Change Component Designator: OldDesignator=M1 NewDesignator=DRX
+Change Component Designator: OldDesignator=M2 NewDesignator=DRY
+Change Component Designator: OldDesignator=M3 NewDesignator=DRZ
+Change Component Designator: OldDesignator=P1 NewDesignator=12V
+Change Net Name : Old Net Name=NetM1_5 New Net Name=NetDRX_5
+Change Net Name : Old Net Name=NetM1_6 New Net Name=NetDRX_6
+Change Net Name : Old Net Name=NetM1_7 New Net Name=NetDRX_7
+Change Net Name : Old Net Name=NetM2_5 New Net Name=NetDRY_5
+Change Net Name : Old Net Name=NetM2_6 New Net Name=NetDRY_6
+Change Net Name : Old Net Name=NetM2_7 New Net Name=NetDRY_7
+Change Net Name : Old Net Name=NetM3_5 New Net Name=NetDRZ_5
+Change Net Name : Old Net Name=NetM3_6 New Net Name=NetDRZ_6
+Change Net Name : Old Net Name=NetM3_7 New Net Name=NetDRZ_7
+Added Room: Name=CNCMicaMini

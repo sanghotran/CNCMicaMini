@@ -1,0 +1,10 @@
+Added Pin To Net: NetName=X_ENB_MCU Pin=B1-5
+Added Pin To Net: NetName=X_DIR_MCU Pin=B1-6
+Added Pin To Net: NetName=Y_ENB_MCU Pin=B1-7
+Added Pin To Net: NetName=Y_DIR_MCU Pin=B1-8
+Added Pin To Net: NetName=Z_ENB_MCU Pin=B1-9
+Added Pin To Net: NetName=Z_DIR_MCU Pin=B1-10
+Added Pin To Net: NetName=Z_PWM_MCU Pin=B1-34
+Added Pin To Net: NetName=Y_PWM_MCU Pin=B1-35
+Added Pin To Net: NetName=X_PWM_MCU Pin=B1-36
+Added Room: Name=CNCMicaMini

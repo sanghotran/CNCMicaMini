@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=X_B2 Pin=P2-1
+Removed Pin From Net: NetName=X_B1 Pin=P2-2
+Removed Pin From Net: NetName=X_A1 Pin=P2-3
+Removed Pin From Net: NetName=X_A2 Pin=P2-4
+Added Pin To Net: NetName=X_A2 Pin=P2-1
+Added Pin To Net: NetName=X_A1 Pin=P2-2
+Added Pin To Net: NetName=X_B1 Pin=P2-3
+Added Pin To Net: NetName=X_B2 Pin=P2-4
+Added Room: Name=CNCMicaMini

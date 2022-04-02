@@ -1,0 +1,17 @@
+Removed Pin From Net: NetName=X_DIR_MCU Pin=B1-6
+Removed Pin From Net: NetName=Y_ENB_MCU Pin=B1-7
+Removed Pin From Net: NetName=Y_DIR_MCU Pin=B1-8
+Removed Pin From Net: NetName=Z_ENB_MCU Pin=B1-9
+Removed Pin From Net: NetName=Z_DIR_MCU Pin=B1-10
+Removed Pin From Net: NetName=Z_PWM_MCU Pin=B1-34
+Removed Pin From Net: NetName=Y_PWM_MCU Pin=B1-35
+Removed Pin From Net: NetName=X_PWM_MCU Pin=B1-36
+Added Pin To Net: NetName=Y_DIR_MCU Pin=B1-10
+Added Pin To Net: NetName=Y_PWM_MCU Pin=B1-11
+Added Pin To Net: NetName=Y_ENB_MCU Pin=B1-12
+Added Pin To Net: NetName=Z_DIR_MCU Pin=B1-13
+Added Pin To Net: NetName=Z_PWM_MCU Pin=B1-14
+Added Pin To Net: NetName=Z_ENB_MCU Pin=B1-15
+Added Pin To Net: NetName=X_PWM_MCU Pin=B1-25
+Added Pin To Net: NetName=X_DIR_MCU Pin=B1-26
+Added Room: Name=CNCMicaMini

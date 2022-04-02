@@ -1,0 +1,5 @@
+Added Pin To Net: NetName=3V3 Pin=M2-3
+Added Pin To Net: NetName=3V3 Pin=M2-4
+Added Pin To Net: NetName=3V3 Pin=M3-3
+Added Pin To Net: NetName=3V3 Pin=M3-4
+Added Room: Name=CNCMicaMini

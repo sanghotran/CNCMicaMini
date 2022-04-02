@@ -1,0 +1,11 @@
+power supply
+- domino 2 pin 
+- lm2596
+- 
+mcu
+-blupill
+-
+driver
+-drv8825 
+-domino 4 pin
+-swith 3 pin

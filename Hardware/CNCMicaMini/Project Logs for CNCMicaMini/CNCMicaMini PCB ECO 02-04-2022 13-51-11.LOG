@@ -1,0 +1,23 @@
+Change Component Designator: OldDesignator=B? NewDesignator=B1
+Added Component: Designator=U1(lm2596)
+Add component (AddParameter): Name = "Copyright"; Value = "Copyright (C) 2022 Ultra Librarian. All rights reserved."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "LM2596TVADJG"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mfr_Name"; Value = "onsemi"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RefDes"; Value = "RefDes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Type"; Value = "DEV"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=12V Pin=U1-1
+Added Pin To Net: NetName=NetD1_2 Pin=U1-2
+Added Pin To Net: NetName=GND Pin=U1-3
+Added Pin To Net: NetName=5V Pin=U1-4
+Added Pin To Net: NetName=GND Pin=U1-5
+Change Net Name : Old Net Name=NetB?_5 New Net Name=NetB1_5
+Change Net Name : Old Net Name=NetB?_6 New Net Name=NetB1_6
+Change Net Name : Old Net Name=NetB?_7 New Net Name=NetB1_7
+Change Net Name : Old Net Name=NetB?_8 New Net Name=NetB1_8
+Change Net Name : Old Net Name=NetB?_9 New Net Name=NetB1_9
+Change Net Name : Old Net Name=NetB?_10 New Net Name=NetB1_10
+Change Net Name : Old Net Name=NetB?_35 New Net Name=NetB1_35
+Change Net Name : Old Net Name=NetB?_36 New Net Name=NetB1_36
+Change Net Name : Old Net Name=NetB?_37 New Net Name=NetB1_37
+Added Member To Class: ClassName=CNCMicaMini Member=Component U1 LM2596TVADJG
+Added Room: Name=CNCMicaMini
