@@ -1,0 +1,4 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <FontFamily x:Key="futuralFont">/CNCMicaMini;component/Fonts/Futura Heavy font.ttf#Futura Hv BT</FontFamily>
+</ResourceDictionary>
