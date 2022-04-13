@@ -23,7 +23,7 @@ namespace CNCMicaMini
         }
 
         public static UsbDevice myUsbDevice;
-        public static UsbDeviceFinder myUsbFinder = new UsbDeviceFinder(1155, 22370);
+        public static UsbDeviceFinder myUsbFinder = new UsbDeviceFinder(1115, 22370);
         UsbEndpointReader reader;
         UsbEndpointWriter writer;
 
@@ -84,19 +84,15 @@ namespace CNCMicaMini
         }
         private void addToTextBox(string input)
         {
-            txt_Test.Text += input.Substring(1);
+            txt_Test.Text += input;
         }
 
         private void btn_Send_Click(object sender, EventArgs e)
         {
-            /*if (textBox1.Text.Length > 63)
-            {
-                MessageBox.Show("Gửi không quá 63 kí tự");
-            }*/
             try
             {
                 int bytesWritten;
-                writer.Write(Encoding.Default.GetBytes("\x02" + "hello"), 1000, out bytesWritten);
+                writer.Write(Encoding.Default.GetBytes("G03"), 1000, out bytesWritten);
             }
             catch (Exception err)
             {
@@ -104,52 +100,6 @@ namespace CNCMicaMini
             }
         }
 
-        /*
-                //---------------fileds-----------------
-                private int numOfCom = 0;
-                private string rxbuff = "";
-                private string txbuff = "";
-
-                //--------------methods----------------------
-                private void processrxbuffer(object sender, EventArgs e)
-                {
-                    txt_Test.Text = rxbuff;
-                }
-
-                //-----------------events-------------------------------------
-
-                private void timer1_Tick(object sender, EventArgs e)
-                {
-                    string[] port = SerialPort.GetPortNames();
-                    if( port.Length != numOfCom)
-                    {
-                        numOfCom = port.Length;
-                        cbo_Select_Com.Items.Clear();
-                        for( int i = 0; i < port.Length; i++ )
-                        {
-                            cbo_Select_Com.Items.Add(port[i]);
-                        }
-                    }
-
-                }
-
-
-                private void OnCom(object sender, SerialDataReceivedEventArgs e)
-                {
-                    rxbuff = COM.ReadLine();
-                    this.Invoke(new EventHandler(processrxbuffer));
-                }
-
-                private void btn_Send_Click(object sender, EventArgs e)
-                {
-                    txbuff = "Hello, How are you?";
-                    COM.Write(txbuff);
-                }
-
-                private void btn_Connect_Click(object sender, EventArgs e)
-                {
-                    COM.PortName = cbo_Select_Com.Text;
-                    COM.Open();
-                }*/
+        
     }
 }
