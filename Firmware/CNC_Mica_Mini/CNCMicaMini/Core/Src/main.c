@@ -46,7 +46,6 @@ TIM_HandleTypeDef htim3;
 
 /* USER CODE BEGIN PV */
 
-extern USBD_HandleTypeDef hUsbDevicesFs;
 
 /* USER CODE END PV */
 

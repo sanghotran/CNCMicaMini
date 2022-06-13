@@ -559,6 +559,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Application/User/Lib</GroupName>
+          <Files>
+            <File>
+              <FileName>MotorControl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\MotorControl.h</FilePath>
+            </File>
+            <File>
+              <FileName>MotorControl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MotorControl.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyMath.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\MyMath.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyMath.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MyMath.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>

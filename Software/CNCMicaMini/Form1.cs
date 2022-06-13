@@ -87,12 +87,14 @@ namespace CNCMicaMini
             txt_Test.Text += input;
         }
 
+        string buff = "S";
+
         private void btn_Send_Click(object sender, EventArgs e)
         {
             try
             {
                 int bytesWritten;
-                writer.Write(Encoding.Default.GetBytes("G03"), 1000, out bytesWritten);
+                writer.Write(Encoding.Default.GetBytes(buff), 1000, out bytesWritten);
             }
             catch (Exception err)
             {

@@ -28,6 +28,8 @@
 "cncmicamini\usbd_ctlreq.o"
 "cncmicamini\usbd_ioreq.o"
 "cncmicamini\usbd_customhid.o"
+"cncmicamini\motorcontrol.o"
+"cncmicamini\mymath.o"
 --strict --scatter "CNCMicaMini\CNCMicaMini.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -17,3 +17,14 @@ E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\obj\Debug\CNCMicaMini.pdb
 E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\obj\Debug\XamlResource\BaseRes.baml
 E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\obj\Debug\XamlResource\TrigerRes.baml
 E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\obj\Debug\App.baml
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\LibUsbDotNet.LibUsbDotNet.dll
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\System.Buffers.dll
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\System.Memory.dll
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\System.Numerics.Vectors.dll
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\LibUsbDotNet.LibUsbDotNet.pdb
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\System.Buffers.xml
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\System.Memory.xml
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\System.Numerics.Vectors.xml
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+E:\Project\CNCMicaMini\Software\CNCMicaMiniWPF\obj\Debug\CNCMicaMiniWPF.csproj.CopyComplete

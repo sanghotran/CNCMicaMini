@@ -5,7 +5,208 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CNCMicaMiniWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Height="760" Width="1360"
+        WindowStyle="None"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/background.jfif"/>
+    </Window.Background>
     <Grid>
+        <!-- Frame window-->
+        <Grid>
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Images/redframeneon.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                <Setter Property="Source" Value="Images/blueframeneon.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </Grid>
+        <!-- Control bar-->
+        <DockPanel Background="Transparent"
+                   LastChildFill="False"
+                   Height="50"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Stretch"
+                   PreviewMouseLeftButtonDown="DragWindow">
+            <!--Close button-->
+            <Image DockPanel.Dock="Right"
+                   Source="Images/x.png"
+                   Margin="0 0 10 0"
+                   Cursor="Hand"
+                   PreviewMouseDown="CloseApp">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="40"/>
+                        <Style.Triggers>
+                            <Trigger Property="Image.IsMouseOver" Value="True">
+                                <Setter Property="Width" Value="50"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <!--Minimize button-->
+            <Image DockPanel.Dock="Right"
+                   Source="Images/-.png"
+                   Margin="0 0 5 0"
+                   Cursor="Hand"
+                   PreviewMouseDown="MinimizeApp">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="40"/>
+                        <Style.Triggers>
+                            <Trigger Property="Image.IsMouseOver" Value="True">
+                                <Setter Property="Width" Value="50"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </DockPanel>
+        <!--Connect button-->
+        <Grid Width="200"
+              VerticalAlignment="Bottom"
+              HorizontalAlignment="Center"
+              Margin="50 0 0 200 "
+              Cursor="Hand"
+              PreviewMouseDown="Connect">
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Images/greenbutton.png"/>
+                        <Style.Triggers>                            
+                            <DataTrigger Binding ="{Binding IsConnected}" Value="True">
+                                <Setter Property="Source" Value="Images/redbutton.png"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                <Setter Property="Source" Value="Images/graybutton.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <TextBlock FontFamily="{StaticResource futuralFont}"
+                       TextAlignment="Center"
+                       Margin="0 8 0 0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Text" Value="CONNECT"/>
+                        <Setter Property="FontSize" Value="35"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                <Setter Property="Text" Value="DISCONNECT"/>
+                                <Setter Property="FontSize" Value="25"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+
+            </TextBlock>
+        </Grid>
+        <!--Start button-->
+        <Grid Width="200"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Bottom"
+              Margin="50 0 0 130"
+              Cursor="Hand"
+              PreviewMouseDown="Start">
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Images/graybutton.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                <Setter Property="Source" Value="Images/greenbutton.png"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                <Setter Property="Source" Value="Images/redbutton.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <TextBlock FontFamily="{StaticResource futuralFont}"
+                       TextAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Text" Value="START"/>
+                        <Setter Property="Margin" Value="0 2 0 0"/>
+                        <Setter Property="FontSize" Value="35"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                    <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Text" Value="START"/>
+                                <Setter Property="Margin" Value="0 10 0 0"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                    <Condition Binding="{Binding IsStarted}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Text" Value="STOP"/>
+                                <Setter Property="Margin" Value="0 5 0 0"/>
+                                <Setter Property="FontSize" Value="30"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+        <!--Pause button-->
+        <Grid Width="200"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Bottom"
+              Margin="50 0 0 60"
+              Cursor="Hand"
+              PreviewMouseDown="Pause">
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Images/graybutton.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                <Setter Property="Source" Value="Images/redbutton.png"/>
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsStarted}" Value="True"/>
+                                    <Condition Binding="{Binding IsPause}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Source" Value="Images/greenbutton.png"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <TextBlock FontFamily="{StaticResource futuralFont}"
+                       TextAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Text" Value="PAUSE"/>
+                        <Setter Property="FontSize" Value="35"/>
+                        <Setter Property="Margin" Value="0 5 0 0"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                <Setter Property="FontSize" Value="30"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsPause}" Value="True">
+                                <Setter Property="Text" Value="RESUME"/>
+                                <Setter Property="Margin" Value="0 12 0 0"/>
+                            </DataTrigger>                            
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
     </Grid>
 </Window>

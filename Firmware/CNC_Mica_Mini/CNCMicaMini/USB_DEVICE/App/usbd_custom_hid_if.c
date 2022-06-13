@@ -30,8 +30,9 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
 char ReceiveBuff[65];
-uint8_t Array[] = "what";
+uint8_t Array[] = "resume";
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -196,11 +197,29 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	for(uint8_t i = 0; i < 65; i++)
 	{
 		ReceiveBuff[i] =  hhid -> Report_buf[i];
-	}
+	}  
 	
-	if((ReceiveBuff[0] == 'G')&&(ReceiveBuff[1] == '0')&&(ReceiveBuff[2] == '3'))
-	{	
-				HAL_GPIO_TogglePin(GPIOA, X_ENB_Pin);
+	switch( ReceiveBuff[0])
+	{
+		case 'G':
+			switch( ReceiveBuff[2])
+			{
+				case '0':
+					break;
+				case '1':
+					break;
+				case '2':
+					break;
+				case '3':	
+					HAL_GPIO_TogglePin(GPIOA, X_ENB_Pin);					
+					break;
+			}
+			break;
+			
+			
+				case 'S':
+				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Array, 65);
+				break;
 	}
 	
 	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Array, 65);
