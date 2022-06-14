@@ -146,5 +146,16 @@
     <Resource Include="Images\redarrowneon.png" />
     <Resource Include="Images\redbutton.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Iblueframeneon.png" />
+    <Resource Include="Images\Iredframeneon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\gblueframeneon.png" />
+    <Resource Include="Images\gredframeneon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bluebutton.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

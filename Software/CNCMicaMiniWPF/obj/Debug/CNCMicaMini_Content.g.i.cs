@@ -8,10 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/arrow.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/graybutton.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/greenbutton.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/redarrowneon.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/redbutton.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/bluebutton.png")]
 
 

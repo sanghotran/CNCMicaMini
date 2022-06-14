@@ -20,6 +20,7 @@ using LibUsbDotNet;
 using LibUsbDotNet.Main;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.IO;
 
 namespace CNCMicaMiniWPF
 {
@@ -73,6 +74,17 @@ namespace CNCMicaMiniWPF
                 OnPropertyChanged();
             }
         }
+
+        private bool _IsGcodeSelected;
+        public bool IsGcodeSelected
+        {
+            get => _IsGcodeSelected;
+            set
+            {
+                _IsGcodeSelected = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region fields
@@ -88,6 +100,7 @@ namespace CNCMicaMiniWPF
         {
             IsConnected = false;
             IsStarted = false;
+            IsGcodeSelected =false;
         }
 
         private void addToTextBox(string input)
@@ -175,6 +188,8 @@ namespace CNCMicaMiniWPF
             // check connect
             if (!IsConnected)
                 return;
+            if (!IsGcodeSelected)
+                return;
             // process 
             if (!IsStarted)
             {
@@ -202,8 +217,29 @@ namespace CNCMicaMiniWPF
             }
         }
 
+        private void SelectGcode(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "txt Files (*.txt)|*.txt|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                Gcode.Text = File.ReadAllText(filename);
+                IsGcodeSelected = true;
+            }
+        }
         #endregion
-
-
     }
 }

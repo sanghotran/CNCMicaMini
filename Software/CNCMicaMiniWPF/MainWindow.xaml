@@ -28,6 +28,40 @@
                 </Image.Style>
             </Image>
         </Grid>
+        <!--Frame Image-->
+        <Grid
+              Margin="40,70,890,300">
+            <Image Source="Images/Iredframeneon.png">
+            </Image>
+        </Grid>
+        <!--Frame Gcode-->
+        <Grid
+              Margin="500,70,500,300">
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Images/gredframeneon.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsGcodeSelected}" Value="True">
+                                <Setter Property="Source" Value="Images/gblueframeneon.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </Grid>
+        <!--Frame CNC-->
+        <Grid
+              Margin="890,70,40,300">
+            <Image Source="Images/Iredframeneon.png"/>
+        </Grid>
+        <!-- Show Gcode-->
+        <Grid Margin="515 80 510 310">
+            <ScrollViewer>
+                <TextBlock x:Name="Gcode" FontSize="22">
+                </TextBlock>
+            </ScrollViewer>
+        </Grid>
         <!-- Control bar-->
         <DockPanel Background="Transparent"
                    LastChildFill="False"
@@ -74,14 +108,14 @@
         <Grid Width="200"
               VerticalAlignment="Bottom"
               HorizontalAlignment="Center"
-              Margin="50 0 0 200 "
+              Margin="50 0 0 170 "
               Cursor="Hand"
               PreviewMouseDown="Connect">
             <Image>
                 <Image.Style>
                     <Style TargetType="Image">
                         <Setter Property="Source" Value="Images/greenbutton.png"/>
-                        <Style.Triggers>                            
+                        <Style.Triggers>
                             <DataTrigger Binding ="{Binding IsConnected}" Value="True">
                                 <Setter Property="Source" Value="Images/redbutton.png"/>
                             </DataTrigger>
@@ -114,7 +148,7 @@
         <Grid Width="200"
               HorizontalAlignment="Center"
               VerticalAlignment="Bottom"
-              Margin="50 0 0 130"
+              Margin="50 0 0 100"
               Cursor="Hand"
               PreviewMouseDown="Start">
             <Image>
@@ -122,9 +156,13 @@
                     <Style TargetType="Image">
                         <Setter Property="Source" Value="Images/graybutton.png"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                    <Condition Binding="{Binding IsGcodeSelected}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
                                 <Setter Property="Source" Value="Images/greenbutton.png"/>
-                            </DataTrigger>
+                            </MultiDataTrigger>
                             <DataTrigger Binding="{Binding IsStarted}" Value="True">
                                 <Setter Property="Source" Value="Images/redbutton.png"/>
                             </DataTrigger>
@@ -144,6 +182,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding IsConnected}" Value="True"/>
                                     <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                    <Condition Binding="{Binding IsGcodeSelected}" Value="True"/>
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="Text" Value="START"/>
                                 <Setter Property="Margin" Value="0 10 0 0"/>
@@ -166,7 +205,7 @@
         <Grid Width="200"
               HorizontalAlignment="Center"
               VerticalAlignment="Bottom"
-              Margin="50 0 0 60"
+              Margin="50 0 0 30"
               Cursor="Hand"
               PreviewMouseDown="Pause">
             <Image>
@@ -202,7 +241,47 @@
                             <DataTrigger Binding="{Binding IsPause}" Value="True">
                                 <Setter Property="Text" Value="RESUME"/>
                                 <Setter Property="Margin" Value="0 12 0 0"/>
-                            </DataTrigger>                            
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+        <!-- Select Gcode button-->
+        <Grid Margin="580 470 580 250"
+              Cursor="Hand"
+              PreviewMouseDown="SelectGcode">
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Images/graybutton.png"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                    <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Source" Value="Images/bluebutton.png"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <TextBlock FontFamily="{StaticResource futuralFont}"
+                       TextAlignment="Center"
+                       Text="SELECT GCODE"
+                       Margin="0 8 0 0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="20"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                    <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="FontSize" Value="19"/>
+                            </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
