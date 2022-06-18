@@ -85,6 +85,28 @@ namespace CNCMicaMiniWPF
                 OnPropertyChanged();
             }
         }
+
+        private bool _IsDebug;
+        public bool IsDebug
+        {
+            get => _IsDebug;
+            set
+            {
+                _IsDebug = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _IsWarningBoxShow;
+        public Visibility IsWarningBoxShow
+        {
+            get => _IsWarningBoxShow;
+            set
+            {
+                _IsWarningBoxShow = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region fields
@@ -92,6 +114,7 @@ namespace CNCMicaMiniWPF
         public static UsbDeviceFinder myUsbFinder = new UsbDeviceFinder(1115, 22370);
         UsbEndpointReader reader;
         UsbEndpointWriter writer;
+        string[] GcodeBuff;
 
         #endregion
 
@@ -101,10 +124,13 @@ namespace CNCMicaMiniWPF
             IsConnected = false;
             IsStarted = false;
             IsGcodeSelected =false;
+            IsDebug = false;
+            IsWarningBoxShow = Visibility.Hidden;
         }
 
         private void addToTextBox(string input)
-        {            
+        {
+            debug.Text += input;
         }
         #endregion
 
@@ -148,7 +174,7 @@ namespace CNCMicaMiniWPF
                 }
                 catch
                 {
-                    System.Windows.MessageBox.Show("error");
+                    IsWarningBoxShow = Visibility.Visible;
                 }
             }
             else // ngắt kết nối
@@ -178,9 +204,8 @@ namespace CNCMicaMiniWPF
 
         private void OnRxEndPointData(object sender, EndpointDataEventArgs e)
         {
-            //Action<string> Action = addToTextBox;
-            //this.BeginInvoke(Action, (Encoding.Default.GetString(e.Buffer, 0, e.Count)));
-            addToTextBox(Encoding.Default.GetString(e.Buffer, 0, e.Count));
+            Action<string> Action = addToTextBox;
+            this.Dispatcher.Invoke(Action, (Encoding.Default.GetString(e.Buffer, 0, e.Count)));
         }
 
         private void Start(object sender, MouseButtonEventArgs e)
@@ -236,10 +261,54 @@ namespace CNCMicaMiniWPF
             {
                 // Open document 
                 string filename = dlg.FileName;
-                Gcode.Text = File.ReadAllText(filename);
+                string data;
+                data = File.ReadAllText(filename);
+                Gcode.Text = data;
+                GcodeBuff = Gcode.Text.Split('\n');                
                 IsGcodeSelected = true;
             }
         }
+
+        private void Debug(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            if (!IsDebug)
+            {
+                try
+                {
+                    int bytesWritten = 1;
+                    writer.Write(Encoding.Default.GetBytes("S"), 1000, out bytesWritten);
+                }
+                catch (Exception)
+                {
+                    IsWarningBoxShow = Visibility.Visible;
+                }
+            }
+            else
+            {
+                try
+                {
+                    int bytesWritten = 1;
+                    writer.Write(Encoding.Default.GetBytes("S"), 1000, out bytesWritten);
+                }
+                catch (Exception)
+                {
+                    IsWarningBoxShow = Visibility.Visible;
+                }
+            }
+            IsDebug = !IsDebug;
+        }
+
+        private void Ok_Warning(object sender, MouseButtonEventArgs e)
+        {
+            IsWarningBoxShow = Visibility.Hidden;
+        }
+
         #endregion
+
+
     }
 }

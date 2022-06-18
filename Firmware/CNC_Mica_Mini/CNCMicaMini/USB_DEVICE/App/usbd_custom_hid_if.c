@@ -32,7 +32,7 @@
 /* USER CODE BEGIN PV */
 
 char ReceiveBuff[65];
-uint8_t Array[] = "resume";
+uint8_t Array[] = "R";
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -217,12 +217,23 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			break;
 			
 			
-				case 'S':
-				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Array, 65);
-				break;
+		case 'S':
+		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Array, 1);
+		break;
+		
+		case 'D':
+			switch( ReceiveBuff[1])
+			{
+				case '0':
+					break;
+				case '1':
+					break;				
+			}
+			break;
+				
 	}
 	
-	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Array, 65);
+	//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Array, 65);
 	
   return (USBD_OK);
   /* USER CODE END 6 */

@@ -108,7 +108,7 @@
         <Grid Width="200"
               VerticalAlignment="Bottom"
               HorizontalAlignment="Center"
-              Margin="50 0 0 170 "
+              Margin="-40 0 0 160 "
               Cursor="Hand"
               PreviewMouseDown="Connect">
             <Image>
@@ -148,7 +148,7 @@
         <Grid Width="200"
               HorizontalAlignment="Center"
               VerticalAlignment="Bottom"
-              Margin="50 0 0 100"
+              Margin="-40 0 0 90"
               Cursor="Hand"
               PreviewMouseDown="Start">
             <Image>
@@ -205,7 +205,7 @@
         <Grid Width="200"
               HorizontalAlignment="Center"
               VerticalAlignment="Bottom"
-              Margin="50 0 0 30"
+              Margin="-40 0 0 20"
               Cursor="Hand"
               PreviewMouseDown="Pause">
             <Image>
@@ -286,6 +286,75 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
+        </Grid>
+        <!-- Debug-->
+        <Grid Margin="1025 530 20 20">
+            <Grid Margin=" 0 0 0 160"
+                  Cursor="Hand"
+                  PreviewMouseDown="Debug">
+                <Image>
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Source" Value="Images/graybutton.png"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Source" Value="Images/bluebutton.png"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <TextBlock TextAlignment="Center"
+                           FontFamily="{StaticResource futuralFont}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="DEBUG ON"/>
+                            <Setter Property="FontSize" Value="30"/>
+                            <Setter Property="Margin" Value="0 8 0 0 "/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDebug}" Value="True">
+                                    <Setter Property="Text" Value="DEBUG OFF"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+            <Grid Margin="0 50 0 0">
+                <ScrollViewer>
+                    <TextBlock x:Name="debug" FontSize="22"
+                               TextWrapping="Wrap">
+                    </TextBlock>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <!--Error warning-->
+        <Grid Visibility="{Binding IsWarningBoxShow}">
+            <!--Background-->
+            <Grid Background="Red" Opacity="0.6"/>
+            <Grid Margin="0 150 0 150">
+                <Image Source="Images/Iredframeneon.png"/>
+                <TextBlock Text="ERROR CONNECT!!"
+                           FontFamily="{StaticResource futuralFont}"
+                           FontSize="50"
+                           TextAlignment="Center"
+                           Margin="0 200 0 200"/>
+                <Grid Margin="500 200 500 0">
+                    <TextBlock Text="OK"
+                               FontSize="50"
+                               FontFamily="{StaticResource futuralFont}"
+                               TextAlignment="Center"
+                               Margin="0 100 0 0"/>
+                    <Image Source="Images/redbutton.png"
+                       Cursor="Hand"
+                       PreviewMouseDown="Ok_Warning"/>
+                    
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
