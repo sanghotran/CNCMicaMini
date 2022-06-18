@@ -57,10 +57,47 @@
         </Grid>
         <!-- Show Gcode-->
         <Grid Margin="515 80 510 310">
-            <ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Hidden">
                 <TextBlock x:Name="Gcode" FontSize="22">
                 </TextBlock>
             </ScrollViewer>
+        </Grid>
+        <!--Software's Name-->
+        <Grid Margin="450 30 450 690">
+            <TextBlock Text="CNC MINI"
+                       FontSize="40"
+                       FontFamily="{StaticResource futuralFont}"
+                       TextAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="Window.Loaded">
+                                <BeginStoryboard Storyboard="{StaticResource GUI_NameStoryBoard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource GUI_TextColor}"/>
+                            </EventTrigger>                            
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+        <!--Created by Sang-->
+        <Grid Margin="900 0 140 690">
+            <TextBlock Text="Created by Sang"
+                       FontSize="40"
+                       FontFamily="{StaticResource futuralFont}"
+                       Margin="0 20 0 0"
+                       TextAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="Window.Loaded">
+                                <BeginStoryboard Storyboard="{StaticResource GUI_TextColor}"/>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+                
+            </TextBlock>
         </Grid>
         <!-- Control bar-->
         <DockPanel Background="Transparent"
@@ -247,6 +284,29 @@
                 </TextBlock.Style>
             </TextBlock>
         </Grid>
+        <!--Set Home button-->
+        <Grid Margin="250 530 860 15">
+            <!--UP-->
+            <Image Source="Images/uparrow.png"
+                   Margin="90 20 90 130"
+                   Cursor="Hand"
+                   MouseDown="UP"/>
+            <!--DOWN-->
+            <Image Source="Images/downarrow.png"
+                   Margin="90 130 90 20"
+                   Cursor="Hand"
+                   MouseDown="DOWN"/>
+            <!--LEFT-->
+            <Image Source="Images/leftarrow.png"
+                   Margin="0 75 160 75"
+                   Cursor="Hand"
+                   MouseDown="LEFT"/>
+            <!--RIGHT-->
+            <Image Source="Images/rightarrow.png"
+                   Margin="160 75 0 75"
+                   Cursor="Hand"
+                   MouseDown="RIGHT"/>
+        </Grid>
         <!-- Select Gcode button-->
         <Grid Margin="580 470 580 250"
               Cursor="Hand"
@@ -324,8 +384,8 @@
                     </TextBlock.Style>
                 </TextBlock>
             </Grid>
-            <Grid Margin="0 50 0 0">
-                <ScrollViewer>
+            <Grid Margin="0 50 0 10">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <TextBlock x:Name="debug" FontSize="22"
                                TextWrapping="Wrap">
                     </TextBlock>
@@ -337,22 +397,21 @@
             <!--Background-->
             <Grid Background="Red" Opacity="0.6"/>
             <Grid Margin="0 150 0 150">
-                <Image Source="Images/Iredframeneon.png"/>
+                <Image Source="Images/warningbox.jpg"/>
                 <TextBlock Text="ERROR CONNECT!!"
                            FontFamily="{StaticResource futuralFont}"
-                           FontSize="50"
+                           FontSize="65"
                            TextAlignment="Center"
-                           Margin="0 200 0 200"/>
-                <Grid Margin="500 200 500 0">
+                           Margin="0 220 0 140"/>
+                <Grid Margin="500 300 500 0">
+                    <Image Source="Images/redbutton.png"/>
                     <TextBlock Text="OK"
                                FontSize="50"
                                FontFamily="{StaticResource futuralFont}"
                                TextAlignment="Center"
-                               Margin="0 100 0 0"/>
-                    <Image Source="Images/redbutton.png"
-                       Cursor="Hand"
-                       PreviewMouseDown="Ok_Warning"/>
-                    
+                               Margin="0 50 0 0"
+                               Cursor="Hand"
+                               PreviewMouseDown="Ok_Warning"/>
                 </Grid>
             </Grid>
         </Grid>

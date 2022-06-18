@@ -22,6 +22,7 @@
 #include "usbd_custom_hid_if.h"
 
 /* USER CODE BEGIN INCLUDE */
+#include <stdbool.h>
 
 /* USER CODE END INCLUDE */
 
@@ -31,8 +32,11 @@
 
 /* USER CODE BEGIN PV */
 
-char ReceiveBuff[65];
-uint8_t Array[] = "R";
+char ReceiveBuff[27];
+uint8_t Resume[] = "R";
+uint8_t Stop[] = "STP";
+
+bool debug_flag = false;
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -194,7 +198,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 {
   /* USER CODE BEGIN 6 */
 	USBD_CUSTOM_HID_HandleTypeDef* hhid = (USBD_CUSTOM_HID_HandleTypeDef*)hUsbDeviceFS.pClassData;
-	for(uint8_t i = 0; i < 65; i++)
+	for(uint8_t i = 0; i < 27; i++)
 	{
 		ReceiveBuff[i] =  hhid -> Report_buf[i];
 	}  
@@ -202,38 +206,55 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	switch( ReceiveBuff[0])
 	{
 		case 'G':
+			if( ReceiveBuff[1] == '0')
+			{
+				switch( ReceiveBuff[2])
+					{
+						case '0':
+							break;
+						case '1':
+							break;
+						case '2':
+							break;
+						case '3':						
+							break;
+					}									
+			}		
+			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+			break;			
+			
+		case 'S':
+			switch(ReceiveBuff[2])
+			{
+				case 'R':
+					USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+					break;
+				case 'P':
+					USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Stop, 3);
+					break;
+			}
+			break;
+		
+		case 'R':
+			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+			break;
+		
+		case 'D':
 			switch( ReceiveBuff[2])
 			{
 				case '0':
+					debug_flag = false;
 					break;
 				case '1':
-					break;
-				case '2':
-					break;
-				case '3':	
-					HAL_GPIO_TogglePin(GPIOA, X_ENB_Pin);					
-					break;
-			}
-			break;
-			
-			
-		case 'S':
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Array, 1);
-		break;
-		
-		case 'D':
-			switch( ReceiveBuff[1])
-			{
-				case '0':
-					break;
-				case '1':
+					debug_flag = true;
 					break;				
 			}
 			break;
-				
+			
+		case 0xD:
+			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);	
+			break;
 	}
-	
-	//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Array, 65);
 	
   return (USBD_OK);
   /* USER CODE END 6 */

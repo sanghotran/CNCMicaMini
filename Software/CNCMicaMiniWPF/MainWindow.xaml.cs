@@ -115,6 +115,7 @@ namespace CNCMicaMiniWPF
         UsbEndpointReader reader;
         UsbEndpointWriter writer;
         string[] GcodeBuff;
+        int point;
 
         #endregion
 
@@ -128,9 +129,47 @@ namespace CNCMicaMiniWPF
             IsWarningBoxShow = Visibility.Hidden;
         }
 
-        private void addToTextBox(string input)
+        private void SendData(string input)
         {
-            debug.Text += input;
+            try
+            {
+                int bytesWritten;
+                writer.Write(Encoding.Default.GetBytes(input), 1000, out bytesWritten);
+            }
+            catch (Exception)
+            {
+                IsWarningBoxShow = Visibility.Visible;
+                return;
+            }
+        }
+
+        private void ProcessReceiveData(string input)
+        {
+            if(IsDebug)
+                debug.Text += input;
+            if (input == "R")
+            {
+                if (IsStarted)
+                {
+                    if (IsPause)
+                    {
+                        SendData("P");
+                        return;
+                    }
+                    if((GcodeBuff[point].Length % 2) == 0)
+                    {
+                        GcodeBuff[point] += '0';
+                    }
+                    SendData(GcodeBuff[point]);
+                    point++;
+                    if ( point == GcodeBuff.Length)
+                        IsStarted = false;
+                }
+                else
+                {
+                    SendData("STP");
+                }
+            }
         }
         #endregion
 
@@ -204,7 +243,7 @@ namespace CNCMicaMiniWPF
 
         private void OnRxEndPointData(object sender, EndpointDataEventArgs e)
         {
-            Action<string> Action = addToTextBox;
+            Action<string> Action = ProcessReceiveData;
             this.Dispatcher.Invoke(Action, (Encoding.Default.GetString(e.Buffer, 0, e.Count)));
         }
 
@@ -218,6 +257,8 @@ namespace CNCMicaMiniWPF
             // process 
             if (!IsStarted)
             {
+                SendData("STR");
+                point = 0;
                 IsStarted = true;
             }
             else
@@ -238,6 +279,7 @@ namespace CNCMicaMiniWPF
             }
             else 
             {
+                SendData("R");
                 IsPause= false;
             }
         }
@@ -277,27 +319,12 @@ namespace CNCMicaMiniWPF
                 return;
             if (!IsDebug)
             {
-                try
-                {
-                    int bytesWritten = 1;
-                    writer.Write(Encoding.Default.GetBytes("S"), 1000, out bytesWritten);
-                }
-                catch (Exception)
-                {
-                    IsWarningBoxShow = Visibility.Visible;
-                }
+                SendData("D01");
             }
             else
             {
-                try
-                {
-                    int bytesWritten = 1;
-                    writer.Write(Encoding.Default.GetBytes("S"), 1000, out bytesWritten);
-                }
-                catch (Exception)
-                {
-                    IsWarningBoxShow = Visibility.Visible;
-                }
+                SendData("D00");
+                debug.Text = "";
             }
             IsDebug = !IsDebug;
         }
@@ -307,6 +334,25 @@ namespace CNCMicaMiniWPF
             IsWarningBoxShow = Visibility.Hidden;
         }
 
+        private void UP(object sender, MouseButtonEventArgs e)
+        {
+            SendData("T0W");
+        }
+
+        private void DOWN(object sender, MouseButtonEventArgs e)
+        {
+            SendData("T0S");
+        }
+
+        private void LEFT(object sender, MouseButtonEventArgs e)
+        {
+            SendData("T0A");
+        }    
+
+        private void RIGHT(object sender, MouseButtonEventArgs e)
+        {
+            SendData("T0D");
+        }
         #endregion
 
 
