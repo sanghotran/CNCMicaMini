@@ -334,24 +334,64 @@ namespace CNCMicaMiniWPF
             IsWarningBoxShow = Visibility.Hidden;
         }
 
-        private void UP(object sender, MouseButtonEventArgs e)
+        private void X_UP(object sender, MouseButtonEventArgs e)
         {
-            SendData("T0W");
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            SendData("TUX");
         }
 
-        private void DOWN(object sender, MouseButtonEventArgs e)
+        private void X_DOWN(object sender, MouseButtonEventArgs e)
         {
-            SendData("T0S");
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            SendData("TDX");
+        }
+        private void Y_UP(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            SendData("TUY");
         }
 
-        private void LEFT(object sender, MouseButtonEventArgs e)
+        private void Y_DOWN(object sender, MouseButtonEventArgs e)
         {
-            SendData("T0A");
-        }    
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            SendData("TDY");
+        }
+        private void Z_UP(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            SendData("TUZ");
+        }
 
-        private void RIGHT(object sender, MouseButtonEventArgs e)
+        private void Z_DOWN(object sender, MouseButtonEventArgs e)
         {
-            SendData("T0D");
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            SendData("TDZ");
+        }
+
+        private void HOME(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
         }
         #endregion
 

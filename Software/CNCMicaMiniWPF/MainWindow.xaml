@@ -284,28 +284,127 @@
                 </TextBlock.Style>
             </TextBlock>
         </Grid>
-        <!--Set Home button-->
-        <Grid Margin="250 530 860 15">
-            <!--UP-->
-            <Image Source="Images/uparrow.png"
-                   Margin="90 20 90 130"
+        <!--Set Home region-->
+        <Grid Margin="15 530 860 15">
+            <!--X-->
+            <Grid Margin=" 10 0 390 0">
+                <!--X UP-->
+                <Image Source="Images/uparrow.png"
+                   Margin="0 0 0 120"
                    Cursor="Hand"
-                   MouseDown="UP"/>
-            <!--DOWN-->
-            <Image Source="Images/downarrow.png"
-                   Margin="90 130 90 20"
+                   MouseDown="X_UP"/>
+                <!--X DOWN-->
+                <Image Source="Images/downarrow.png"
+                   Margin="0 120 0 0"
                    Cursor="Hand"
-                   MouseDown="DOWN"/>
-            <!--LEFT-->
-            <Image Source="Images/leftarrow.png"
-                   Margin="0 75 160 75"
+                   MouseDown="X_DOWN"/>
+                <TextBlock Text="X" TextAlignment="Center"
+                           FontSize="50" FontFamily="{StaticResource futuralFont}"
+                           Margin="0 80 0 80">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Foreground" Value="Blue"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+            <!--Y-->
+            <Grid Margin="110 0 290 0">
+                <!--Y UP-->
+                <Image Source="Images/uparrow.png"
+                       Margin="0 0 0 120"
+                       Cursor="Hand"
+                       MouseDown="Y_UP"/>
+                <!--Y DOWN-->
+                <Image Source="Images/downarrow.png"
+                   Margin="0 120 0 0"
                    Cursor="Hand"
-                   MouseDown="LEFT"/>
-            <!--RIGHT-->
-            <Image Source="Images/rightarrow.png"
-                   Margin="160 75 0 75"
+                   MouseDown="Y_DOWN"/>
+                <TextBlock Text="Y" TextAlignment="Center"
+                           FontSize="50" FontFamily="{StaticResource futuralFont}"
+                           Margin="0 80 0 80">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Foreground" Value="Blue"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+            <!--Z-->
+            <Grid Margin="210 0 190 0">
+                <!--Z UP-->
+                <Image Source="Images/uparrow.png"
+                       Margin="0 0 0 120"
+                       Cursor="Hand"
+                       MouseDown="Z_UP"/>
+                <!--Z DOWN-->
+                <Image Source="Images/downarrow.png"
+                   Margin="0 120 0 0"
                    Cursor="Hand"
-                   MouseDown="RIGHT"/>
+                   MouseDown="Z_DOWN"/>
+                <TextBlock Text="Z" TextAlignment="Center"
+                           FontSize="50" FontFamily="{StaticResource futuralFont}"
+                           Margin="0 80 0 80">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Foreground" Value="Blue"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+            <!--HOME-->
+            <Grid Margin="310 0 0 0 ">
+                <Image>
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Source" Value="Images/graybutton.png"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Source" Value="Images/bluebutton.png"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <TextBlock Text="HOME"
+                           FontSize="40"
+                           TextAlignment="Center"
+                           Cursor="Hand"
+                           FontFamily="{StaticResource futuralFont}"
+                           Margin="0 85 0 85"
+                           MouseDown="HOME"/>
+            </Grid>
         </Grid>
         <!-- Select Gcode button-->
         <Grid Margin="580 470 580 250"
