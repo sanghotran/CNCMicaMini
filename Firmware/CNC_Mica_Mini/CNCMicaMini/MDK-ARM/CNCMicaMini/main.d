@@ -42,3 +42,4 @@ cncmicamini\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_cor
 cncmicamini\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h
 cncmicamini\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h
 cncmicamini\main.o: ../USB_DEVICE/App/usbd_custom_hid_if.h
+cncmicamini\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h

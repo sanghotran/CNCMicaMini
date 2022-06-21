@@ -23,6 +23,7 @@
 
 /* USER CODE BEGIN INCLUDE */
 #include <stdbool.h>
+#include <stdio.h>
 
 /* USER CODE END INCLUDE */
 
@@ -40,6 +41,11 @@ bool debug_flag = false;
 bool process_flag = false;
 
 uint8_t _cncState = 4;
+
+int temp;
+
+float X_next = 0;
+float Y_next = 0;
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -205,12 +211,13 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	{
 		ReceiveBuff[i] =  hhid -> Report_buf[i];
 	}  
-	
+	memset(hhid ->Report_buf , 0, 65);
 	switch( ReceiveBuff[0])
 	{
 		case 'G':
-			if( ReceiveBuff[1] == '0')
+			if(( ReceiveBuff[1] == '0') && (ReceiveBuff[4] == 'X'))
 			{
+				sscanf(ReceiveBuff, "G0%u X%f Y%f", &temp, &X_next, &Y_next);
 				switch( ReceiveBuff[2])
 					{
 						case '0':
@@ -264,7 +271,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);	
 			break;
 	}
-	
+	memset(ReceiveBuff, 0, 27);
   return (USBD_OK);
   /* USER CODE END 6 */
 }

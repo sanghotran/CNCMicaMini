@@ -128,7 +128,6 @@ namespace CNCMicaMiniWPF
             IsDebug = false;
             IsWarningBoxShow = Visibility.Hidden;
         }
-
         private void SendData(string input)
         {
             try
@@ -142,11 +141,10 @@ namespace CNCMicaMiniWPF
                 return;
             }
         }
-
         private void ProcessReceiveData(string input)
         {
             if(IsDebug)
-                debug.Text += input;
+                debug.Text += input + "\n";
             if (input == "R")
             {
                 if (IsStarted)
@@ -171,6 +169,8 @@ namespace CNCMicaMiniWPF
                 }
             }
         }
+
+
         #endregion
 
         #region events
@@ -182,7 +182,6 @@ namespace CNCMicaMiniWPF
         {
             WindowState = WindowState.Minimized;
         }
-
         private void DragWindow(object sender, MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
@@ -240,13 +239,11 @@ namespace CNCMicaMiniWPF
                 IsConnected = false;
             }
         }
-
         private void OnRxEndPointData(object sender, EndpointDataEventArgs e)
         {
             Action<string> Action = ProcessReceiveData;
             this.Dispatcher.Invoke(Action, (Encoding.Default.GetString(e.Buffer, 0, e.Count)));
         }
-
         private void Start(object sender, MouseButtonEventArgs e)
         {
             // check connect
@@ -267,7 +264,6 @@ namespace CNCMicaMiniWPF
                 IsPause = false;
             }
         }
-
         private void Pause(object sender, MouseButtonEventArgs e)
         {
             // check status start
@@ -283,7 +279,6 @@ namespace CNCMicaMiniWPF
                 IsPause= false;
             }
         }
-
         private void SelectGcode(object sender, MouseButtonEventArgs e)
         {
             if (!IsConnected)
@@ -310,7 +305,6 @@ namespace CNCMicaMiniWPF
                 IsGcodeSelected = true;
             }
         }
-
         private void Debug(object sender, MouseButtonEventArgs e)
         {
             if (!IsConnected)
@@ -328,12 +322,10 @@ namespace CNCMicaMiniWPF
             }
             IsDebug = !IsDebug;
         }
-
         private void Ok_Warning(object sender, MouseButtonEventArgs e)
         {
             IsWarningBoxShow = Visibility.Hidden;
         }
-
         private void X_UP(object sender, MouseButtonEventArgs e)
         {
             if (!IsConnected)
@@ -342,7 +334,6 @@ namespace CNCMicaMiniWPF
                 return;
             SendData("TUX");
         }
-
         private void X_DOWN(object sender, MouseButtonEventArgs e)
         {
             if (!IsConnected)
@@ -359,7 +350,6 @@ namespace CNCMicaMiniWPF
                 return;
             SendData("TUY");
         }
-
         private void Y_DOWN(object sender, MouseButtonEventArgs e)
         {
             if (!IsConnected)
@@ -376,7 +366,6 @@ namespace CNCMicaMiniWPF
                 return;
             SendData("TUZ");
         }
-
         private void Z_DOWN(object sender, MouseButtonEventArgs e)
         {
             if (!IsConnected)
@@ -385,7 +374,6 @@ namespace CNCMicaMiniWPF
                 return;
             SendData("TDZ");
         }
-
         private void HOME(object sender, MouseButtonEventArgs e)
         {
             if (!IsConnected)
