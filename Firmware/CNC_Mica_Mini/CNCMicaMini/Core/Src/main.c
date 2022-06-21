@@ -23,12 +23,13 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "usbd_customhid.h"
+#include "usbd_custom_hid_if.h"
+#include <stdbool.h>
 
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -55,6 +56,13 @@ static void MX_GPIO_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
+
+extern USBD_HandleTypeDef hUsbDeviceFS;
+extern uint8_t Stop[];
+extern uint8_t Resume[];
+extern bool process_flag;
+extern uint8_t _cncState;
+
 
 /* USER CODE END PFP */
 
@@ -102,6 +110,25 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		if( process_flag)
+		{
+			switch(_cncState)
+			{
+				case 0:					
+					break;
+				
+				case 1:
+					break;
+				
+				case 2:
+					break;
+				
+				case 3:
+					break;
+			}
+			
+			process_flag = false;
+		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

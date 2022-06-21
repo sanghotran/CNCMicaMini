@@ -37,6 +37,9 @@ uint8_t Resume[] = "R";
 uint8_t Stop[] = "STP";
 
 bool debug_flag = false;
+bool process_flag = false;
+
+uint8_t _cncState = 4;
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -211,16 +214,22 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 				switch( ReceiveBuff[2])
 					{
 						case '0':
+							_cncState = 0;
 							break;
 						case '1':
+							_cncState = 1;
 							break;
 						case '2':
+							_cncState = 2;
 							break;
-						case '3':						
+						case '3':
+							_cncState = 3;
 							break;
-					}									
-			}		
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+					}	
+			 process_flag = true;
+			}
+			else
+				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
 			break;			
 			
 		case 'S':
