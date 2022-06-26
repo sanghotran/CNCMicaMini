@@ -38,9 +38,10 @@ uint8_t Resume[] = "R";
 uint8_t Stop[] = "STP";
 
 bool debug_flag = false;
-bool process_flag = false;
+uint8_t process_mode = 0;
 
 uint8_t _cncState = 4;
+uint8_t _poscontrol = 0;
 
 int temp;
 
@@ -214,31 +215,61 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	memset(hhid ->Report_buf , 0, 65);
 	switch( ReceiveBuff[0])
 	{
+		// set home position
+		case 'H': 
+			
+			break;
+		// control x y z motor
+		case 'T':
+			switch(ReceiveBuff[1])
+			{
+				case '1': // x up
+					_poscontrol = 1;
+					break;					
+				case '2': // x down
+					_poscontrol = 2;
+					break;
+				case '3': // y up
+					_poscontrol = 3;
+					break;
+				case '4': // y down
+					_poscontrol = 4;
+					break;
+				case '5': // z up
+					_poscontrol = 5;
+					break;
+				case '6': // z down
+					_poscontrol = 6;
+					break;
+			}
+			process_mode = 1; // mode control position motor
+			break;
+		// Gcode control motor
 		case 'G':
 			if(( ReceiveBuff[1] == '0') && (ReceiveBuff[4] == 'X'))
 			{
 				sscanf(ReceiveBuff, "G0%u X%f Y%f", &temp, &X_next, &Y_next);
 				switch( ReceiveBuff[2])
 					{
-						case '0':
-							_cncState = 0;
+						case '0': //
+							_cncState = 0; 
 							break;
-						case '1':
+						case '1': //
 							_cncState = 1;
 							break;
-						case '2':
+						case '2': //
 							_cncState = 2;
 							break;
-						case '3':
+						case '3': //
 							_cncState = 3;
 							break;
 					}	
-			 process_flag = true;
+			 process_mode = 2; // mode gcode control motor
 			}
 			else
 				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
 			break;			
-			
+		// command control Start and Stop CNC
 		case 'S':
 			switch(ReceiveBuff[2])
 			{
@@ -250,11 +281,11 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 					break;
 			}
 			break;
-		
+		// command control Resume CNC
 		case 'R':
 			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
 			break;
-		
+		// command on/off debug
 		case 'D':
 			switch( ReceiveBuff[2])
 			{
@@ -266,7 +297,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 					break;				
 			}
 			break;
-			
+		// skip other Gcode		
 		case 0xD:
 			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);	
 			break;

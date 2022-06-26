@@ -332,7 +332,7 @@ namespace CNCMicaMiniWPF
                 return;
             if (IsStarted)
                 return;
-            SendData("TUX");
+            SendData("T1");
         }
         private void X_DOWN(object sender, MouseButtonEventArgs e)
         {
@@ -340,7 +340,7 @@ namespace CNCMicaMiniWPF
                 return;
             if (IsStarted)
                 return;
-            SendData("TDX");
+            SendData("T2");
         }
         private void Y_UP(object sender, MouseButtonEventArgs e)
         {
@@ -348,7 +348,7 @@ namespace CNCMicaMiniWPF
                 return;
             if (IsStarted)
                 return;
-            SendData("TUY");
+            SendData("T3");
         }
         private void Y_DOWN(object sender, MouseButtonEventArgs e)
         {
@@ -356,7 +356,7 @@ namespace CNCMicaMiniWPF
                 return;
             if (IsStarted)
                 return;
-            SendData("TDY");
+            SendData("T4");
         }
         private void Z_UP(object sender, MouseButtonEventArgs e)
         {
@@ -364,7 +364,7 @@ namespace CNCMicaMiniWPF
                 return;
             if (IsStarted)
                 return;
-            SendData("TUZ");
+            SendData("T5");
         }
         private void Z_DOWN(object sender, MouseButtonEventArgs e)
         {
@@ -372,7 +372,7 @@ namespace CNCMicaMiniWPF
                 return;
             if (IsStarted)
                 return;
-            SendData("TDZ");
+            SendData("T6");
         }
         private void HOME(object sender, MouseButtonEventArgs e)
         {
@@ -380,6 +380,7 @@ namespace CNCMicaMiniWPF
                 return;
             if (IsStarted)
                 return;
+            SendData("H");
         }
         #endregion
 

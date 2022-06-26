@@ -61,9 +61,10 @@ static void MX_TIM3_Init(void);
 extern USBD_HandleTypeDef hUsbDeviceFS;
 extern uint8_t Stop[];
 extern uint8_t Resume[];
-extern bool process_flag;
+extern uint8_t process_mode;
 extern bool debug_flag;
 extern uint8_t _cncState;
+extern uint8_t _poscontrol;
 
 extern float X_next;
 extern float Y_next;
@@ -114,8 +115,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		if( process_flag)
+		if(process_mode == 2 ) // mode gcode control
 		{
+			// send x y z for debug
 			if( debug_flag)
 					{
 						sprintf(TransBuff, "X%f Y%f", X_next, Y_next);
@@ -125,21 +127,40 @@ int main(void)
 					}
 			switch(_cncState)
 			{ 				
-				case 0:
+				case 0: // 
 					
 					break;
 				
-				case 1:
+				case 1: // move x y with z down
+					break; 
+				
+				case 2: // move x y with z down circle
 					break;
 				
-				case 2:
-					break;
-				
-				case 3:
+				case 3: // move x y wih z down circle 
 					break;
 			}
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
-   		process_flag = false;
+			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1); // send command resume
+   		process_mode = 0; // idle mode
+		}
+		if( process_mode == 1) // mode user control
+		{
+			switch(_poscontrol)
+			{
+				case '1': // x up
+					break;
+				case '2': // x down
+					break;
+				case '3': // y up
+					break;
+				case '4': // y down
+					break;
+				case '5': // z up
+					break;
+				case '6': // z down
+					break;				
+			}
+			process_mode = 0; // idle mode
 		}
     /* USER CODE END WHILE */
 
