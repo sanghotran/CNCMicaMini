@@ -1,0 +1,17 @@
+Removed Pin From Net: NetName=DRILL_PWM Pin=DRILL-1
+Removed Pin From Net: NetName=DRILL_DIR Pin=DRILL-2
+Removed Pin From Net: NetName=X_PWM Pin=X_MOTOR-1
+Removed Pin From Net: NetName=X_DIR Pin=X_MOTOR-2
+Removed Pin From Net: NetName=Y_PWM Pin=Y_MOTOR-1
+Removed Pin From Net: NetName=Y_DIR Pin=Y_MOTOR-2
+Removed Pin From Net: NetName=Z_PWM Pin=Z_MOTOR-1
+Removed Pin From Net: NetName=Z_DIR Pin=Z_MOTOR-2
+Added Pin To Net: NetName=DRILL_DIR Pin=DRILL-1
+Added Pin To Net: NetName=DRILL_PWM Pin=DRILL-2
+Added Pin To Net: NetName=X_DIR Pin=X_MOTOR-1
+Added Pin To Net: NetName=X_PWM Pin=X_MOTOR-2
+Added Pin To Net: NetName=Y_DIR Pin=Y_MOTOR-1
+Added Pin To Net: NetName=Y_PWM Pin=Y_MOTOR-2
+Added Pin To Net: NetName=Z_DIR Pin=Z_MOTOR-1
+Added Pin To Net: NetName=Z_PWM Pin=Z_MOTOR-2
+Added Room: Name=CNCMicaMini

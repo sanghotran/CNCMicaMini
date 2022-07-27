@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=MCU_Z_A_ENC Pin=ENCODER-4
+Removed Pin From Net: NetName=MCU_Z_B_ENC Pin=ENCODER-5
+Removed Pin From Net: NetName=MCU_X_A_ENC Pin=ENCODER-6
+Removed Pin From Net: NetName=MCU_X_B_ENC Pin=ENCODER-7
+Added Pin To Net: NetName=MCU_Z_B_ENC Pin=ENCODER-4
+Added Pin To Net: NetName=MCU_Z_A_ENC Pin=ENCODER-5
+Added Pin To Net: NetName=MCU_X_B_ENC Pin=ENCODER-6
+Added Pin To Net: NetName=MCU_X_A_ENC Pin=ENCODER-7
+Change Net Name : Old Net Name=X_A_ENC New Net Name=X_B_ENC
+Change Net Name : Old Net Name=X_B_ENC New Net Name=X_A_ENC
+Change Net Name : Old Net Name=Z_A_ENC New Net Name=Z_B_ENC
+Change Net Name : Old Net Name=Z_B_ENC New Net Name=Z_A_ENC
+Added Room: Name=CNCMicaMini

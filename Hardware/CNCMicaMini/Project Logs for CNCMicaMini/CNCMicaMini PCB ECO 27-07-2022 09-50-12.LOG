@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=X_A_ENC Pin=X_ENC-2
+Removed Pin From Net: NetName=X_B_ENC Pin=X_ENC-3
+Removed Pin From Net: NetName=Y_A_ENC Pin=Y_ENC-2
+Removed Pin From Net: NetName=Y_B_ENC Pin=Y_ENC-3
+Removed Pin From Net: NetName=Z_A_ENC Pin=Z_ENC-2
+Removed Pin From Net: NetName=Z_B_ENC Pin=Z_ENC-3
+Added Pin To Net: NetName=X_B_ENC Pin=X_ENC-2
+Added Pin To Net: NetName=X_A_ENC Pin=X_ENC-3
+Added Pin To Net: NetName=Y_B_ENC Pin=Y_ENC-2
+Added Pin To Net: NetName=Y_A_ENC Pin=Y_ENC-3
+Added Pin To Net: NetName=Z_B_ENC Pin=Z_ENC-2
+Added Pin To Net: NetName=Z_A_ENC Pin=Z_ENC-3
+Added Room: Name=CNCMicaMini

@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=MCU_X_PWM Pin=BLUEPILL-11
+Removed Pin From Net: NetName=MCU_Y_PWM Pin=BLUEPILL-12
+Removed Pin From Net: NetName=MCU_Z_PWM Pin=BLUEPILL-13
+Removed Pin From Net: NetName=MCU_DRILL_PWM Pin=BLUEPILL-14
+Added Pin To Net: NetName=MCU_DRILL_PWM Pin=BLUEPILL-11
+Added Pin To Net: NetName=MCU_Z_PWM Pin=BLUEPILL-12
+Added Pin To Net: NetName=MCU_Y_PWM Pin=BLUEPILL-13
+Added Pin To Net: NetName=MCU_X_PWM Pin=BLUEPILL-14
+Added Room: Name=CNCMicaMini
