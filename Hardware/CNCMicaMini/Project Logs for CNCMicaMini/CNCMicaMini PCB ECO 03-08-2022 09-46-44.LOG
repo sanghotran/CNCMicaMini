@@ -1,0 +1,101 @@
+Added Component: Designator=C3(CAP-SM-0805)
+Add component (AddParameter): Name = "Local Supplier"; Value = "thegioiic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Local Supplier Link"; Value = "https://www.thegioiic.com/products/tu-gom-0805-100nf-0-1uf-50v"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Samsung Electro-Mechanics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "CL21F104ZBCNNNC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digikey"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Link"; Value = "https://www.digikey.com/product-detail/en/samsung-electro-mechanics/CL21F104ZBCNNNC/1276-1007-1-ND/3889093"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Part Number"; Value = "1276-1007-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF/50V"; VariantName = "[No Variations]"
+Added Component: Designator=C4(CAP-SM-0805)
+Add component (AddParameter): Name = "Local Supplier"; Value = "thegioiic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Local Supplier Link"; Value = "https://www.thegioiic.com/products/tu-gom-0805-100nf-0-1uf-50v"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Samsung Electro-Mechanics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "CL21F104ZBCNNNC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digikey"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Link"; Value = "https://www.digikey.com/product-detail/en/samsung-electro-mechanics/CL21F104ZBCNNNC/1276-1007-1-ND/3889093"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Part Number"; Value = "1276-1007-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF/50V"; VariantName = "[No Variations]"
+Added Component: Designator=C5(CAP-SM-0805)
+Add component (AddParameter): Name = "Local Supplier"; Value = "thegioiic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Local Supplier Link"; Value = "https://www.thegioiic.com/products/tu-gom-0805-100nf-0-1uf-50v"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Samsung Electro-Mechanics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "CL21F104ZBCNNNC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digikey"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Link"; Value = "https://www.digikey.com/product-detail/en/samsung-electro-mechanics/CL21F104ZBCNNNC/1276-1007-1-ND/3889093"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Part Number"; Value = "1276-1007-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF/50V"; VariantName = "[No Variations]"
+Added Component: Designator=P1(691322310004)
+Add component (AddParameter): Name = "Application"; Value = "Pluggable"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Compliance"; Value = "RoHS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.we-online.de"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://katalog.we-online.de/em/datasheet/691322310004.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Modularity"; Value = "No"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = "THT"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Operating Temperature"; Value = "-40 to +105degC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packaging"; Value = "Box"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part Number"; Value = "691322310004"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB/Cable/Panel"; Value = "PCB"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pin Number"; Value = "4"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "3.81mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published Date"; Value = "October 2019"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Wurth Elektronik"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Rated Current [UL]"; Value = "10A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Type"; Value = "Horizontal"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Working Voltage [UL]"; Value = "300VAC"; VariantName = "[No Variations]"
+Added Component: Designator=R1(RES-SM-0805)
+Add component (AddParameter): Name = "Local Supplier"; Value = "thegioiic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Local Supplier Link"; Value = "https://www.thegioiic.com/products/dien-tro-10-kohm-0805-5"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "RNCP0805FTD10K0"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digikey"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Link"; Value = "https://www.digikey.com/product-detail/en/stackpole-electronics-inc/RNCP0805FTD10K0/RNCP0805FTD10K0CT-ND/2240601"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Part Number"; Value = "RNCP0805FTD10K0CT-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Component: Designator=R2(RES-SM-0805)
+Add component (AddParameter): Name = "Local Supplier"; Value = "thegioiic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Local Supplier Link"; Value = "https://www.thegioiic.com/products/dien-tro-10-kohm-0805-5"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "RNCP0805FTD10K0"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digikey"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Link"; Value = "https://www.digikey.com/product-detail/en/stackpole-electronics-inc/RNCP0805FTD10K0/RNCP0805FTD10K0CT-ND/2240601"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Part Number"; Value = "RNCP0805FTD10K0CT-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Component: Designator=R3(RES-SM-0805)
+Add component (AddParameter): Name = "Local Supplier"; Value = "thegioiic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Local Supplier Link"; Value = "https://www.thegioiic.com/products/dien-tro-10-kohm-0805-5"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "RNCP0805FTD10K0"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digikey"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Link"; Value = "https://www.digikey.com/product-detail/en/stackpole-electronics-inc/RNCP0805FTD10K0/RNCP0805FTD10K0CT-ND/2240601"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1 Part Number"; Value = "RNCP0805FTD10K0CT-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C3-1
+Added Pin To Net: NetName=GND Pin=C4-1
+Added Pin To Net: NetName=GND Pin=C5-1
+Added Pin To Net: NetName=GND Pin=P1-4
+Added Pin To Net: NetName=3V3 Pin=R1-2
+Added Pin To Net: NetName=3V3 Pin=R2-2
+Added Pin To Net: NetName=3V3 Pin=R3-2
+Added Pin To Net: NetName=X_HOME Pin=C3-2
+Added Pin To Net: NetName=X_HOME Pin=P1-1
+Added Pin To Net: NetName=X_HOME Pin=R1-1
+Added Net: Name=X_HOME
+Added Pin To Net: NetName=Y_HOME Pin=C4-2
+Added Pin To Net: NetName=Y_HOME Pin=P1-2
+Added Pin To Net: NetName=Y_HOME Pin=R2-1
+Added Net: Name=Y_HOME
+Added Pin To Net: NetName=Z_HOME Pin=C5-2
+Added Pin To Net: NetName=Z_HOME Pin=P1-3
+Added Pin To Net: NetName=Z_HOME Pin=R3-1
+Added Net: Name=Z_HOME
+Added Member To Class: ClassName=CNCMicaMini Member=Component C3 Cap-100nF-50V-0805
+Added Member To Class: ClassName=CNCMicaMini Member=Component C4 Cap-100nF-50V-0805
+Added Member To Class: ClassName=CNCMicaMini Member=Component C5 Cap-100nF-50V-0805
+Added Member To Class: ClassName=CNCMicaMini Member=Component P1 691322310004
+Added Member To Class: ClassName=CNCMicaMini Member=Component R1 Res-10k-0805
+Added Member To Class: ClassName=CNCMicaMini Member=Component R2 Res-10k-0805
+Added Member To Class: ClassName=CNCMicaMini Member=Component R3 Res-10k-0805
+Added Room: Name=CNCMicaMini

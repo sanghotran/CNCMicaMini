@@ -1,0 +1,7 @@
+Added Pin To Net: NetName=X_HOME Pin=BLUEPILL-2
+Added Pin To Net: NetName=Y_HOME Pin=BLUEPILL-3
+Added Pin To Net: NetName=Z_HOME Pin=BLUEPILL-4
+Change Net Name : Old Net Name=X_HOME New Net Name=MCU_X_HOME
+Change Net Name : Old Net Name=Y_HOME New Net Name=MCU_Y_HOME
+Change Net Name : Old Net Name=Z_HOME New Net Name=MCU_Z_HOME
+Added Room: Name=CNCMicaMini
