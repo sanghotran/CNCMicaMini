@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=5V Pin=C2-2
+Removed Pin From Net: NetName=5V Pin=ENCODER-20
+Added Pin To Net: NetName=3V3 Pin=C2-2
+Added Pin To Net: NetName=3V3 Pin=ENCODER-20
+Added Room: Name=CNCMicaMini
