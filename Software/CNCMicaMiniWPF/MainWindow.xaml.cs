@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -137,8 +137,13 @@ namespace CNCMicaMiniWPF
         public static UsbDeviceFinder myUsbFinder = new UsbDeviceFinder(1115, 22370);
         UsbEndpointReader reader;
         UsbEndpointWriter writer;
+
+        private Thread DebugThread; 
+
         string[] GcodeBuff;
+        string debug_data;
         int point;
+        bool debug_flag = false;
 
         #endregion
 
@@ -152,6 +157,10 @@ namespace CNCMicaMiniWPF
             IsWarningBoxShow = Visibility.Hidden;
             IsControlPageShow = Visibility.Visible;
             IsDebugPageShow = Visibility.Hidden;
+
+            DebugThread = new Thread(new ThreadStart(Debug));
+            DebugThread.IsBackground = true;
+            DebugThread.Start();
         }
         private void SendData(string input)
         {
@@ -168,7 +177,9 @@ namespace CNCMicaMiniWPF
         }
         private void ProcessReceiveData(string input)
         {
-            debug.Text += input + "\n";
+            debug_data = input + "\n";
+            debug_flag = true;            
+            //debug.Text += input + "\n";
             if (input == "R")
             {
                 if (IsStarted)
@@ -193,7 +204,17 @@ namespace CNCMicaMiniWPF
                 }
             }
         }
-
+        private void Debug()
+        {
+            while( true)
+            {
+                if (debug_flag)
+                {
+                    debug_flag = false;
+                    debug.Dispatcher.Invoke( ()=>  debug.Text += debug_data);
+                }
+            }
+        }
 
         #endregion
 
