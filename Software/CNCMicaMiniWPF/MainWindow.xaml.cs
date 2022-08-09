@@ -107,6 +107,18 @@ namespace CNCMicaMiniWPF
                 OnPropertyChanged();
             }
         }
+
+        private Visibility _IsControlPageShow;
+        public Visibility IsControlPageShow
+        {
+            get => _IsControlPageShow;
+            set
+            {
+                _IsControlPageShow = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region fields
@@ -127,6 +139,7 @@ namespace CNCMicaMiniWPF
             IsGcodeSelected =false;
             IsDebug = false;
             IsWarningBoxShow = Visibility.Hidden;
+            IsControlPageShow = Visibility.Visible;
         }
         private void SendData(string input)
         {
@@ -279,6 +292,13 @@ namespace CNCMicaMiniWPF
                 IsPause= false;
             }
         }
+        private void SelectImage(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+        }
         private void SelectGcode(object sender, MouseButtonEventArgs e)
         {
             if (!IsConnected)
@@ -326,62 +346,7 @@ namespace CNCMicaMiniWPF
         {
             IsWarningBoxShow = Visibility.Hidden;
         }
-        private void X_UP(object sender, MouseButtonEventArgs e)
-        {
-            if (!IsConnected)
-                return;
-            if (IsStarted)
-                return;
-            SendData("T1");
-        }
-        private void X_DOWN(object sender, MouseButtonEventArgs e)
-        {
-            if (!IsConnected)
-                return;
-            if (IsStarted)
-                return;
-            SendData("T2");
-        }
-        private void Y_UP(object sender, MouseButtonEventArgs e)
-        {
-            if (!IsConnected)
-                return;
-            if (IsStarted)
-                return;
-            SendData("T3");
-        }
-        private void Y_DOWN(object sender, MouseButtonEventArgs e)
-        {
-            if (!IsConnected)
-                return;
-            if (IsStarted)
-                return;
-            SendData("T4");
-        }
-        private void Z_UP(object sender, MouseButtonEventArgs e)
-        {
-            if (!IsConnected)
-                return;
-            if (IsStarted)
-                return;
-            SendData("T5");
-        }
-        private void Z_DOWN(object sender, MouseButtonEventArgs e)
-        {
-            if (!IsConnected)
-                return;
-            if (IsStarted)
-                return;
-            SendData("T6");
-        }
-        private void HOME(object sender, MouseButtonEventArgs e)
-        {
-            if (!IsConnected)
-                return;
-            if (IsStarted)
-                return;
-            SendData("H");
-        }
+
         #endregion
 
 

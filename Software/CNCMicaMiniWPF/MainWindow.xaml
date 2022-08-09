@@ -28,39 +28,10 @@
                 </Image.Style>
             </Image>
         </Grid>
-        <!--Frame Image-->
-        <Grid
-              Margin="40,70,890,300">
-            <Image Source="Images/Iredframeneon.png">
-            </Image>
-        </Grid>
-        <!--Frame Gcode-->
-        <Grid
-              Margin="500,70,500,300">
-            <Image>
-                <Image.Style>
-                    <Style TargetType="Image">
-                        <Setter Property="Source" Value="Images/gredframeneon.png"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsGcodeSelected}" Value="True">
-                                <Setter Property="Source" Value="Images/gblueframeneon.png"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Image.Style>
-            </Image>
-        </Grid>
         <!--Frame CNC-->
         <Grid
-              Margin="890,70,40,300">
+              Margin="575,80,30,30">
             <Image Source="Images/Iredframeneon.png"/>
-        </Grid>
-        <!-- Show Gcode-->
-        <Grid Margin="515 80 510 310">
-            <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                <TextBlock x:Name="Gcode" FontSize="22">
-                </TextBlock>
-            </ScrollViewer>
         </Grid>
         <!--Software's Name-->
         <Grid Margin="450 30 450 690">
@@ -72,7 +43,7 @@
                     <Style TargetType="TextBlock">
                         <Style.Triggers>
                             <EventTrigger RoutedEvent="Window.Loaded">
-                                <BeginStoryboard Storyboard="{StaticResource GUI_NameStoryBoard}"/>
+                                <!--BeginStoryboard Storyboard="{StaticResource GUI_NameStoryBoard}"/-->
                                 <BeginStoryboard Storyboard="{StaticResource GUI_TextColor}"/>
                             </EventTrigger>                            
                         </Style.Triggers>
@@ -141,311 +112,6 @@
                 </Image.Style>
             </Image>
         </DockPanel>
-        <!--Connect button-->
-        <Grid Width="200"
-              VerticalAlignment="Bottom"
-              HorizontalAlignment="Center"
-              Margin="-40 0 0 160 "
-              Cursor="Hand"
-              PreviewMouseDown="Connect">
-            <Image>
-                <Image.Style>
-                    <Style TargetType="Image">
-                        <Setter Property="Source" Value="Images/greenbutton.png"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding ="{Binding IsConnected}" Value="True">
-                                <Setter Property="Source" Value="Images/redbutton.png"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsStarted}" Value="True">
-                                <Setter Property="Source" Value="Images/graybutton.png"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Image.Style>
-            </Image>
-            <TextBlock FontFamily="{StaticResource futuralFont}"
-                       TextAlignment="Center"
-                       Margin="0 8 0 0">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Text" Value="CONNECT"/>
-                        <Setter Property="FontSize" Value="35"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
-                                <Setter Property="Text" Value="DISCONNECT"/>
-                                <Setter Property="FontSize" Value="25"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-
-            </TextBlock>
-        </Grid>
-        <!--Start button-->
-        <Grid Width="200"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Bottom"
-              Margin="-40 0 0 90"
-              Cursor="Hand"
-              PreviewMouseDown="Start">
-            <Image>
-                <Image.Style>
-                    <Style TargetType="Image">
-                        <Setter Property="Source" Value="Images/graybutton.png"/>
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                    <Condition Binding="{Binding IsGcodeSelected}" Value="True"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Source" Value="Images/greenbutton.png"/>
-                            </MultiDataTrigger>
-                            <DataTrigger Binding="{Binding IsStarted}" Value="True">
-                                <Setter Property="Source" Value="Images/redbutton.png"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Image.Style>
-            </Image>
-            <TextBlock FontFamily="{StaticResource futuralFont}"
-                       TextAlignment="Center">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Text" Value="START"/>
-                        <Setter Property="Margin" Value="0 2 0 0"/>
-                        <Setter Property="FontSize" Value="35"/>
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                    <Condition Binding="{Binding IsStarted}" Value="False"/>
-                                    <Condition Binding="{Binding IsGcodeSelected}" Value="True"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Text" Value="START"/>
-                                <Setter Property="Margin" Value="0 10 0 0"/>
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                    <Condition Binding="{Binding IsStarted}" Value="True"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Text" Value="STOP"/>
-                                <Setter Property="Margin" Value="0 5 0 0"/>
-                                <Setter Property="FontSize" Value="30"/>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-        </Grid>
-        <!--Pause button-->
-        <Grid Width="200"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Bottom"
-              Margin="-40 0 0 20"
-              Cursor="Hand"
-              PreviewMouseDown="Pause">
-            <Image>
-                <Image.Style>
-                    <Style TargetType="Image">
-                        <Setter Property="Source" Value="Images/graybutton.png"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsStarted}" Value="True">
-                                <Setter Property="Source" Value="Images/redbutton.png"/>
-                            </DataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsStarted}" Value="True"/>
-                                    <Condition Binding="{Binding IsPause}" Value="True"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Source" Value="Images/greenbutton.png"/>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Image.Style>
-            </Image>
-            <TextBlock FontFamily="{StaticResource futuralFont}"
-                       TextAlignment="Center">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Text" Value="PAUSE"/>
-                        <Setter Property="FontSize" Value="35"/>
-                        <Setter Property="Margin" Value="0 5 0 0"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsStarted}" Value="True">
-                                <Setter Property="FontSize" Value="30"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsPause}" Value="True">
-                                <Setter Property="Text" Value="RESUME"/>
-                                <Setter Property="Margin" Value="0 12 0 0"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-        </Grid>
-        <!--Set Home region-->
-        <Grid Margin="15 530 860 15">
-            <!--X-->
-            <Grid Margin=" 10 0 390 0">
-                <!--X UP-->
-                <Image Source="Images/uparrow.png"
-                   Margin="0 0 0 120"
-                   Cursor="Hand"
-                   MouseDown="X_UP"/>
-                <!--X DOWN-->
-                <Image Source="Images/downarrow.png"
-                   Margin="0 120 0 0"
-                   Cursor="Hand"
-                   MouseDown="X_DOWN"/>
-                <TextBlock Text="X" TextAlignment="Center"
-                           FontSize="50" FontFamily="{StaticResource futuralFont}"
-                           Margin="0 80 0 80">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="Foreground" Value="Blue"/>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
-            <!--Y-->
-            <Grid Margin="110 0 290 0">
-                <!--Y UP-->
-                <Image Source="Images/uparrow.png"
-                       Margin="0 0 0 120"
-                       Cursor="Hand"
-                       MouseDown="Y_UP"/>
-                <!--Y DOWN-->
-                <Image Source="Images/downarrow.png"
-                   Margin="0 120 0 0"
-                   Cursor="Hand"
-                   MouseDown="Y_DOWN"/>
-                <TextBlock Text="Y" TextAlignment="Center"
-                           FontSize="50" FontFamily="{StaticResource futuralFont}"
-                           Margin="0 80 0 80">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="Foreground" Value="Blue"/>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
-            <!--Z-->
-            <Grid Margin="210 0 190 0">
-                <!--Z UP-->
-                <Image Source="Images/uparrow.png"
-                       Margin="0 0 0 120"
-                       Cursor="Hand"
-                       MouseDown="Z_UP"/>
-                <!--Z DOWN-->
-                <Image Source="Images/downarrow.png"
-                   Margin="0 120 0 0"
-                   Cursor="Hand"
-                   MouseDown="Z_DOWN"/>
-                <TextBlock Text="Z" TextAlignment="Center"
-                           FontSize="50" FontFamily="{StaticResource futuralFont}"
-                           Margin="0 80 0 80">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="Foreground" Value="Blue"/>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
-            <!--HOME-->
-            <Grid Margin="310 0 0 0 ">
-                <Image>
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Setter Property="Source" Value="Images/graybutton.png"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="Source" Value="Images/bluebutton.png"/>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-                <TextBlock Text="HOME"
-                           FontSize="40"
-                           TextAlignment="Center"
-                           Cursor="Hand"
-                           FontFamily="{StaticResource futuralFont}"
-                           Margin="0 85 0 85"
-                           MouseDown="HOME"/>
-            </Grid>
-        </Grid>
-        <!-- Select Gcode button-->
-        <Grid Margin="580 470 580 250"
-              Cursor="Hand"
-              PreviewMouseDown="SelectGcode">
-            <Image>
-                <Image.Style>
-                    <Style TargetType="Image">
-                        <Setter Property="Source" Value="Images/graybutton.png"/>
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                    <Condition Binding="{Binding IsStarted}" Value="False"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Source" Value="Images/bluebutton.png"/>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Image.Style>
-            </Image>
-            <TextBlock FontFamily="{StaticResource futuralFont}"
-                       TextAlignment="Center"
-                       Text="SELECT GCODE"
-                       Margin="0 8 0 0">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="FontSize" Value="20"/>
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                    <Condition Binding="{Binding IsStarted}" Value="False"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="FontSize" Value="19"/>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-        </Grid>
         <!-- Debug-->
         <Grid Margin="1025 530 20 20">
             <Grid Margin=" 0 0 0 160"
@@ -489,6 +155,261 @@
                                TextWrapping="Wrap">
                     </TextBlock>
                 </ScrollViewer>
+            </Grid>
+        </Grid>
+        <!-- Main Page-->
+        <Grid Margin="25 80 830 25">
+            <!-- Control Page-->
+            <Grid Visibility="{Binding IsControlPageShow}">
+                <!--Frame Image-->
+                <Grid Visibility="Hidden"
+                      Margin="0 0 0 270">
+                    <Image Source="Images/gredframeneon.png">
+                    </Image>
+                </Grid>
+                <!-- Select Gcode button-->
+                <Grid Margin="285 385 20 230"
+                      Cursor="Hand"
+                      PreviewMouseDown="SelectImage">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="Images/graybutton.png"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                            <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Source" Value="Images/bluebutton.png"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <TextBlock FontFamily="{StaticResource futuralFont}"
+                       TextAlignment="Center"
+                       Text="SELECT IMAGE"
+                       Margin="0 8 0 0">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="20"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                            <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="FontSize" Value="19"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <!--Frame Gcode-->
+                <Grid Margin="0,0,0,270">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="Images/gredframeneon.png"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsGcodeSelected}" Value="True">
+                                        <Setter Property="Source" Value="Images/gblueframeneon.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <ScrollViewer Margin="25 25 25 25"
+                                  VerticalScrollBarVisibility="Hidden">
+                        <TextBlock x:Name="Gcode" FontSize="22">
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+                <!-- Select Gcode button-->
+                <Grid Margin="20 385 285 230"
+                      Cursor="Hand"
+                      PreviewMouseDown="SelectGcode">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="Images/graybutton.png"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                            <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Source" Value="Images/bluebutton.png"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <TextBlock FontFamily="{StaticResource futuralFont}"
+                       TextAlignment="Center"
+                       Text="SELECT GCODE"
+                       Margin="0 8 0 0">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="20"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                            <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="FontSize" Value="19"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <!--Connect button-->
+                <Grid Width="200"
+                      VerticalAlignment="Bottom"
+                      HorizontalAlignment="Center"
+                      Margin="-40 0 0 160 "
+                      Cursor="Hand"
+                      PreviewMouseDown="Connect">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="Images/greenbutton.png"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding ="{Binding IsConnected}" Value="True">
+                                        <Setter Property="Source" Value="Images/redbutton.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                        <Setter Property="Source" Value="Images/graybutton.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <TextBlock FontFamily="{StaticResource futuralFont}"
+                               TextAlignment="Center"
+                               Margin=" 0 8 0 0">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value="CONNECT"/>
+                                <Setter Property="FontSize" Value="35"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                        <Setter Property="Text" Value="DISCONNECT"/>
+                                        <Setter Property="FontSize" Value="25"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+
+                    </TextBlock>
+                </Grid>
+                <!--Start button-->
+                <Grid Width="200"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Bottom"
+                      Margin="-40 0 0 90"
+                      Cursor="Hand"
+                      PreviewMouseDown="Start">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="Images/graybutton.png"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                            <Condition Binding="{Binding IsGcodeSelected}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Source" Value="Images/greenbutton.png"/>
+                                    </MultiDataTrigger>
+                                    <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                        <Setter Property="Source" Value="Images/redbutton.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <TextBlock FontFamily="{StaticResource futuralFont}"
+                       TextAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value="START"/>
+                                <Setter Property="Margin" Value="0 2 0 0"/>
+                                <Setter Property="FontSize" Value="35"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                            <Condition Binding="{Binding IsStarted}" Value="False"/>
+                                            <Condition Binding="{Binding IsGcodeSelected}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Text" Value="START"/>
+                                        <Setter Property="Margin" Value="0 10 0 0"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                                            <Condition Binding="{Binding IsStarted}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Text" Value="STOP"/>
+                                        <Setter Property="Margin" Value="0 5 0 0"/>
+                                        <Setter Property="FontSize" Value="30"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <!--Pause button-->
+                <Grid Width="200"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Bottom"
+                      Margin="-40 0 0 20"
+                      Cursor="Hand"
+                      PreviewMouseDown="Pause">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="Images/graybutton.png"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                        <Setter Property="Source" Value="Images/redbutton.png"/>
+                                    </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsStarted}" Value="True"/>
+                                            <Condition Binding="{Binding IsPause}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Source" Value="Images/greenbutton.png"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <TextBlock FontFamily="{StaticResource futuralFont}"
+                       TextAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value="PAUSE"/>
+                                <Setter Property="FontSize" Value="35"/>
+                                <Setter Property="Margin" Value="0 5 0 0"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                        <Setter Property="FontSize" Value="30"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsPause}" Value="True">
+                                        <Setter Property="Text" Value="RESUME"/>
+                                        <Setter Property="Margin" Value="0 12 0 0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
             </Grid>
         </Grid>
         <!--Error warning-->
