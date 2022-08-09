@@ -28,13 +28,13 @@
                 </Image.Style>
             </Image>
         </Grid>
-        <!--Frame CNC-->
+        <!-- Frame CNC-->
         <Grid
               Margin="575,80,30,30">
             <Image Source="Images/Iredframeneon.png"/>
         </Grid>
-        <!--Software's Name-->
-        <Grid Margin="450 30 450 690">
+        <!-- Software's Name-->
+        <Grid Margin="700 30 200 690">
             <TextBlock Text="CNC MINI"
                        FontSize="40"
                        FontFamily="{StaticResource futuralFont}"
@@ -51,10 +51,10 @@
                 </TextBlock.Style>
             </TextBlock>
         </Grid>
-        <!--Created by Sang-->
-        <Grid Margin="900 0 140 690">
+        <!-- Created by Sang-->
+        <Grid Margin="1150 30 25 680">
             <TextBlock Text="Created by Sang"
-                       FontSize="40"
+                       FontSize="20"
                        FontFamily="{StaticResource futuralFont}"
                        Margin="0 20 0 0"
                        TextAlignment="Center">
@@ -112,56 +112,51 @@
                 </Image.Style>
             </Image>
         </DockPanel>
-        <!-- Debug-->
-        <Grid Margin="1025 530 20 20">
-            <Grid Margin=" 0 0 0 160"
-                  Cursor="Hand"
-                  PreviewMouseDown="Debug">
-                <Image>
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Setter Property="Source" Value="Images/graybutton.png"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsConnected}" Value="True"/>
-                                        <Condition Binding="{Binding IsStarted}" Value="False"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="Source" Value="Images/bluebutton.png"/>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-                <TextBlock TextAlignment="Center"
-                           FontFamily="{StaticResource futuralFont}">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Text" Value="DEBUG ON"/>
-                            <Setter Property="FontSize" Value="30"/>
-                            <Setter Property="Margin" Value="0 8 0 0 "/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsDebug}" Value="True">
-                                    <Setter Property="Text" Value="DEBUG OFF"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
-            <Grid Margin="0 50 0 10">
-                <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                    <TextBlock x:Name="debug" FontSize="22"
-                               TextWrapping="Wrap">
-                    </TextBlock>
-                </ScrollViewer>
-            </Grid>
-        </Grid>
+        <!-- Task bar-->
+        <DockPanel Margin="25 25 1000 690"
+                   Background="Transparent"
+                   LastChildFill="False"
+                   HorizontalAlignment="Stretch">
+            <!-- Control Page Button-->
+            <Image Source="Images/Home.png"
+                   DockPanel.Dock="Left"
+                   Cursor="Hand"
+                   PreviewMouseDown="ControlPage"
+                   Margin="5 0 0 0">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="40"/>
+                        <Style.Triggers>
+                            <Trigger Property="Image.IsMouseOver" Value="True">
+                                <Setter Property="Width" Value="50"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <!-- Debug Page Button-->
+            <Image Source="Images/Debug.png"
+                   DockPanel.Dock="Left"
+                   Cursor="Hand"
+                   PreviewMouseDown="DebugPage"
+                   Margin="5 0 0 0">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="40"/>
+                        <Style.Triggers>
+                            <Trigger Property="Image.IsMouseOver" Value="True">
+                                <Setter Property="Width" Value="50"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </DockPanel>
         <!-- Main Page-->
         <Grid Margin="25 80 830 25">
             <!-- Control Page-->
             <Grid Visibility="{Binding IsControlPageShow}">
-                <!--Frame Image-->
+                <!-- Frame Image-->
                 <Grid Visibility="Hidden"
                       Margin="0 0 0 270">
                     <Image Source="Images/gredframeneon.png">
@@ -207,7 +202,7 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </Grid>
-                <!--Frame Gcode-->
+                <!-- Frame Gcode-->
                 <Grid Margin="0,0,0,270">
                     <Image>
                         <Image.Style>
@@ -267,7 +262,7 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </Grid>
-                <!--Connect button-->
+                <!-- Connect button-->
                 <Grid Width="200"
                       VerticalAlignment="Bottom"
                       HorizontalAlignment="Center"
@@ -307,7 +302,7 @@
 
                     </TextBlock>
                 </Grid>
-                <!--Start button-->
+                <!-- Start button-->
                 <Grid Width="200"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Bottom"
@@ -364,7 +359,7 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </Grid>
-                <!--Pause button-->
+                <!-- Pause button-->
                 <Grid Width="200"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Bottom"
@@ -411,8 +406,16 @@
                     </TextBlock>
                 </Grid>
             </Grid>
+            <!-- Debug Page-->
+            <Grid Visibility="{Binding IsDebugPageShow}">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <TextBlock x:Name="debug" FontSize="22"
+                               TextWrapping="Wrap">
+                    </TextBlock>
+                </ScrollViewer>
+            </Grid>
         </Grid>
-        <!--Error warning-->
+        <!-- Error warning-->
         <Grid Visibility="{Binding IsWarningBoxShow}">
             <!--Background-->
             <Grid Background="Red" Opacity="0.6"/>

@@ -119,6 +119,17 @@ namespace CNCMicaMiniWPF
             }
         }
 
+        private Visibility _IsDebugPageShow;
+        public Visibility IsDebugPageShow
+        {
+            get => _IsDebugPageShow;
+            set
+            {
+                _IsDebugPageShow = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region fields
@@ -140,6 +151,7 @@ namespace CNCMicaMiniWPF
             IsDebug = false;
             IsWarningBoxShow = Visibility.Hidden;
             IsControlPageShow = Visibility.Visible;
+            IsDebugPageShow = Visibility.Hidden;
         }
         private void SendData(string input)
         {
@@ -156,8 +168,7 @@ namespace CNCMicaMiniWPF
         }
         private void ProcessReceiveData(string input)
         {
-            if(IsDebug)
-                debug.Text += input + "\n";
+            debug.Text += input + "\n";
             if (input == "R")
             {
                 if (IsStarted)
@@ -199,6 +210,16 @@ namespace CNCMicaMiniWPF
         {
             base.OnMouseLeftButtonDown(e);
             this.DragMove();
+        }
+        private void ControlPage(object sender, MouseButtonEventArgs e)
+        {
+            IsControlPageShow = Visibility.Visible;
+            IsDebugPageShow = Visibility.Hidden;
+        }
+        private void DebugPage(object sender, MouseButtonEventArgs e)
+        {
+            IsDebugPageShow = Visibility.Visible;
+            IsControlPageShow = Visibility.Hidden;
         }
         private void Connect(object sender, MouseButtonEventArgs e)
         {
@@ -325,30 +346,11 @@ namespace CNCMicaMiniWPF
                 IsGcodeSelected = true;
             }
         }
-        private void Debug(object sender, MouseButtonEventArgs e)
-        {
-            if (!IsConnected)
-                return;
-            if (IsStarted)
-                return;
-            if (!IsDebug)
-            {
-                SendData("D01");
-            }
-            else
-            {
-                SendData("D00");
-                debug.Text = "";
-            }
-            IsDebug = !IsDebug;
-        }
         private void Ok_Warning(object sender, MouseButtonEventArgs e)
         {
             IsWarningBoxShow = Visibility.Hidden;
         }
 
         #endregion
-
-
     }
 }

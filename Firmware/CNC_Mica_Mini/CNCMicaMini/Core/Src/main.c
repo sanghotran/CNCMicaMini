@@ -62,7 +62,6 @@ extern USBD_HandleTypeDef hUsbDeviceFS;
 extern uint8_t Stop[];
 extern uint8_t Resume[];
 extern uint8_t process_mode;
-extern bool debug_flag;
 extern uint8_t _cncState;
 extern uint8_t _poscontrol;
 
@@ -118,13 +117,10 @@ int main(void)
 		if(process_mode == 2 ) // mode gcode control
 		{
 			// send x y z for debug
-			if( debug_flag)
-					{
 						sprintf(TransBuff, "X%f Y%f", X_next, Y_next);
 						USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)TransBuff, 25);
 						// delay for test without step, when have step, i will delete it.
 						HAL_Delay(500);
-					}
 			switch(_cncState)
 			{ 				
 				case 0: // 

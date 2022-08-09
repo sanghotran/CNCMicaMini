@@ -37,7 +37,6 @@ char ReceiveBuff[27];
 uint8_t Resume[] = "R";
 uint8_t Stop[] = "STP";
 
-bool debug_flag = false;
 uint8_t process_mode = 0;
 
 uint8_t _cncState = 4;
@@ -284,18 +283,6 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 		// command control Resume CNC
 		case 'R':
 			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
-			break;
-		// command on/off debug
-		case 'D':
-			switch( ReceiveBuff[2])
-			{
-				case '0':
-					debug_flag = false;
-					break;
-				case '1':
-					debug_flag = true;
-					break;				
-			}
 			break;
 		// skip other Gcode		
 		case 0xD:
