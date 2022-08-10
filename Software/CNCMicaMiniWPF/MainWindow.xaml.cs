@@ -146,7 +146,6 @@ namespace CNCMicaMiniWPF
         string debug_data;
         int point;
         int send_count;
-        int recieve_count;
         bool debug_flag = false;
 
         #endregion
@@ -173,6 +172,10 @@ namespace CNCMicaMiniWPF
                 int bytesWritten;
                 ResendBuff = input;
                 input = num.ToString() + ' ' + input;
+                if ((input.Length % 2) == 0)
+                {
+                    input += ' ';
+                }
                 writer.Write(Encoding.Default.GetBytes(input), 1000, out bytesWritten);
             }
             catch (Exception)
@@ -194,6 +197,26 @@ namespace CNCMicaMiniWPF
             if( RecieveData[0] == "ACK")
             {
                 send_count++;
+                // Check Command form CNC
+                if (RecieveData[1] == "R")
+                {
+                    if (IsStarted)
+                    {
+                        if (IsPause)
+                        {
+                            SendData("P", send_count);
+                            return;
+                        }
+                        SendData(GcodeBuff[point], send_count);
+                        point++;
+                        if (point == GcodeBuff.Length)
+                            IsStarted = false;
+                    }
+                    else
+                    {
+                        SendData("STP", send_count);
+                    }
+                }
                 return;
             }
 
@@ -204,30 +227,7 @@ namespace CNCMicaMiniWPF
                 return;
             }
 
-            // Check Command form CNC
-            if (input == "R")
-            {
-                if (IsStarted)
-                {
-                    if (IsPause)
-                    {
-                        SendData("P", send_count);
-                        return;
-                    }
-                    if((GcodeBuff[point].Length % 2) == 0)
-                    {
-                        GcodeBuff[point] += '0';
-                    }
-                    SendData(GcodeBuff[point], send_count);
-                    point++;
-                    if ( point == GcodeBuff.Length)
-                        IsStarted = false;
-                }
-                else
-                {
-                    SendData("STP", send_count);
-                }
-            }
+
         }
         private void Debug()
         {

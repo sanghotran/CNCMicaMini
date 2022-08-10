@@ -37,8 +37,8 @@ char ReceiveBuff[27];
 uint8_t Resume[] = "R";
 uint8_t Stop[] = "STP";
 uint8_t Command[3];
-char NAK[10];
-uint8_t ACK[] = "ACK";
+char NAK[5];
+uint8_t ACK[9];
 
 uint8_t process_mode = 0;
 
@@ -212,6 +212,8 @@ static int8_t CUSTOM_HID_DeInit_FS(void)
 static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 {
   /* USER CODE BEGIN 6 */
+	memset(ReceiveBuff, 0, 27);
+	memset(Command, 0, 3);
 	USBD_CUSTOM_HID_HandleTypeDef* hhid = (USBD_CUSTOM_HID_HandleTypeDef*)hUsbDeviceFS.pClassData;
 	for(uint8_t i = 0; i < 27; i++)
 	{
@@ -226,15 +228,11 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	if( data_count != receive_count)
 	{
 		sprintf(NAK, "NAK %d", receive_count);
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, NAK, 10);
+		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, NAK, 5);
 		return(USBD_OK);
 	}	
-	
-	// if true send ACK
-	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, ACK, 3);
-	
-	// increase recieve count
-	receive_count++;
+	// delete ACK buff
+	memset(ACK, 0, 9);
 	
 	// check command from data
 	switch( Command[0])
@@ -243,7 +241,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 		case 'G':
 			if(Command[1] == '0')
 			{
-				sscanf(ReceiveBuff, "G0%u X%f Y%f", &temp, &X_next, &Y_next);
+				sscanf(ReceiveBuff, "%d G0%u X%f Y%f",&temp, &temp, &X_next, &Y_next);
 				switch( Command[2])
 					{
 						case '0': //
@@ -262,31 +260,43 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			 process_mode = 2; // mode gcode control motor
 			}
 			else
-				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+				//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+			sprintf(ACK, "ACK R %d", receive_count);
 			break;			
 		// command control Start and Stop CNC
 		case 'S':
 			switch(Command[2])
 			{
 				case 'R':
-					USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+					//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+				receive_count = 0;
+				sprintf(ACK, "ACK R %d", receive_count);
 					break;
 				case 'P':
-					USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Stop, 3);
+					//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Stop, 3);
+				sprintf(ACK, "ACK STP");
 					break;
 			}
 			break;
 		// command control Resume CNC
 		case 'R':
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+			//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
+		sprintf(ACK, "ACK R %d", receive_count);
 			break;
 		// skip other Gcode		
-		case 0xD:
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);	
+		default:
+			//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);	
+		sprintf(ACK, "ACK R %d", receive_count);
 			break;
 	}
-	memset(ReceiveBuff, 0, 27);
-	memset(Command, 0, 3);
+
+	// check process for skip send ack
+	if( process_mode != 0)
+		return(USBD_OK);
+			// increase recieve count
+	receive_count++;
+		// if true send ACK
+	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, ACK, 9);
   return (USBD_OK);
   /* USER CODE END 6 */
 }

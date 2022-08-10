@@ -64,6 +64,9 @@ extern uint8_t Resume[];
 extern uint8_t process_mode;
 extern uint8_t _cncState;
 extern uint8_t _poscontrol;
+extern uint8_t ACK[7];
+
+extern int receive_count;
 
 extern float X_next;
 extern float Y_next;
@@ -118,7 +121,7 @@ int main(void)
 		{
 			// send x y z for debug
 						sprintf(TransBuff, "X%f Y%f", X_next, Y_next);
-						USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)TransBuff, 25);
+						USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, TransBuff, 25);
 						// delay for test without step, when have step, i will delete it.
 						HAL_Delay(500);
 			switch(_cncState)
@@ -136,7 +139,9 @@ int main(void)
 				case 3: // move x y wih z down circle 
 					break;
 			}
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1); // send command resume
+			sprintf(ACK, "ACK R %d", receive_count);
+			receive_count++;
+			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, ACK, 9); // send command resume
    		process_mode = 0; // idle mode
 		}
 		if( process_mode == 1) // mode user control
