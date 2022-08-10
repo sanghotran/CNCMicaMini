@@ -47,8 +47,8 @@ namespace CNCMicaMiniWPF
         public bool IsConnected
         {
             get => _IsConnected;
-            set 
-            {   _IsConnected = value;
+            set
+            { _IsConnected = value;
                 OnPropertyChanged();
             }
         }
@@ -57,7 +57,7 @@ namespace CNCMicaMiniWPF
         public bool IsStarted
         {
             get => _IsStarted;
-            set 
+            set
             {
                 _IsStarted = value;
                 OnPropertyChanged();
@@ -138,11 +138,15 @@ namespace CNCMicaMiniWPF
         UsbEndpointReader reader;
         UsbEndpointWriter writer;
 
-        private Thread DebugThread; 
+        private Thread DebugThread;
 
         string[] GcodeBuff;
+        string ResendBuff;
+        string[] RecieveData;
         string debug_data;
         int point;
+        int send_count;
+        int recieve_count;
         bool debug_flag = false;
 
         #endregion
@@ -162,11 +166,13 @@ namespace CNCMicaMiniWPF
             DebugThread.IsBackground = true;
             DebugThread.Start();
         }
-        private void SendData(string input)
+        private void SendData(string input, int num)
         {
             try
             {
                 int bytesWritten;
+                ResendBuff = input;
+                input = num.ToString() + ' ' + input;
                 writer.Write(Encoding.Default.GetBytes(input), 1000, out bytesWritten);
             }
             catch (Exception)
@@ -178,29 +184,48 @@ namespace CNCMicaMiniWPF
         private void ProcessReceiveData(string input)
         {
             debug_data = input + "\n";
-            debug_flag = true;            
+            debug_flag = true;
             //debug.Text += input + "\n";
+
+            //split data
+            RecieveData = input.Split(' ');
+
+            // check ACK from CNC
+            if( RecieveData[0] == "ACK")
+            {
+                send_count++;
+                return;
+            }
+
+            // check NAK from CNC
+            if (RecieveData[0] == "NAK")
+            {
+                SendData(ResendBuff, send_count);
+                return;
+            }
+
+            // Check Command form CNC
             if (input == "R")
             {
                 if (IsStarted)
                 {
                     if (IsPause)
                     {
-                        SendData("P");
+                        SendData("P", send_count);
                         return;
                     }
                     if((GcodeBuff[point].Length % 2) == 0)
                     {
                         GcodeBuff[point] += '0';
                     }
-                    SendData(GcodeBuff[point]);
+                    SendData(GcodeBuff[point], send_count);
                     point++;
                     if ( point == GcodeBuff.Length)
                         IsStarted = false;
                 }
                 else
                 {
-                    SendData("STP");
+                    SendData("STP", send_count);
                 }
             }
         }
@@ -308,9 +333,10 @@ namespace CNCMicaMiniWPF
                 return;
             // process 
             if (!IsStarted)
-            {
-                SendData("STR");
-                point = 0;
+            {   point = 0;
+                send_count = 0;
+                debug.Text = "";
+                SendData("STR", send_count);
                 IsStarted = true;
             }
             else
@@ -330,7 +356,7 @@ namespace CNCMicaMiniWPF
             }
             else 
             {
-                SendData("R");
+                SendData("R", send_count);
                 IsPause= false;
             }
         }

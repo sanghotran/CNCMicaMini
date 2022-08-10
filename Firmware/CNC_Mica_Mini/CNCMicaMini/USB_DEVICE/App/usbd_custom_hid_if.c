@@ -36,6 +36,9 @@
 char ReceiveBuff[27];
 uint8_t Resume[] = "R";
 uint8_t Stop[] = "STP";
+uint8_t Command[3];
+char NAK[10];
+uint8_t ACK[] = "ACK";
 
 uint8_t process_mode = 0;
 
@@ -43,6 +46,9 @@ uint8_t _cncState = 4;
 uint8_t _poscontrol = 0;
 
 int temp;
+
+int receive_count = 0;
+int data_count;
 
 float X_next = 0;
 float Y_next = 0;
@@ -212,43 +218,33 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 		ReceiveBuff[i] =  hhid -> Report_buf[i];
 	}  
 	memset(hhid ->Report_buf , 0, 65);
-	switch( ReceiveBuff[0])
+	
+	// spilit command and data form GUI
+	sscanf(ReceiveBuff, "%d %s ", &data_count, Command);
+	
+	// check data from GUI, If false send NAK
+	if( data_count != receive_count)
 	{
-		// set home position
-		case 'H': 
-			
-			break;
-		// control x y z motor
-		case 'T':
-			switch(ReceiveBuff[1])
-			{
-				case '1': // x up
-					_poscontrol = 1;
-					break;					
-				case '2': // x down
-					_poscontrol = 2;
-					break;
-				case '3': // y up
-					_poscontrol = 3;
-					break;
-				case '4': // y down
-					_poscontrol = 4;
-					break;
-				case '5': // z up
-					_poscontrol = 5;
-					break;
-				case '6': // z down
-					_poscontrol = 6;
-					break;
-			}
-			process_mode = 1; // mode control position motor
-			break;
+		sprintf(NAK, "NAK %d", receive_count);
+		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, NAK, 10);
+		return(USBD_OK);
+	}	
+	
+	// if true send ACK
+	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, ACK, 3);
+	
+	// increase recieve count
+	receive_count++;
+	
+	// check command from data
+	switch( Command[0])
+	{
 		// Gcode control motor
 		case 'G':
-			if(( ReceiveBuff[1] == '0') && (ReceiveBuff[4] == 'X'))
+			if(Command[1] == '0')
 			{
 				sscanf(ReceiveBuff, "G0%u X%f Y%f", &temp, &X_next, &Y_next);
-				switch( ReceiveBuff[2])
+				switch( Command[2])
 					{
 						case '0': //
 							_cncState = 0; 
@@ -270,7 +266,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			break;			
 		// command control Start and Stop CNC
 		case 'S':
-			switch(ReceiveBuff[2])
+			switch(Command[2])
 			{
 				case 'R':
 					USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
@@ -290,6 +286,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			break;
 	}
 	memset(ReceiveBuff, 0, 27);
+	memset(Command, 0, 3);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
