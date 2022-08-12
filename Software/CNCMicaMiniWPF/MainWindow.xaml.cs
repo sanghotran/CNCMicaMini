@@ -202,6 +202,17 @@ namespace CNCMicaMiniWPF
         int send_count;
         bool debug_flag = false;
 
+        public struct PID
+        {
+            public string Kp;
+            public string Ki;
+            public string Kd;
+            public string send;
+        }
+        public PID x_PID;
+        public PID y_PID;
+        public PID z_PID;
+
         #endregion
 
         #region methods
@@ -466,6 +477,9 @@ namespace CNCMicaMiniWPF
             IsY = false;
             IsZ = false;
             IsInputPIDPageShow = Visibility.Visible;
+            Kp.Text = x_PID.Kp;
+            Ki.Text = x_PID.Ki;
+            Kd.Text = x_PID.Kd;
         }
         private void Y(object sender, MouseButtonEventArgs e)
         {
@@ -473,6 +487,9 @@ namespace CNCMicaMiniWPF
             IsX = false;
             IsZ = false;
             IsInputPIDPageShow = Visibility.Visible;
+            Kp.Text = y_PID.Kp;
+            Ki.Text = y_PID.Ki;
+            Kd.Text = y_PID.Kd;
         }
         private void Z(object sender, MouseButtonEventArgs e)
         {
@@ -480,6 +497,40 @@ namespace CNCMicaMiniWPF
             IsX = false;
             IsY = false;
             IsInputPIDPageShow = Visibility.Visible;
+            Kp.Text = z_PID.Kp;
+            Ki.Text = z_PID.Ki;
+            Kd.Text = z_PID.Kd;
+        }
+        private void SendPID(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            if(IsX)
+            {
+                x_PID.Kp = Kp.Text;
+                x_PID.Ki = Ki.Text;
+                x_PID.Kd = Kd.Text;
+                x_PID.send = x_PID.Kp + x_PID.Ki + x_PID.Kd;
+                SendData(x_PID.send, send_count);
+            }
+            if (IsY)
+            {
+                y_PID.Kp = Kp.Text;
+                y_PID.Ki = Ki.Text;
+                y_PID.Kd = Kd.Text;
+                y_PID.send = y_PID.Kp + y_PID.Ki + y_PID.Kd;
+                SendData(y_PID.send, send_count);
+            }
+            if (IsZ)
+            {
+                z_PID.Kp = Kp.Text;
+                z_PID.Ki = Ki.Text;
+                z_PID.Kd = Kd.Text;
+                z_PID.send = z_PID.Kp + z_PID.Ki + z_PID.Kd;
+                SendData(z_PID.send, send_count);
+            }
         }
         #endregion
 
