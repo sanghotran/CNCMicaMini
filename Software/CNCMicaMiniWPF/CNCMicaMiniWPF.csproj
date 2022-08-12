@@ -171,5 +171,17 @@
   <ItemGroup>
     <Resource Include="Images\Debug.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\debugscreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bluebuttoncircle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\greenbuttoncircle.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

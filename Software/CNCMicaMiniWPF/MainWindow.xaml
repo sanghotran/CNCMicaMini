@@ -218,7 +218,7 @@
                     </Image>
                     <ScrollViewer Margin="25 25 25 25"
                                   VerticalScrollBarVisibility="Hidden">
-                        <TextBlock x:Name="Gcode" FontSize="22">
+                        <TextBlock x:Name="Gcode" FontSize="22" Foreground="Red">
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>
@@ -408,11 +408,133 @@
             </Grid>
             <!-- Debug Page-->
             <Grid Visibility="{Binding IsDebugPageShow}">
-                <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                    <TextBlock x:Name="debug" FontSize="22"
-                               TextWrapping="Wrap">
-                    </TextBlock>
-                </ScrollViewer>
+                <!-- Log-->
+                <Grid Margin="0 0 0 280">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Images/debugscreen.png"/>
+                    </Grid.Background>
+                    <ScrollViewer Margin="15 15 15 20"
+                                  VerticalScrollBarVisibility="Hidden">
+                        <TextBlock x:Name="debug" FontSize="22" 
+                                   TextWrapping="Wrap" Foreground="Green"/>
+                    </ScrollViewer>
+                </Grid>
+                <!-- Setting PID-->
+                <Grid Margin="0 400 0 0">
+                    <!-- Setting button-->
+                    <Image Source="Images/setting.png"
+                           Margin="10 0 450 200"
+                           Cursor="Hand"
+                           PreviewMouseDown="Setting">
+                    </Image>
+                    <!-- Setting Page-->
+                    <Grid Visibility="{Binding IsSettingPageShow}"
+                          Margin="0 60 0 0">
+                        <!-- Task bar Setting-->
+                        <DockPanel Margin="10 0 0 150"
+                                   Background="Transparent"
+                                   LastChildFill="False"
+                                   HorizontalAlignment="Stretch">
+                            <!-- X setting-->
+                            <Grid Cursor="Hand"
+                                  Margin="5 0 0 0"
+                                  PreviewMouseDown="X">
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="Images/bluebuttoncircle.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding ="{Binding IsX}" Value="True">
+                                                    <Setter Property="Source" Value="Images/greenbuttoncircle.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock TextAlignment="Center" Margin="0 7 0 0"
+                                           Text="X" FontSize="25" 
+                                           FontFamily="{StaticResource futuralFont}"/>
+                            </Grid>
+                            <!-- Y setting-->
+                            <Grid Cursor="Hand"
+                                  Margin="5 0 0 0"
+                                  PreviewMouseDown="Y">
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="Images/bluebuttoncircle.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding ="{Binding IsY}" Value="True">
+                                                    <Setter Property="Source" Value="Images/greenbuttoncircle.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock TextAlignment="Center" Margin="0 7 0 0"
+                                           Text="Y" FontSize="25" 
+                                           FontFamily="{StaticResource futuralFont}"/>
+                            </Grid>
+                            <!-- Z setting-->
+                            <Grid Cursor="Hand"
+                                  Margin="5 0 0 0"
+                                  PreviewMouseDown="Z">
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="Images/bluebuttoncircle.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding ="{Binding IsZ}" Value="True">
+                                                    <Setter Property="Source" Value="Images/greenbuttoncircle.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock TextAlignment="Center" Margin="0 7 0 0"
+                                           Text="Z" FontSize="25" 
+                                           FontFamily="{StaticResource futuralFont}"/>
+                            </Grid>
+                        </DockPanel>
+                        <!-- Input PID Page-->
+                        <Grid Margin="0 50 0 0"
+                              Visibility="{Binding IsInputPIDPageShow}">
+                            <!-- Kp-->
+                            <Grid Margin="0 0 320 60">
+                                <TextBlock Text="Kp" FontSize="30"
+                                           TextAlignment="Center"
+                                           FontFamily="{StaticResource futuralFont}"/>
+                                <TextBox Margin="20 50 20 0"
+                                         x:Name="Kp"
+                                         TextAlignment="Center"
+                                         FontSize="25"
+                                         FontFamily="{StaticResource futuralFont}"/>
+                            </Grid>
+                            <!-- Ki-->
+                            <Grid Margin="160 0 160 60">
+                                <TextBlock Text="Ki" FontSize="30"
+                                           TextAlignment="Center"
+                                           FontFamily="{StaticResource futuralFont}"/>
+                                <TextBox Margin="20 50 20 0"
+                                         x:Name="Ki"
+                                         TextAlignment="Center"
+                                         FontSize="25"
+                                         FontFamily="{StaticResource futuralFont}"/>
+                            </Grid>
+                            <!-- Kd-->
+                            <Grid Margin="320 0 0 60">
+                                <TextBlock Text="Kd" FontSize="30"
+                                           TextAlignment="Center"
+                                           FontFamily="{StaticResource futuralFont}"/>
+                                <TextBox Margin="20 50 20 0"
+                                         x:Name="Kd"
+                                         TextAlignment="Center"
+                                         FontSize="25"
+                                         FontFamily="{StaticResource futuralFont}"/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
         <!-- Error warning-->

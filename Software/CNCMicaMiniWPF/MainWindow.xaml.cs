@@ -130,6 +130,60 @@ namespace CNCMicaMiniWPF
             }
         }
 
+        private Visibility _IsSettingPageShow;
+        public Visibility IsSettingPageShow
+        {
+            get => _IsSettingPageShow;
+            set
+            {
+                _IsSettingPageShow = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _IsX;
+        public bool IsX
+        {
+            get => _IsX;
+            set
+            {
+                _IsX = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _IsY;
+        public bool IsY
+        {
+            get => _IsY;
+            set
+            {
+                _IsY = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _IsZ;
+        public bool IsZ
+        {
+            get => _IsZ;
+            set
+            {
+                _IsZ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _IsInputPIDPageShow;
+        public Visibility IsInputPIDPageShow
+        {
+            get => _IsInputPIDPageShow;
+            set
+            {
+                _IsInputPIDPageShow = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region fields
@@ -160,6 +214,8 @@ namespace CNCMicaMiniWPF
             IsWarningBoxShow = Visibility.Hidden;
             IsControlPageShow = Visibility.Visible;
             IsDebugPageShow = Visibility.Hidden;
+            IsSettingPageShow = Visibility.Hidden;
+            IsInputPIDPageShow = Visibility.Hidden;
 
             DebugThread = new Thread(new ThreadStart(Debug));
             DebugThread.IsBackground = true;
@@ -397,7 +453,36 @@ namespace CNCMicaMiniWPF
         {
             IsWarningBoxShow = Visibility.Hidden;
         }
-
+        private void Setting(object sender, MouseButtonEventArgs e)
+        {
+            if (IsSettingPageShow == Visibility.Visible)
+                IsSettingPageShow = Visibility.Hidden;
+            else
+                IsSettingPageShow = Visibility.Visible;
+        }
+        private void X(object sender, MouseButtonEventArgs e)
+        {
+            IsX = true;
+            IsY = false;
+            IsZ = false;
+            IsInputPIDPageShow = Visibility.Visible;
+        }
+        private void Y(object sender, MouseButtonEventArgs e)
+        {
+            IsY = true;
+            IsX = false;
+            IsZ = false;
+            IsInputPIDPageShow = Visibility.Visible;
+        }
+        private void Z(object sender, MouseButtonEventArgs e)
+        {
+            IsZ = true;
+            IsX = false;
+            IsY = false;
+            IsInputPIDPageShow = Visibility.Visible;
+        }
         #endregion
+
+
     }
 }
