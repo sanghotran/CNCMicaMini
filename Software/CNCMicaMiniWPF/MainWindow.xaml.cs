@@ -512,7 +512,7 @@ namespace CNCMicaMiniWPF
                 x_PID.Kp = Kp.Text;
                 x_PID.Ki = Ki.Text;
                 x_PID.Kd = Kd.Text;
-                x_PID.send = x_PID.Kp + x_PID.Ki + x_PID.Kd;
+                x_PID.send = "PX " + x_PID.Kp + " " + x_PID.Ki + " " + x_PID.Kd;
                 SendData(x_PID.send, send_count);
             }
             if (IsY)
@@ -520,7 +520,7 @@ namespace CNCMicaMiniWPF
                 y_PID.Kp = Kp.Text;
                 y_PID.Ki = Ki.Text;
                 y_PID.Kd = Kd.Text;
-                y_PID.send = y_PID.Kp + y_PID.Ki + y_PID.Kd;
+                y_PID.send = "PY " + y_PID.Kp + " " + y_PID.Ki + " " + y_PID.Kd;
                 SendData(y_PID.send, send_count);
             }
             if (IsZ)
@@ -528,7 +528,7 @@ namespace CNCMicaMiniWPF
                 z_PID.Kp = Kp.Text;
                 z_PID.Ki = Ki.Text;
                 z_PID.Kd = Kd.Text;
-                z_PID.send = z_PID.Kp + z_PID.Ki + z_PID.Kd;
+                z_PID.send = "PZ " + z_PID.Kp + " " + z_PID.Ki + " " + z_PID.Kd;
                 SendData(z_PID.send, send_count);
             }
         }

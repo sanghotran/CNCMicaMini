@@ -38,7 +38,7 @@ uint8_t Resume[] = "R";
 uint8_t Stop[] = "STP";
 uint8_t Command[3];
 char NAK[5];
-uint8_t ACK[9];
+char ACK[11];
 
 uint8_t process_mode = 0;
 
@@ -228,11 +228,11 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	if( data_count != receive_count)
 	{
 		sprintf(NAK, "NAK %d", receive_count);
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, NAK, 5);
+		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS,(uint8_t *)NAK, 5);
 		return(USBD_OK);
 	}	
 	// delete ACK buff
-	memset(ACK, 0, 9);
+	memset(ACK, 0, 11);
 	
 	// check command from data
 	switch( Command[0])
@@ -269,15 +269,30 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			{
 				case 'R':
 					//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
-				receive_count = 0;
 				sprintf(ACK, "ACK R %d", receive_count);
 					break;
 				case 'P':
 					//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Stop, 3);
-				sprintf(ACK, "ACK STP");
+				sprintf(ACK, "ACK STP %d", receive_count);
+				receive_count = -1;
 					break;
 			}
 			break;
+			// command set PID 
+				case 'P':
+					switch( Command[1])
+					{
+						case 'X':
+							sprintf(ACK, "ACK PID X %d", receive_count);
+							break;
+						case 'Y':
+							sprintf(ACK, "ACK PID Y %d", receive_count);
+							break;
+						case 'Z':
+							sprintf(ACK, "ACK PID Z %d", receive_count);
+							break;
+					}
+					break;
 		// command control Resume CNC
 		case 'R':
 			//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
@@ -296,7 +311,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			// increase recieve count
 	receive_count++;
 		// if true send ACK
-	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, ACK, 9);
+	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)ACK, 11);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
