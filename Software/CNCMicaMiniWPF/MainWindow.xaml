@@ -414,7 +414,8 @@
                         <ImageBrush ImageSource="Images/debugscreen.png"/>
                     </Grid.Background>
                     <ScrollViewer Margin="15 15 15 30"
-                                  VerticalScrollBarVisibility="Hidden">
+                                  VerticalScrollBarVisibility="Hidden"
+                                  x:Name="LogScroll">
                         <TextBlock x:Name="debug" FontSize="22" 
                                    TextWrapping="Wrap" Foreground="Green"/>
                     </ScrollViewer>

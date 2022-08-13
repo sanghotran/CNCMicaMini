@@ -223,11 +223,11 @@ namespace CNCMicaMiniWPF
             IsGcodeSelected =false;
             IsDebug = false;
             IsWarningBoxShow = Visibility.Hidden;
-            IsControlPageShow = Visibility.Visible;
             IsDebugPageShow = Visibility.Hidden;
             IsSettingPageShow = Visibility.Hidden;
             IsInputPIDPageShow = Visibility.Hidden;
 
+            // start new thread for print debug
             DebugThread = new Thread(new ThreadStart(Debug));
             DebugThread.IsBackground = true;
             DebugThread.Start();
@@ -255,6 +255,11 @@ namespace CNCMicaMiniWPF
         {
             debug_data = input + "\n";
             debug_flag = true;
+            // auto scroll to end
+            if (LogScroll.VerticalOffset == LogScroll.ScrollableHeight)
+            {
+                LogScroll.ScrollToEnd();
+            }
             //debug.Text += input + "\n";
 
             //split data
