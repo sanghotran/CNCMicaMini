@@ -22,15 +22,27 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
 
+typedef struct
+{
+	bool home;
+	bool pid_process;
+	uint8_t time_sample;
+	uint16_t pos;
+} axis;
+
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+#define T_SAMPLE 3
 
 /* USER CODE END PD */
 
@@ -42,10 +54,17 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
+
+void readEncoder(TIM_HandleTypeDef htim, uint16_t *Pos)
+{
+	Pos += (int16_t)(htim.Instance->CNT);
+	htim.Instance->CNT=0;
+}
 
 /* USER CODE END PFP */
 
@@ -57,6 +76,15 @@
 /* External variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_FS;
 /* USER CODE BEGIN EV */
+
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim4;
+
+
+extern axis x_axis;
+extern axis y_axis;
+extern axis z_axis;
 
 /* USER CODE END EV */
 
@@ -183,6 +211,40 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
+	
+	// PID X axis
+	if(x_axis.pid_process)
+	{
+		x_axis.time_sample++;
+		if( x_axis.time_sample >= T_SAMPLE )
+		{
+			readEncoder(htim1, &x_axis.pos);
+			x_axis.time_sample = 0;			
+		}
+	}
+	
+		// PID Y axis
+	if(y_axis.pid_process)
+	{
+		y_axis.time_sample++;
+		if( y_axis.time_sample >= T_SAMPLE )
+		{
+			readEncoder(htim1, &y_axis.pos);
+			y_axis.time_sample = 0;			
+		}
+	}
+	
+		// PID Z axis
+	if(z_axis.pid_process)
+	{
+		z_axis.time_sample++;
+		if( z_axis.time_sample >= T_SAMPLE )
+		{
+			readEncoder(htim1, &z_axis.pos);
+			z_axis.time_sample = 0;			
+		}
+	}
+
 
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
@@ -210,6 +272,22 @@ void USB_LP_CAN1_RX0_IRQHandler(void)
   /* USER CODE BEGIN USB_LP_CAN1_RX0_IRQn 1 */
 
   /* USER CODE END USB_LP_CAN1_RX0_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line[15:10] interrupts.
+  */
+void EXTI15_10_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
+
+  /* USER CODE END EXTI15_10_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_14);
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_15);
+  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+
+  /* USER CODE END EXTI15_10_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

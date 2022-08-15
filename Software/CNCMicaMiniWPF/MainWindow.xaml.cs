@@ -287,6 +287,7 @@ namespace CNCMicaMiniWPF
                     else
                     {
                         SendData("STP", send_count);
+                        send_count = 0;
                     }
                 }
                 return;
@@ -405,8 +406,8 @@ namespace CNCMicaMiniWPF
                 return;
             // process 
             if (!IsStarted)
-            {   point = 0;
-                send_count = 0;
+            {
+                point = 0;
                 debug.Text = "";
                 SendData("STR", send_count);
                 IsStarted = true;

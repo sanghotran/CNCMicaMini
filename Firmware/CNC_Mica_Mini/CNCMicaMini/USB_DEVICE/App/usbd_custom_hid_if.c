@@ -33,6 +33,8 @@
 
 /* USER CODE BEGIN PV */
 
+extern TIM_HandleTypeDef htim3;
+
 char ReceiveBuff[27];
 uint8_t Resume[] = "R";
 uint8_t Stop[] = "STP";
@@ -269,7 +271,17 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			{
 				case 'R':
 					//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
-				sprintf(ACK, "ACK R %d", receive_count);
+				//sprintf(ACK, "ACK R %d", receive_count);
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 60);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+				
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, 60);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+				
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, 60);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+				
+				process_mode = 1; // mode goto home
 					break;
 				case 'P':
 					//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Stop, 3);

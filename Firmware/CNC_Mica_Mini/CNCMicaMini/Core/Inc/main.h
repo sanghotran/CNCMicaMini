@@ -59,18 +59,6 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define X_ENB_Pin GPIO_PIN_0
-#define X_ENB_GPIO_Port GPIOA
-#define Y_DIR_Pin GPIO_PIN_5
-#define Y_DIR_GPIO_Port GPIOA
-#define Y_ENB_Pin GPIO_PIN_7
-#define Y_ENB_GPIO_Port GPIOA
-#define Z_DIR_Pin GPIO_PIN_0
-#define Z_DIR_GPIO_Port GPIOB
-#define Z_ENB_Pin GPIO_PIN_10
-#define Z_ENB_GPIO_Port GPIOB
-#define X_DIR_Pin GPIO_PIN_9
-#define X_DIR_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
