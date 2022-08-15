@@ -174,6 +174,17 @@ namespace CNCMicaMiniWPF
             }
         }
 
+        private bool _IsCalib;
+        public bool IsCalib
+        {
+            get => _IsCalib;
+            set
+            {
+                _IsCalib = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Visibility _IsInputPIDPageShow;
         public Visibility IsInputPIDPageShow
         {
@@ -181,6 +192,17 @@ namespace CNCMicaMiniWPF
             set
             {
                 _IsInputPIDPageShow = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _IsCalibPageShow;
+        public Visibility IsCalibPageShow
+        {
+            get => _IsCalibPageShow;
+            set
+            {
+                _IsCalibPageShow = value;
                 OnPropertyChanged();
             }
         }
@@ -226,6 +248,7 @@ namespace CNCMicaMiniWPF
             IsDebugPageShow = Visibility.Hidden;
             IsSettingPageShow = Visibility.Hidden;
             IsInputPIDPageShow = Visibility.Hidden;
+            IsCalibPageShow = Visibility.Hidden;
 
             // start new thread for print debug
             DebugThread = new Thread(new ThreadStart(Debug));
@@ -299,8 +322,6 @@ namespace CNCMicaMiniWPF
                 SendData(ResendBuff, send_count);
                 return;
             }
-
-
         }
         private void Debug()
         {
@@ -477,12 +498,23 @@ namespace CNCMicaMiniWPF
             else
                 IsSettingPageShow = Visibility.Visible;
         }
+        private void Calib(object sender, MouseButtonEventArgs e)
+        {
+            IsCalib = true;
+            IsX = false;
+            IsY = false;
+            IsZ = false;
+            IsInputPIDPageShow = Visibility.Hidden;
+            IsCalibPageShow = Visibility.Visible;
+        }
         private void X(object sender, MouseButtonEventArgs e)
         {
             IsX = true;
             IsY = false;
             IsZ = false;
+            IsCalib = false;
             IsInputPIDPageShow = Visibility.Visible;
+            IsCalibPageShow = Visibility.Hidden;
             Kp.Text = x_PID.Kp;
             Ki.Text = x_PID.Ki;
             Kd.Text = x_PID.Kd;
@@ -492,7 +524,9 @@ namespace CNCMicaMiniWPF
             IsY = true;
             IsX = false;
             IsZ = false;
+            IsCalib = false;
             IsInputPIDPageShow = Visibility.Visible;
+            IsCalibPageShow = Visibility.Hidden;
             Kp.Text = y_PID.Kp;
             Ki.Text = y_PID.Ki;
             Kd.Text = y_PID.Kd;
@@ -502,7 +536,9 @@ namespace CNCMicaMiniWPF
             IsZ = true;
             IsX = false;
             IsY = false;
+            IsCalib = false;
             IsInputPIDPageShow = Visibility.Visible;
+            IsCalibPageShow = Visibility.Hidden;
             Kp.Text = z_PID.Kp;
             Ki.Text = z_PID.Ki;
             Kd.Text = z_PID.Kd;
@@ -538,6 +574,14 @@ namespace CNCMicaMiniWPF
                 SendData(z_PID.send, send_count);
             }
         }
+        private void SendCalib(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+        }
+
         #endregion
 
 

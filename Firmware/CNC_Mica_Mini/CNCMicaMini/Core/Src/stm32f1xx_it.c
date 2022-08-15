@@ -35,6 +35,7 @@ typedef struct
 	bool pid_process;
 	uint8_t time_sample;
 	uint16_t pos;
+	float pwm;
 } axis;
 
 /* USER CODE END TD */

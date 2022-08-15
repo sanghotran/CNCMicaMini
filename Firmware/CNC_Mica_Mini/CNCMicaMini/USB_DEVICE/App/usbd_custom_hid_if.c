@@ -33,7 +33,24 @@
 
 /* USER CODE BEGIN PV */
 
-extern TIM_HandleTypeDef htim3;
+typedef struct
+{
+	float Kp;
+	float Ki;
+	float Kd;
+	float I_part;
+	float e_pre;
+	
+	bool home;
+	bool pid_process;
+	uint8_t time_sample;
+	uint16_t pos;
+	float pwm;
+} axis;
+
+extern axis x_axis;
+extern axis y_axis;
+extern axis z_axis;
 
 char ReceiveBuff[27];
 uint8_t Resume[] = "R";
@@ -41,6 +58,7 @@ uint8_t Stop[] = "STP";
 uint8_t Command[3];
 char NAK[5];
 char ACK[11];
+extern char TransBuff[25];
 
 uint8_t process_mode = 0;
 
@@ -216,6 +234,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
   /* USER CODE BEGIN 6 */
 	memset(ReceiveBuff, 0, 27);
 	memset(Command, 0, 3);
+	memset(TransBuff, 0, 17);
 	USBD_CUSTOM_HID_HandleTypeDef* hhid = (USBD_CUSTOM_HID_HandleTypeDef*)hUsbDeviceFS.pClassData;
 	for(uint8_t i = 0; i < 27; i++)
 	{
@@ -284,12 +303,21 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 					switch( Command[1])
 					{
 						case 'X':
+							sscanf(ReceiveBuff, "%d PX %f %f %f",&temp, &x_axis.Kp, &x_axis.Ki, &x_axis.Kd);
+							sprintf(TransBuff, "%.2f %.4f %.2f", x_axis.Kp, x_axis.Ki, x_axis.Kd);
+							USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)TransBuff, 17);
 							sprintf(ACK, "ACK PID X %d", receive_count);
 							break;
 						case 'Y':
+							sscanf(ReceiveBuff, "%d PY %f %f %f",&temp, &y_axis.Kp, &y_axis.Ki, &y_axis.Kd);
+							sprintf(TransBuff, "%.2f %.4f %.2f", y_axis.Kp, y_axis.Ki, y_axis.Kd);
+							USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)TransBuff, 17);
 							sprintf(ACK, "ACK PID Y %d", receive_count);
 							break;
 						case 'Z':
+							sscanf(ReceiveBuff, "%d PZ %f %f %f",&temp, &z_axis.Kp, &z_axis.Ki, &z_axis.Kd);
+							sprintf(TransBuff, "%.2f %.4f %.2f", z_axis.Kp, z_axis.Ki, z_axis.Kd);
+							USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)TransBuff, 17);
 							sprintf(ACK, "ACK PID Z %d", receive_count);
 							break;
 					}

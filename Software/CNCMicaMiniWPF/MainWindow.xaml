@@ -420,7 +420,7 @@
                                    TextWrapping="Wrap" Foreground="Green"/>
                     </ScrollViewer>
                 </Grid>
-                <!-- Setting PID-->
+                <!-- Setting-->
                 <Grid Margin="0 400 0 0">
                     <!-- Setting button-->
                     <Image Source="Images/setting.png"
@@ -494,6 +494,26 @@
                                 </Image>
                                 <TextBlock TextAlignment="Center" Margin="0 7 0 0"
                                            Text="Z" FontSize="25" 
+                                           FontFamily="{StaticResource futuralFont}"/>
+                            </Grid>
+                            <!-- Calib-->
+                            <Grid Cursor="Hand"
+                                  Margin="5 0 0 0"
+                                  PreviewMouseDown="Calib">
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="Images/bluebuttoncircle.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding ="{Binding IsCalib}" Value="True">
+                                                    <Setter Property="Source" Value="Images/greenbuttoncircle.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock TextAlignment="Center" Margin="0 7 0 0"
+                                           Text="C" FontSize="25" 
                                            FontFamily="{StaticResource futuralFont}"/>
                             </Grid>
                         </DockPanel>
@@ -576,6 +596,53 @@
                                     </TextBlock.Style>
                                 </TextBlock>
 
+                            </Grid>
+                        </Grid>
+                        <!-- Calib Page-->
+                        <Grid Margin="0 50 0 0"
+                              Visibility="{Binding IsCalibPageShow}">
+                            <!-- Send Calib-->
+                            <Grid Margin="160 100 160 0"
+                                  Cursor="Hand"
+                                  PreviewMouseDown="SendCalib">
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="Images/graybutton.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                    <Setter Property="Source" Value="Images/greenbutton.png"/>
+                                                </DataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsStarted}" Value="True"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Source" Value="Images/redbutton.png"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock FontFamily="{StaticResource futuralFont}"
+                                           TextAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="SEND"/>
+                                            <Setter Property="FontSize" Value="30"/>
+                                            <Setter Property="Margin" Value="0 5 0 0"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                                    <Setter Property="FontSize" Value="25"/>
+                                                    <Setter Property="Margin" Value="0 2 0 0"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                    <Setter Property="Margin" Value="0 7 0 0"/>
+                                                    <Setter Property="FontSize" Value="25"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </Grid>
                         </Grid>
                     </Grid>

@@ -34,6 +34,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+#define TS 0.03
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -53,10 +55,17 @@ char TransBuff[25];
 
 typedef struct
 {
+	float Kp;
+	float Ki;
+	float Kd;
+	float I_part;
+	float e_pre;
+	
 	bool home;
 	bool pid_process;
 	uint8_t time_sample;
 	uint16_t pos;
+	float pwm;
 } axis;
 
 axis x_axis;
@@ -121,7 +130,90 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 }
 
 // Function 
+void X_PWM(float duty)  
+	{
+		if (duty > 1) duty = 1;
+		else if(duty ==0)  duty =0;
+		else if (duty < -1) duty = -1;
+		int16_t pwm = duty*100;
+		
+		if (pwm>0)
+			{
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, pwm);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
+			}
+		else if (pwm == 0)
+			{
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 0);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+			}
+		else if (pwm < 0)
+			{
+				pwm *= -1;
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, pwm);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+			}
+	}
+	
+	void Y_PWM(float duty)  
+	{
+		if (duty > 1) duty = 1;
+		else if(duty ==0)  duty =0;
+		else if (duty < -1) duty = -1;
+		int16_t pwm = duty*100;
+		
+		if (pwm>0)
+			{
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, pwm);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+			}
+		else if (pwm == 0)
+			{
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, 0);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+			}
+		else if (pwm < 0)
+			{
+				pwm *= -1;
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, pwm);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+			}
+	}
+	
+	void Z_PWM(float duty)  
+	{
+		if (duty > 1) duty = 1;
+		else if(duty ==0)  duty =0;
+		else if (duty < -1) duty = -1;
+		int16_t pwm = duty*60;
+		
+		if (pwm>0)
+			{
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, pwm);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+			}
+		else if (pwm == 0)
+			{
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, 0);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+			}
+		else if (pwm < 0)
+			{
+				pwm *= -1;
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, pwm);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+			}
+	}
+	 
 
+void PID_control(int sp, axis *pid)
+{
+	float e;
+	e = sp - pid->pos;
+	pid->I_part += TS*e;
+	pid->pwm = pid->Kp*e + pid->Ki*pid->I_part + pid->Kd*(e-pid->e_pre)/TS;
+	pid->e_pre = e;
+}
 
 /* USER CODE END 0 */
 
@@ -556,6 +648,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
 
 /* USER CODE END 4 */
 
