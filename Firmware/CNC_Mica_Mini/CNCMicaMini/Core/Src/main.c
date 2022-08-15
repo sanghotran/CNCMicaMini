@@ -206,6 +206,32 @@ int main(void)
 		}
 		if( process_mode == 1) // mode goto home
 		{
+			// goto x home
+			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == 1)
+			{
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 60);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+			}
+			else
+				x_axis.home = true;
+			
+			// goto y home
+			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_14) == 1)
+			{
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, 60);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+			}
+			else
+				y_axis.home = true;
+			
+			// goto z home
+			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) == 1)
+			{
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, 60);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+			}
+			z_axis.home = true;
+			
 			if( x_axis.home && y_axis.home && z_axis.home)
 			{
 				sprintf(ACK, "ACK R %d", receive_count);				
