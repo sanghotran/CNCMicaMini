@@ -408,15 +408,23 @@
             </Grid>
             <!-- Debug Page-->
             <Grid Visibility="{Binding IsDebugPageShow}">
-                <!-- Log-->
+                <!-- Debug and Log-->
                 <Grid Margin="0 0 0 280">
                     <Grid.Background>
                         <ImageBrush ImageSource="Images/debugscreen.png"/>
                     </Grid.Background>
-                    <ScrollViewer Margin="15 15 15 30"
+                    <!-- Debug-->
+                    <ScrollViewer Margin="200 20 15 30"
+                                  VerticalScrollBarVisibility="Hidden"
+                                  x:Name="DebugScroll">
+                        <TextBlock x:Name="debug" FontSize="22" 
+                                   TextWrapping="Wrap" Foreground="Green"/>
+                    </ScrollViewer>
+                    <!-- Log-->
+                    <ScrollViewer Margin="15 20 290 30"
                                   VerticalScrollBarVisibility="Hidden"
                                   x:Name="LogScroll">
-                        <TextBlock x:Name="debug" FontSize="22" 
+                        <TextBlock x:Name="log" FontSize="22" 
                                    TextWrapping="Wrap" Foreground="Green"/>
                     </ScrollViewer>
                 </Grid>

@@ -28,9 +28,7 @@ typedef struct
 
 typedef struct
 {
-	char ACK[11];
-	char NAK[5];
-	char TransBuff[25];
+	char TransBuff[45];
 	char ReceiveBuff[27];
 	char Command[3];
 	

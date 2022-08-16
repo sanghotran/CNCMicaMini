@@ -218,11 +218,15 @@ namespace CNCMicaMiniWPF
 
         string[] GcodeBuff;
         string ResendBuff;
-        string[] RecieveData;
-        string debug_data;
+        string[] ReceiveData;
+        string[] ShowData;
         int point;
         int send_count;
+        string debug_data;
         bool debug_flag = false;
+
+        string log_data;
+        bool log_flag = false;
 
         public struct PID
         {
@@ -275,24 +279,45 @@ namespace CNCMicaMiniWPF
             }
         }
         private void ProcessReceiveData(string input)
-        {
-            debug_data = input + "\n";
-            debug_flag = true;
-            // auto scroll to end
+        {         
+            // auto scroll to end of debug
+            if (DebugScroll.VerticalOffset == DebugScroll.ScrollableHeight)
+            {
+                DebugScroll.ScrollToEnd();
+            }
+            // auto scroll to end of log
             if (LogScroll.VerticalOffset == LogScroll.ScrollableHeight)
             {
                 LogScroll.ScrollToEnd();
             }
 
             //split data
-            RecieveData = input.Split(' ');
+            ReceiveData = input.Split(' ');
+
+            // show data
+            try
+            {
+                ShowData = input.Split('_');
+
+                // print to log
+                log_data = ShowData[0] + '\n';
+                log_flag = true;
+
+                // print to debug
+                debug_data = ShowData[1] + '\n';
+                debug_flag = true;
+            }
+            catch
+            {
+
+            }
 
             // check ACK from CNC
-            if( RecieveData[0] == "ACK")
+            if ( ReceiveData[0] == "ACK")
             {
                 send_count++;
                 // Check Command form CNC
-                if (RecieveData[1] == "R")
+                if (ReceiveData[1] == "R")
                 {
                     if (IsStarted)
                     {
@@ -312,15 +337,20 @@ namespace CNCMicaMiniWPF
                         send_count = 0;
                     }
                 }
+
+                if (ReceiveData[1] == "STP")
+                    send_count = 0;
+
                 return;
             }
 
             // check NAK from CNC
-            if (RecieveData[0] == "NAK")
+            if (ReceiveData[0] == "NAK")
             {
                 SendData(ResendBuff, send_count);
                 return;
             }
+
         }
         private void Debug()
         {
@@ -330,6 +360,12 @@ namespace CNCMicaMiniWPF
                 {
                     debug_flag = false;
                     debug.Dispatcher.Invoke( ()=>  debug.Text += debug_data);
+                }
+
+                if (log_flag)
+                {
+                    log_flag = false;
+                    log.Dispatcher.Invoke(() => log.Text += log_data); ;
                 }
             }
         }
@@ -428,7 +464,6 @@ namespace CNCMicaMiniWPF
             if (!IsStarted)
             {
                 point = 0;
-                debug.Text = "";
                 SendData("STR", send_count);
                 IsStarted = true;
             }
@@ -553,7 +588,7 @@ namespace CNCMicaMiniWPF
                 x_PID.Kp = Kp.Text;
                 x_PID.Ki = Ki.Text;
                 x_PID.Kd = Kd.Text;
-                x_PID.send = "PX " + x_PID.Kp + " " + x_PID.Ki + " " + x_PID.Kd;
+                x_PID.send = "IX " + x_PID.Kp + " " + x_PID.Ki + " " + x_PID.Kd;
                 SendData(x_PID.send, send_count);
             }
             if (IsY)
@@ -561,7 +596,7 @@ namespace CNCMicaMiniWPF
                 y_PID.Kp = Kp.Text;
                 y_PID.Ki = Ki.Text;
                 y_PID.Kd = Kd.Text;
-                y_PID.send = "PY " + y_PID.Kp + " " + y_PID.Ki + " " + y_PID.Kd;
+                y_PID.send = "IY " + y_PID.Kp + " " + y_PID.Ki + " " + y_PID.Kd;
                 SendData(y_PID.send, send_count);
             }
             if (IsZ)
@@ -569,7 +604,7 @@ namespace CNCMicaMiniWPF
                 z_PID.Kp = Kp.Text;
                 z_PID.Ki = Ki.Text;
                 z_PID.Kd = Kd.Text;
-                z_PID.send = "PZ " + z_PID.Kp + " " + z_PID.Ki + " " + z_PID.Kd;
+                z_PID.send = "IZ " + z_PID.Kp + " " + z_PID.Ki + " " + z_PID.Kd;
                 SendData(z_PID.send, send_count);
             }
         }

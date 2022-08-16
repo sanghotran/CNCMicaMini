@@ -246,11 +246,13 @@ int main(void)
   {
 		if(process_mode == 2 ) // mode gcode control
 		{
+			/*
 			// send x y z for debug
 						sprintf(data.TransBuff, "X%f Y%f", x_axis.next, y_axis.next);
-						USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 25);
+						USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 35);
 						// delay for test without step, when have step, i will delete it.
 						HAL_Delay(500);
+			*/
 			switch(_cncState)
 			{ 				
 				case 0: // move x y with z up
@@ -266,9 +268,9 @@ int main(void)
 				case 3: // move x y wih z down circle 
 					break;
 			}
-			sprintf(data.ACK, "ACK R %d", data.receive);
+			sprintf(data.TransBuff, "ACK R %d_RESUME", data.receive);
 			data.need++;
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.ACK, 11); // send command resume
+			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45); // send command resume
    		process_mode = 0; // idle mode
 		}
 		if( process_mode == 1) // mode goto home
@@ -297,12 +299,13 @@ int main(void)
 				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, 60);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
 			}
-			z_axis.home = true;
+			else
+				z_axis.home = true;
 			
 			if( x_axis.home && y_axis.home && z_axis.home)
 			{
-				sprintf(data.ACK, "ACK R %d", data.receive);				
-				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.ACK, 11);
+				sprintf(data.TransBuff, "ACK R %d_HOME", data.receive);				
+				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
 				data.need++;
 				process_mode = 0; // idle mode				
 			}
