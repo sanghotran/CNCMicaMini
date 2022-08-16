@@ -24,6 +24,7 @@
 /* USER CODE BEGIN INCLUDE */
 #include <stdbool.h>
 #include <stdio.h>
+#include "main.h"
 
 /* USER CODE END INCLUDE */
 
@@ -33,45 +34,20 @@
 
 /* USER CODE BEGIN PV */
 
-typedef struct
-{
-	float Kp;
-	float Ki;
-	float Kd;
-	float I_part;
-	float e_pre;
-	
-	bool home;
-	bool pid_process;
-	uint8_t time_sample;
-	uint16_t pos;
-	float pwm;
-} axis;
 
-extern axis x_axis;
-extern axis y_axis;
-extern axis z_axis;
+extern AXIS x_axis;
+extern AXIS y_axis;
+extern AXIS z_axis;
 
-char ReceiveBuff[27];
-uint8_t Resume[] = "R";
-uint8_t Stop[] = "STP";
-uint8_t Command[3];
-char NAK[5];
-char ACK[11];
-extern char TransBuff[25];
+extern DATA data;
 
 uint8_t process_mode = 0;
 
 uint8_t _cncState = 4;
-uint8_t _poscontrol = 0;
 
 int temp;
 
-int receive_count = 0;
-int data_count;
 
-float X_next = 0;
-float Y_next = 0;
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -232,38 +208,38 @@ static int8_t CUSTOM_HID_DeInit_FS(void)
 static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 {
   /* USER CODE BEGIN 6 */
-	memset(ReceiveBuff, 0, 27);
-	memset(Command, 0, 3);
-	memset(TransBuff, 0, 17);
+	memset(data.ReceiveBuff, 0, 27);
+	memset(data.Command, 0, 3);
+	memset(data.TransBuff, 0, 17);
 	USBD_CUSTOM_HID_HandleTypeDef* hhid = (USBD_CUSTOM_HID_HandleTypeDef*)hUsbDeviceFS.pClassData;
 	for(uint8_t i = 0; i < 27; i++)
 	{
-		ReceiveBuff[i] =  hhid -> Report_buf[i];
+		data.ReceiveBuff[i] =  hhid -> Report_buf[i];
 	}  
 	memset(hhid ->Report_buf , 0, 65);
 	
 	// spilit command and data form GUI
-	sscanf(ReceiveBuff, "%d %s ", &data_count, Command);
+	sscanf(data.ReceiveBuff, "%d %s ", &data.receive, data.Command);
 	
 	// check data from GUI, If false send NAK
-	if( data_count != receive_count)
+	if( data.receive != data.need)
 	{
-		sprintf(NAK, "NAK %d", receive_count);
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS,(uint8_t *)NAK, 5);
+		sprintf(data.NAK, "NAK %d", data.need);
+		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS,(uint8_t *)data.NAK, 5);
 		return(USBD_OK);
 	}	
 	// delete ACK buff
-	memset(ACK, 0, 11);
+	memset(data.ACK, 0, 11);
 	
 	// check command from data
-	switch( Command[0])
+	switch( data.Command[0])
 	{
 		// Gcode control motor
 		case 'G':
-			if(Command[1] == '0')
+			if(data.Command[1] == '0')
 			{
-				sscanf(ReceiveBuff, "%d G0%u X%f Y%f",&temp, &temp, &X_next, &Y_next);
-				switch( Command[2])
+				sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f",&temp, &temp, &x_axis.next, &y_axis.next);
+				switch( data.Command[2])
 					{
 						case '0': //
 							_cncState = 0; 
@@ -282,55 +258,55 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			}
 			else
 				//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
-			sprintf(ACK, "ACK R %d", receive_count);
+			sprintf(data.ACK, "ACK R %d", data.receive);
 			break;			
 		// command control Start and Stop CNC
 		case 'S':
-			switch(Command[2])
+			switch(data.Command[2])
 			{
 				case 'R':
 				process_mode = 1; // mode goto home
 					break;
 				case 'P':
 					//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Stop, 3);
-				sprintf(ACK, "ACK STP %d", receive_count);
-				receive_count = -1;
+				sprintf(data.ACK, "ACK STP %d", data.receive);
+				data.need = -1;
 					break;
 			}
 			break;
 			// command set PID 
 				case 'P':
-					switch( Command[1])
+					switch( data.Command[1])
 					{
 						case 'X':
-							sscanf(ReceiveBuff, "%d PX %f %f %f",&temp, &x_axis.Kp, &x_axis.Ki, &x_axis.Kd);
-							sprintf(TransBuff, "%.2f %.4f %.2f", x_axis.Kp, x_axis.Ki, x_axis.Kd);
-							USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)TransBuff, 17);
-							sprintf(ACK, "ACK PID X %d", receive_count);
+							sscanf(data.ReceiveBuff, "%d PX %f %f %f",&temp, &x_axis.Kp, &x_axis.Ki, &x_axis.Kd);
+							sprintf(data.TransBuff, "%.2f %.4f %.2f", x_axis.Kp, x_axis.Ki, x_axis.Kd);
+							USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 17);
+							sprintf(data.ACK, "ACK PID X %d", data.receive);
 							break;
 						case 'Y':
-							sscanf(ReceiveBuff, "%d PY %f %f %f",&temp, &y_axis.Kp, &y_axis.Ki, &y_axis.Kd);
-							sprintf(TransBuff, "%.2f %.4f %.2f", y_axis.Kp, y_axis.Ki, y_axis.Kd);
-							USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)TransBuff, 17);
-							sprintf(ACK, "ACK PID Y %d", receive_count);
+							sscanf(data.ReceiveBuff, "%d PY %f %f %f",&temp, &y_axis.Kp, &y_axis.Ki, &y_axis.Kd);
+							sprintf(data.TransBuff, "%.2f %.4f %.2f", y_axis.Kp, y_axis.Ki, y_axis.Kd);
+							USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 17);
+							sprintf(data.ACK, "ACK PID Y %d", data.receive);
 							break;
 						case 'Z':
-							sscanf(ReceiveBuff, "%d PZ %f %f %f",&temp, &z_axis.Kp, &z_axis.Ki, &z_axis.Kd);
-							sprintf(TransBuff, "%.2f %.4f %.2f", z_axis.Kp, z_axis.Ki, z_axis.Kd);
-							USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)TransBuff, 17);
-							sprintf(ACK, "ACK PID Z %d", receive_count);
+							sscanf(data.ReceiveBuff, "%d PZ %f %f %f",&temp, &z_axis.Kp, &z_axis.Ki, &z_axis.Kd);
+							sprintf(data.TransBuff, "%.2f %.4f %.2f", z_axis.Kp, z_axis.Ki, z_axis.Kd);
+							USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 17);
+							sprintf(data.ACK, "ACK PID Z %d", data.receive);
 							break;
 					}
 					break;
 		// command control Resume CNC
 		case 'R':
 			//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);
-		sprintf(ACK, "ACK R %d", receive_count);
+		sprintf(data.ACK, "ACK R %d", data.receive);
 			break;
 		// skip other Gcode		
 		default:
 			//USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, Resume, 1);	
-		sprintf(ACK, "ACK R %d", receive_count);
+		sprintf(data.ACK, "ACK R %d", data.receive);
 			break;
 	}
 
@@ -338,9 +314,9 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	if( process_mode != 0)
 		return(USBD_OK);
 			// increase recieve count
-	receive_count++;
+	data.need++;
 		// if true send ACK
-	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)ACK, 11);
+	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.ACK, 11);
   return (USBD_OK);
   /* USER CODE END 6 */
 }

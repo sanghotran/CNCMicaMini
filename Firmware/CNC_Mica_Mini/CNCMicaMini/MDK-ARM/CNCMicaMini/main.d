@@ -30,6 +30,8 @@ cncmicamini\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 cncmicamini\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h
 cncmicamini\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h
 cncmicamini\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
+cncmicamini\main.o: ..\CNC_lib\Inc/MyStruct.h
+cncmicamini\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 cncmicamini\main.o: ../USB_DEVICE/App/usb_device.h
 cncmicamini\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h
 cncmicamini\main.o: ../USB_DEVICE/Target/usbd_conf.h
@@ -42,4 +44,3 @@ cncmicamini\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_cor
 cncmicamini\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h
 cncmicamini\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h
 cncmicamini\main.o: ../USB_DEVICE/App/usbd_custom_hid_if.h
-cncmicamini\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h

@@ -29,21 +29,10 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
 
-typedef struct
-{
-	bool home;
-	bool pid_process;
-	uint8_t time_sample;
-	uint16_t pos;
-	float pwm;
-} axis;
-
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
-#define T_SAMPLE 3
 
 /* USER CODE END PD */
 
@@ -83,9 +72,9 @@ extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim4;
 
 
-extern axis x_axis;
-extern axis y_axis;
-extern axis z_axis;
+extern AXIS x_axis;
+extern AXIS y_axis;
+extern AXIS z_axis;
 
 /* USER CODE END EV */
 

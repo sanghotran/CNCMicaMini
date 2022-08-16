@@ -283,7 +283,6 @@ namespace CNCMicaMiniWPF
             {
                 LogScroll.ScrollToEnd();
             }
-            //debug.Text += input + "\n";
 
             //split data
             RecieveData = input.Split(' ');

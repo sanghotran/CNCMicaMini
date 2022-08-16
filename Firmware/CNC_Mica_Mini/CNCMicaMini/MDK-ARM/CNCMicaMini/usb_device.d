@@ -36,6 +36,8 @@ cncmicamini\usb_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 cncmicamini\usb_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 cncmicamini\usb_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 cncmicamini\usb_device.o: ../Core/Inc/main.h
+cncmicamini\usb_device.o: ..\CNC_lib\Inc/MyStruct.h
+cncmicamini\usb_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 cncmicamini\usb_device.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h
 cncmicamini\usb_device.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h
 cncmicamini\usb_device.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h

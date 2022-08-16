@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../USB_DEVICE/App;  ../USB_DEVICE/Target;  ../Core/Inc;  ../Drivers/STM32F1xx_HAL_Driver/Inc;  ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;  ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc;  ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;  ../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../USB_DEVICE/App;../USB_DEVICE/Target;../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\CNC_lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -562,24 +562,14 @@
           <GroupName>Application/User/Lib</GroupName>
           <Files>
             <File>
-              <FileName>MotorControl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\MotorControl.h</FilePath>
-            </File>
-            <File>
               <FileName>MotorControl.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\MotorControl.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyMath.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\MyMath.h</FilePath>
+              <FilePath>..\CNC_lib\Src\MotorControl.c</FilePath>
             </File>
             <File>
               <FileName>MyMath.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\MyMath.c</FilePath>
+              <FilePath>..\CNC_lib\Src\MyMath.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,4 +1,4 @@
-#include "MotorControl.h"
+#include "Inc/MotorControl.h"
 #include <math.h>
 
 void move_to(int *x_last, int *y_last, float x, float y, int scale_factor, float x_step_per_mm, float y_step_per_mm)

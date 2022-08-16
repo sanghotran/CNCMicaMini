@@ -51,27 +51,11 @@ TIM_HandleTypeDef htim4;
 
 /* USER CODE BEGIN PV */
 
-char TransBuff[25];
+AXIS x_axis;
+AXIS y_axis;
+AXIS z_axis;
 
-typedef struct
-{
-	float Kp;
-	float Ki;
-	float Kd;
-	float I_part;
-	float e_pre;
-	
-	bool home;
-	bool pid_process;
-	uint8_t time_sample;
-	uint16_t pos;
-	float pwm;
-} axis;
-
-axis x_axis;
-axis y_axis;
-axis z_axis;
-
+DATA data;
 
 /* USER CODE END PV */
 
@@ -85,17 +69,8 @@ static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
-extern uint8_t Stop[];
-extern uint8_t Resume[];
 extern uint8_t process_mode;
 extern uint8_t _cncState;
-extern uint8_t _poscontrol;
-extern char ACK[11];
-
-extern int receive_count;
-
-extern float X_next;
-extern float Y_next;
 
 /* USER CODE END PFP */
 
@@ -206,7 +181,7 @@ void X_PWM(float duty)
 	}
 	 
 
-void PID_control(int sp, axis *pid)
+void PID_control(int sp, AXIS *pid)
 {
 	float e;
 	e = sp - pid->pos;
@@ -272,8 +247,8 @@ int main(void)
 		if(process_mode == 2 ) // mode gcode control
 		{
 			// send x y z for debug
-						sprintf(TransBuff, "X%f Y%f", X_next, Y_next);
-						USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)TransBuff, 25);
+						sprintf(data.TransBuff, "X%f Y%f", x_axis.next, y_axis.next);
+						USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 25);
 						// delay for test without step, when have step, i will delete it.
 						HAL_Delay(500);
 			switch(_cncState)
@@ -291,9 +266,9 @@ int main(void)
 				case 3: // move x y wih z down circle 
 					break;
 			}
-			sprintf(ACK, "ACK R %d", receive_count);
-			receive_count++;
-			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)ACK, 11); // send command resume
+			sprintf(data.ACK, "ACK R %d", data.receive);
+			data.need++;
+			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.ACK, 11); // send command resume
    		process_mode = 0; // idle mode
 		}
 		if( process_mode == 1) // mode goto home
@@ -326,9 +301,9 @@ int main(void)
 			
 			if( x_axis.home && y_axis.home && z_axis.home)
 			{
-				sprintf(ACK, "ACK R %d", receive_count);				
-				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)ACK, 11);
-				receive_count++;
+				sprintf(data.ACK, "ACK R %d", data.receive);				
+				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.ACK, 11);
+				data.need++;
 				process_mode = 0; // idle mode				
 			}
 

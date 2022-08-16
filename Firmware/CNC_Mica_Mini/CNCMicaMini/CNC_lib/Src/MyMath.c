@@ -1,4 +1,4 @@
-#include "MyMath.h"
+#include "Inc/MyMath.h"
 
 int int_abs(int number)
 {
