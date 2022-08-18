@@ -39,6 +39,8 @@ cncmicamini\usbd_customhid.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_u
 cncmicamini\usbd_customhid.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
 cncmicamini\usbd_customhid.o: ..\CNC_lib\Inc/MyStruct.h
 cncmicamini\usbd_customhid.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+cncmicamini\usbd_customhid.o: ..\CNC_lib\Inc/MotorControl.h
+cncmicamini\usbd_customhid.o: ..\CNC_lib\Inc/MyMath.h
 cncmicamini\usbd_customhid.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h
 cncmicamini\usbd_customhid.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h
 cncmicamini\usbd_customhid.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h

@@ -220,6 +220,7 @@ namespace CNCMicaMiniWPF
         string ResendBuff;
         string[] ReceiveData;
         string[] ShowData;
+        string Calib_data;
         int point;
         int send_count;
         string debug_data;
@@ -334,7 +335,6 @@ namespace CNCMicaMiniWPF
                     else
                     {
                         SendData("STP", send_count);
-                        send_count = 0;
                     }
                 }
 
@@ -614,6 +614,8 @@ namespace CNCMicaMiniWPF
                 return;
             if (IsStarted)
                 return;
+            Calib_data = "C " + setpoint.Text;
+            SendData(Calib_data, send_count);
         }
 
         #endregion

@@ -50,10 +50,10 @@
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
 
-void readEncoder(TIM_HandleTypeDef htim, uint16_t *Pos)
+void readEncoder(TIM_HandleTypeDef htim, int *Pos)
 {
-	Pos += (int16_t)(htim.Instance->CNT);
-	htim.Instance->CNT=0;
+	*Pos = (int16_t)(htim.Instance->CNT);
+	//htim.Instance->CNT=0;
 }
 
 /* USER CODE END PFP */
@@ -209,6 +209,7 @@ void SysTick_Handler(void)
 		if( x_axis.time_sample >= T_SAMPLE )
 		{
 			readEncoder(htim1, &x_axis.pos);
+			PID_control(x_axis.setpoint, &x_axis);
 			x_axis.time_sample = 0;			
 		}
 	}
@@ -219,7 +220,9 @@ void SysTick_Handler(void)
 		y_axis.time_sample++;
 		if( y_axis.time_sample >= T_SAMPLE )
 		{
-			readEncoder(htim1, &y_axis.pos);
+			readEncoder(htim2, &y_axis.pos);
+			y_axis.pos *= -1;
+			PID_control(y_axis.setpoint, &y_axis);
 			y_axis.time_sample = 0;			
 		}
 	}
@@ -230,7 +233,8 @@ void SysTick_Handler(void)
 		z_axis.time_sample++;
 		if( z_axis.time_sample >= T_SAMPLE )
 		{
-			readEncoder(htim1, &z_axis.pos);
+			readEncoder(htim4, &z_axis.pos);
+			PID_control(z_axis.setpoint, &z_axis);
 			z_axis.time_sample = 0;			
 		}
 	}

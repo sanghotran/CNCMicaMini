@@ -57,6 +57,10 @@ AXIS z_axis;
 
 DATA data;
 
+extern USBD_HandleTypeDef hUsbDeviceFS;
+extern uint8_t process_mode;
+extern uint8_t _cncState;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -68,9 +72,12 @@ static void MX_TIM2_Init(void);
 static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
-extern USBD_HandleTypeDef hUsbDeviceFS;
-extern uint8_t process_mode;
-extern uint8_t _cncState;
+void X_PWM(float duty);
+void Y_PWM(float duty);
+void Z_PWM(float duty);
+void calib(AXIS *axis);
+
+
 
 /* USER CODE END PFP */
 
@@ -84,22 +91,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	// X Home
 	if( GPIO_Pin == GPIO_PIN_13)
 	{
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
-		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, 0);
+		X_PWM(0);
 		x_axis.home = true;
 	}
 	// Y Home
 	if( GPIO_Pin == GPIO_PIN_14)
 	{
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 0);
+		Y_PWM(0);
 		y_axis.home = true;
 	}
 	// Z Home
 	if( GPIO_Pin == GPIO_PIN_15)
 	{
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+		Z_PWM(0);
 		z_axis.home = true;
 	}
 }
@@ -114,7 +118,7 @@ void X_PWM(float duty)
 		
 		if (pwm>0)
 			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, pwm);
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 100 - pwm);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
 			}
 		else if (pwm == 0)
@@ -139,7 +143,7 @@ void X_PWM(float duty)
 		
 		if (pwm>0)
 			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, pwm);
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, 100-pwm);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
 			}
 		else if (pwm == 0)
@@ -164,7 +168,7 @@ void X_PWM(float duty)
 		
 		if (pwm>0)
 			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, pwm);
+				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, 60-pwm);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 			}
 		else if (pwm == 0)
@@ -181,14 +185,33 @@ void X_PWM(float duty)
 	}
 	 
 
-void PID_control(int sp, AXIS *pid)
+
+void calib(AXIS *axis)
 {
-	float e;
-	e = sp - pid->pos;
-	pid->I_part += TS*e;
-	pid->pwm = pid->Kp*e + pid->Ki*pid->I_part + pid->Kd*(e-pid->e_pre)/TS;
-	pid->e_pre = e;
+	axis->pid_process = true;
+	Z_PWM(z_axis.pwm);	
+	if( axis->finish)
+	{
+		Z_PWM(0);
+		memset(data.TransBuff, 0, 45);
+		axis->pid_process = false;
+		axis->finish = false;
+		process_mode = 0;
+		axis->time_sample = 0;
+		sprintf(data.TransBuff, "ACK C %d_SETPOINT %d", data.need, axis->e_pre);
+		data.need++;
+		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
+	}
+	/*else
+	{	
+		HAL_Delay(300);		
+		sprintf(data.TransBuff, "%d_POS %d", data.need, axis->pos);
+		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
+	}*/
+
+	
 }
+
 
 /* USER CODE END 0 */
 
@@ -278,29 +301,39 @@ int main(void)
 			// goto x home
 			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == 1)
 			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 60);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+				X_PWM(-0.5);
+				x_axis.home = false;
 			}
 			else
+			{
+				X_PWM(0);
 				x_axis.home = true;
+			}
 			
 			// goto y home
 			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_14) == 1)
 			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, 60);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+				Y_PWM(-0.5);
+				y_axis.home = false;
 			}
 			else
+			{
+				Y_PWM(0);
 				y_axis.home = true;
+			}
+
 			
 			// goto z home
 			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) == 1)
 			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, 60);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+				Z_PWM(-0.6);
+				z_axis.home = false;
 			}
 			else
+			{
+				Z_PWM(0);
 				z_axis.home = true;
+			}
 			
 			if( x_axis.home && y_axis.home && z_axis.home)
 			{
@@ -310,6 +343,11 @@ int main(void)
 				process_mode = 0; // idle mode				
 			}
 
+		}
+		// calib mode
+		if( process_mode == 3) 
+		{
+			calib(&z_axis);
 		}
     /* USER CODE END WHILE */
 

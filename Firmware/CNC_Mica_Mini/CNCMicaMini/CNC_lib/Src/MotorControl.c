@@ -1,6 +1,17 @@
 #include "Inc/MotorControl.h"
 #include <math.h>
 
+void PID_control(int sp, AXIS *pid)
+{
+	int e;
+	e = sp - pid->pos;
+	pid->I_part += TS*e;
+	pid->pwm = pid->Kp*e + pid->Ki*pid->I_part + pid->Kd*(e-pid->e_pre)/TS;
+	pid->e_pre = e;
+	if( int_abs(pid->e_pre) < 25)
+		pid->finish = true;
+}
+
 void move_to(int *x_last, int *y_last, float x, float y, int scale_factor, float x_step_per_mm, float y_step_per_mm)
 {
 	int x1 = *x_last;

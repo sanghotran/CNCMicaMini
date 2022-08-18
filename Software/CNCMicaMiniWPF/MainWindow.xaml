@@ -609,6 +609,17 @@
                         <!-- Calib Page-->
                         <Grid Margin="0 50 0 0"
                               Visibility="{Binding IsCalibPageShow}">
+                            <!-- setpoint-->
+                            <Grid Margin="0 0 320 60">
+                                <TextBlock Text="SetPoint" FontSize="30"
+                                           TextAlignment="Center"
+                                           FontFamily="{StaticResource futuralFont}"/>
+                                <TextBox Margin="20 50 20 0"
+                                         x:Name="setpoint"
+                                         TextAlignment="Center"
+                                         FontSize="25"
+                                         FontFamily="{StaticResource futuralFont}"/>
+                            </Grid>
                             <!-- Send Calib-->
                             <Grid Margin="160 100 160 0"
                                   Cursor="Hand"

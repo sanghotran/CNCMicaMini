@@ -1,5 +1,5 @@
-#ifndef __MYMATH_H
-#define __MYMATH_H
+#ifndef __MYSTRUCT_H
+#define __MYSTRUCT_H
 
 
 #include <stdbool.h>
@@ -13,10 +13,13 @@ typedef struct
 	float Ki;
 	float Kd;
 	float I_part;
-	float e_pre;
+	int e_pre;
 	uint8_t time_sample;
-	uint16_t pos;
+	int pos;
 	float pwm;
+	int setpoint;
+	
+	bool finish;
 	
 	bool pid_process;
 	
