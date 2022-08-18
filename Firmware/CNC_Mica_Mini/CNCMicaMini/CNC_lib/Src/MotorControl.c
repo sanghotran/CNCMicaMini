@@ -10,19 +10,19 @@ void PWM(AXIS *axis)
 		
 	if (pwm > 0)
 		{
-			__HAL_TIM_SetCompare(axis->htim_motor, axis->CHANEL, 100 - pwm);
-			HAL_GPIO_WritePin(axis->GPIO, axis->PIN, GPIO_PIN_SET);
+			__HAL_TIM_SetCompare(axis->htim_motor, axis->CHANNEL, 100 - pwm);
+			HAL_GPIO_WritePin(axis->GPIO_DIR, axis->PIN_DIR, GPIO_PIN_SET);
 		}
 	else if (pwm == 0)
 		{
-			__HAL_TIM_SetCompare(axis->htim_motor, axis->CHANEL, 0);
-			HAL_GPIO_WritePin(axis->GPIO, axis->PIN, GPIO_PIN_RESET);
+			__HAL_TIM_SetCompare(axis->htim_motor, axis->CHANNEL, 0);
+			HAL_GPIO_WritePin(axis->GPIO_DIR, axis->PIN_DIR, GPIO_PIN_RESET);
 		}
 	else if (pwm < 0)
 		{
 			pwm *= -1;
-			__HAL_TIM_SetCompare(axis->htim_motor, axis->CHANEL, pwm);
-			HAL_GPIO_WritePin(axis->GPIO, axis->PIN, GPIO_PIN_RESET);
+			__HAL_TIM_SetCompare(axis->htim_motor, axis->CHANNEL, pwm);
+			HAL_GPIO_WritePin(axis->GPIO_DIR, axis->PIN_DIR, GPIO_PIN_RESET);
 
 		}
 }
@@ -56,6 +56,22 @@ void PID_control(int sp, AXIS *pid)
 	pid->e_pre = e;
 	if( int_abs(pid->e_pre) < 25)
 		pid->finish = true;
+}
+
+void HOME(AXIS *axis)
+{
+	if( HAL_GPIO_ReadPin(axis->GPIO_HOME, axis->PIN_HOME) == 1)
+		{
+			axis->pwm = -0.5;
+			PWM(axis);
+			axis->home = false;
+		}
+	else
+		{
+			axis->pwm = 0;
+			PWM(axis);
+			axis->home = true;
+		}
 }
 
 void move_to(int *x_last, int *y_last, float x, float y, int scale_factor, float x_step_per_mm, float y_step_per_mm)

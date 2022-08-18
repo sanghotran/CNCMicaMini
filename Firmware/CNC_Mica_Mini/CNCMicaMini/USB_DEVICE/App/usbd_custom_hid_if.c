@@ -33,6 +33,13 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+enum
+{
+	Idle = 0,
+	Gcode,
+	Home,
+	Calib
+}CNC_Mode_usb;
 
 
 extern AXIS x_axis;
@@ -306,7 +313,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			break;
 		// command calib 
 		case 'C':
-			sscanf(data.ReceiveBuff, "%d C %d", &temp, &y_axis.setpoint);
+			sscanf(data.ReceiveBuff, "%d C %f", &temp, &z_axis.next);
 			process_mode = Calib; // mode calib
 			break;
 		// skip other Gcode		

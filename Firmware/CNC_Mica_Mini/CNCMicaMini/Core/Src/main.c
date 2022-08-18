@@ -30,6 +30,13 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+enum
+{
+	Idle = 0,
+	Gcode,
+	Home,
+	Calib
+}CNC_Mode_main;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -55,11 +62,11 @@ AXIS x_axis;
 AXIS y_axis;
 AXIS z_axis;
 
+uint8_t process_mode = Idle;
 
 DATA data;
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
-uint8_t process_mode = Idle;
 extern uint8_t _cncState;
 
 /* USER CODE END PV */
@@ -74,8 +81,7 @@ static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
 void axisInit(void);
-void calib(AXIS *axis);
-
+void move(AXIS *axis, float pos);
 
 
 /* USER CODE END PFP */
@@ -90,18 +96,21 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	// X Home
 	if( GPIO_Pin == GPIO_PIN_13)
 	{
+		x_axis.pwm = 0;
 		PWM(&x_axis);
 		x_axis.home = true;
 	}
 	// Y Home
 	if( GPIO_Pin == GPIO_PIN_14)
 	{
+		y_axis.pwm = 0;
 		PWM(&y_axis);
 		y_axis.home = true;
 	}
 	// Z Home
 	if( GPIO_Pin == GPIO_PIN_15)
 	{
+		z_axis.pwm = 0;
 		PWM(&z_axis);
 		z_axis.home = true;
 	}
@@ -117,35 +126,60 @@ void axisInit()
 	
 	x_axis.htim_enc = &htim1;
 	y_axis.htim_enc = &htim2;
-	z_axis.htim_enc = &htim3;
+	z_axis.htim_enc = &htim4;
 	
-	x_axis.GPIO = GPIOA;
-	y_axis.GPIO = GPIOA;
-	z_axis.GPIO = GPIOA;
+	x_axis.GPIO_DIR = GPIOA;
+	y_axis.GPIO_DIR = GPIOA;
+	z_axis.GPIO_DIR = GPIOA;
 	
-	x_axis.PIN = GPIO_PIN_2;
-	y_axis.PIN = GPIO_PIN_3;
-	z_axis.PIN = GPIO_PIN_4;
+	x_axis.PIN_DIR = GPIO_PIN_2;
+	y_axis.PIN_DIR = GPIO_PIN_3;
+	z_axis.PIN_DIR = GPIO_PIN_4;
 	
-	x_axis.CHANEL = TIM_CHANNEL_4;
-	y_axis.CHANEL = TIM_CHANNEL_3;
-	z_axis.CHANEL = TIM_CHANNEL_2;
+	x_axis.CHANNEL = TIM_CHANNEL_4;
+	y_axis.CHANNEL = TIM_CHANNEL_3;
+	z_axis.CHANNEL = TIM_CHANNEL_2;
+	
+	x_axis.GPIO_HOME = GPIOC;
+	y_axis.GPIO_HOME = GPIOC;
+	z_axis.GPIO_HOME = GPIOC;
+	
+	x_axis.PIN_HOME = GPIO_PIN_13;
+	y_axis.PIN_HOME = GPIO_PIN_14;
+	z_axis.PIN_HOME = GPIO_PIN_15;
+	
+	x_axis.Kp = 0.5;
+	y_axis.Kp = 0.5;
+	z_axis.Kp = 0.5;
+	
+	x_axis.Ki = 0.0001;
+	y_axis.Ki = 0.0001;
+	z_axis.Ki = 0.0001;
+	
+	x_axis.Kd = 0.01;
+	y_axis.Kd = 0.01;
+	z_axis.Kd = 0.01;
+	
+	x_axis.mm_pulse = 142.8571;
+	y_axis.mm_pulse = 333.3333;
+	z_axis.mm_pulse = 500;
 }
 
 
-void calib(AXIS *axis)
+void move(AXIS *axis, float pos)
 {
+	axis->setpoint = (int)(pos*axis->mm_pulse);
 	axis->pid_process = true;
 	PWM(axis);	
 	if( axis->finish)
 	{
 		axis->pwm = 0;
 		PWM(axis);
-		memset(data.TransBuff, 0, 45);
 		axis->pid_process = false;
-		axis->finish = false;
-		process_mode = Idle;
+		axis->finish = false;		
 		axis->time_sample = 0;
+		process_mode = Idle;
+		memset(data.TransBuff, 0, 45);
 		sprintf(data.TransBuff, "ACK C %d_SETPOINT %d", data.need, axis->e_pre);
 		data.need++;
 		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
@@ -192,7 +226,6 @@ int main(void)
 	
 	// Init axis
 	axisInit();
-
 	
 	// Start PWM
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
@@ -211,7 +244,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		if(process_mode == Gcode ) // mode gcode control
+		// mode gcode control
+		if(process_mode == Gcode ) 
 		{
 			switch(_cncState)
 			{ 				
@@ -233,50 +267,17 @@ int main(void)
 			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45); // send command resume
    		process_mode = Idle; // idle mode
 		}
-		if( process_mode == Home) // mode goto home
+		// mode goto home
+		if( process_mode == Home) 
 		{
 			// goto x home
-			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == 1)
-			{
-				x_axis.pwm = -0.5;
-				PWM(&x_axis);
-				x_axis.home = false;
-			}
-			else
-			{
-				x_axis.pwm = 0;
-				PWM(&x_axis);
-				x_axis.home = true;
-			}
+			HOME(&x_axis);
 			
 			// goto y home
-			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_14) == 1)
-			{
-				y_axis.pwm = -0.5;
-				PWM(&y_axis);
-				y_axis.home = false;
-			}
-			else
-			{
-				y_axis.pwm = 0;
-				PWM(&y_axis);
-				y_axis.home = true;
-			}
-
+			HOME(&y_axis);
 			
 			// goto z home
-			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) == 1)
-			{
-				z_axis.pwm = -0.6;
-				PWM(&z_axis);
-				z_axis.home = false;
-			}
-			else
-			{
-				z_axis.pwm = 0;
-				PWM(&z_axis);
-				z_axis.home = true;
-			}
+			HOME(&z_axis);
 			
 			if( x_axis.home && y_axis.home && z_axis.home)
 			{
@@ -290,7 +291,7 @@ int main(void)
 		// calib mode
 		if( process_mode == Calib) 
 		{
-			calib(&y_axis);
+			move(&z_axis, z_axis.next);
 		}
     /* USER CODE END WHILE */
 

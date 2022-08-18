@@ -8,13 +8,8 @@
 
 #define T_SAMPLE 3
 
-enum
-{
-	Idle = 0,
-	Gcode,
-	Home,
-	Calib
-}MODE;
+
+
 
 typedef struct
 {
@@ -29,11 +24,17 @@ typedef struct
 	int setpoint;
 	
 	TIM_HandleTypeDef* htim_enc;
-	TIM_HandleTypeDef* htim_motor;
-	uint32_t CHANEL;
 	
-	GPIO_TypeDef* GPIO;
-	uint16_t PIN;
+	TIM_HandleTypeDef* htim_motor;
+	uint32_t CHANNEL;
+	
+	GPIO_TypeDef* GPIO_DIR;
+	uint16_t PIN_DIR;
+	
+	GPIO_TypeDef* GPIO_HOME;
+	uint16_t PIN_HOME;
+	
+  float mm_pulse;
 	
 	bool finish;
 	

@@ -30,6 +30,8 @@ void sample(AXIS *axis);
 
 void PID_control(int sp, AXIS *pid);
 
+void HOME(AXIS *axis);
+
 void move_to(int *x_last, int *y_last, float x, float y, int scale_factor, float x_step_per_mm, float y_step_per_mm);
 
 void draw_line(int x1, int y1, int x2, int y2);
