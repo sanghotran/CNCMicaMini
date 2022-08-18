@@ -3,7 +3,7 @@
 <title>Static Call Graph - [CNCMicaMini\CNCMicaMini.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image CNCMicaMini\CNCMicaMini.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Aug 18 17:25:36 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Aug 18 20:28:24 2022
 <BR><P>
 <H3>Maximum Stack Usage =        572 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -427,7 +427,6 @@ Global Symbols
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CUSTOM_HID_OutEvent_FS
-<LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -497,7 +496,6 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CUSTOM_HID_OutEvent_FS
-<LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move
 <LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 <LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM4_Init
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM3_Init
@@ -1372,7 +1370,6 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_Transmit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CUSTOM_HID_OutEvent_FS
-<LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;move
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -1914,7 +1911,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__support_ldexp
 </UL>
 
-<P><STRONG><a name="[68]"></a>main</STRONG> (Thumb, 246 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[68]"></a>main</STRONG> (Thumb, 370 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152 + Unknown Stack Size
 <LI>Call Chain = main &rArr; SystemClock_Config &rArr; HAL_RCC_ClockConfig &rArr; HAL_InitTick &rArr; HAL_NVIC_SetPriority
 </UL>
@@ -1937,16 +1934,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[13c]"></a>move</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, main.o(i.move))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144 + Unknown Stack Size
-<LI>Call Chain = move &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+<P><STRONG><a name="[13c]"></a>move</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, main.o(i.move))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = move &rArr; PWM &rArr; __aeabi_fmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CUSTOM_HID_SendReport
-<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM
+<BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM
 <LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
 <LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>

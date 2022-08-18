@@ -35,6 +35,7 @@ enum
 	Idle = 0,
 	Gcode,
 	Home,
+	Home_1cm,
 	Calib
 }CNC_Mode_main;
 /* USER CODE END PTD */
@@ -116,8 +117,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	}
 }
 
-// Function 
 
+
+// Function 
 void axisInit()
 {
 	x_axis.htim_motor = &htim3;
@@ -175,14 +177,13 @@ void move(AXIS *axis, float pos)
 	{
 		axis->pwm = 0;
 		PWM(axis);
-		axis->pid_process = false;
-		axis->finish = false;		
+		axis->pid_process = false;		
 		axis->time_sample = 0;
-		process_mode = Idle;
-		memset(data.TransBuff, 0, 45);
+		/*memset(data.TransBuff, 0, 45);
 		sprintf(data.TransBuff, "ACK C %d_SETPOINT %d", data.need, axis->e_pre);
 		data.need++;
 		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
+		*/
 	}
 }
 
@@ -281,12 +282,35 @@ int main(void)
 			
 			if( x_axis.home && y_axis.home && z_axis.home)
 			{
+				x_axis.htim_enc->Instance->CNT = 0;
+				y_axis.htim_enc->Instance->CNT = 0;
+				z_axis.htim_enc->Instance->CNT = 0;
+				process_mode = Home_1cm; // idle mode				
+			}
+
+		}
+		// home 1cm
+		if( process_mode == Home_1cm)
+		{
+			move(&x_axis, 10);
+			move(&y_axis, 10);
+			move(&z_axis, 10);
+			if( x_axis.finish && y_axis.finish && z_axis.finish)
+			{
+				x_axis.finish = false;
+				y_axis.finish = false;
+				z_axis.finish = false;
+				
+				x_axis.htim_enc->Instance->CNT = 0;
+				y_axis.htim_enc->Instance->CNT = 0;
+				z_axis.htim_enc->Instance->CNT = 0;
+				
 				sprintf(data.TransBuff, "ACK R %d_HOME", data.receive);				
 				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
 				data.need++;
-				process_mode = Idle; // idle mode				
+				
+				process_mode = Idle;
 			}
-
 		}
 		// calib mode
 		if( process_mode == Calib) 
