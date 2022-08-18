@@ -55,10 +55,11 @@ AXIS x_axis;
 AXIS y_axis;
 AXIS z_axis;
 
+
 DATA data;
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
-extern uint8_t process_mode;
+uint8_t process_mode = Idle;
 extern uint8_t _cncState;
 
 /* USER CODE END PV */
@@ -72,9 +73,7 @@ static void MX_TIM2_Init(void);
 static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
-void X_PWM(float duty);
-void Y_PWM(float duty);
-void Z_PWM(float duty);
+void axisInit(void);
 void calib(AXIS *axis);
 
 
@@ -91,125 +90,66 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	// X Home
 	if( GPIO_Pin == GPIO_PIN_13)
 	{
-		X_PWM(0);
+		PWM(&x_axis);
 		x_axis.home = true;
 	}
 	// Y Home
 	if( GPIO_Pin == GPIO_PIN_14)
 	{
-		Y_PWM(0);
+		PWM(&y_axis);
 		y_axis.home = true;
 	}
 	// Z Home
 	if( GPIO_Pin == GPIO_PIN_15)
 	{
-		Z_PWM(0);
+		PWM(&z_axis);
 		z_axis.home = true;
 	}
 }
 
 // Function 
-void X_PWM(float duty)  
-	{
-		if (duty > 1) duty = 1;
-		else if(duty ==0)  duty =0;
-		else if (duty < -1) duty = -1;
-		int16_t pwm = duty*100;
-		
-		if (pwm>0)
-			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 100 - pwm);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
-			}
-		else if (pwm == 0)
-			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, 0);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
-			}
-		else if (pwm < 0)
-			{
-				pwm *= -1;
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_4, pwm);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
-			}
-	}
+
+void axisInit()
+{
+	x_axis.htim_motor = &htim3;
+	y_axis.htim_motor = &htim3;
+	z_axis.htim_motor = &htim3;
 	
-	void Y_PWM(float duty)  
-	{
-		if (duty > 1) duty = 1;
-		else if(duty ==0)  duty =0;
-		else if (duty < -1) duty = -1;
-		int16_t pwm = duty*100;
-		
-		if (pwm>0)
-			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, 100-pwm);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
-			}
-		else if (pwm == 0)
-			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, 0);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-			}
-		else if (pwm < 0)
-			{
-				pwm *= -1;
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, pwm);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-			}
-	}
+	x_axis.htim_enc = &htim1;
+	y_axis.htim_enc = &htim2;
+	z_axis.htim_enc = &htim3;
 	
-	void Z_PWM(float duty)  
-	{
-		if (duty > 1) duty = 1;
-		else if(duty ==0)  duty =0;
-		else if (duty < -1) duty = -1;
-		int16_t pwm = duty*60;
-		
-		if (pwm>0)
-			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, 60-pwm);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-			}
-		else if (pwm == 0)
-			{
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, 0);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-			}
-		else if (pwm < 0)
-			{
-				pwm *= -1;
-				__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_2, pwm);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-			}
-	}
-	 
+	x_axis.GPIO = GPIOA;
+	y_axis.GPIO = GPIOA;
+	z_axis.GPIO = GPIOA;
+	
+	x_axis.PIN = GPIO_PIN_2;
+	y_axis.PIN = GPIO_PIN_3;
+	z_axis.PIN = GPIO_PIN_4;
+	
+	x_axis.CHANEL = TIM_CHANNEL_4;
+	y_axis.CHANEL = TIM_CHANNEL_3;
+	z_axis.CHANEL = TIM_CHANNEL_2;
+}
 
 
 void calib(AXIS *axis)
 {
 	axis->pid_process = true;
-	Z_PWM(z_axis.pwm);	
+	PWM(axis);	
 	if( axis->finish)
 	{
-		Z_PWM(0);
+		axis->pwm = 0;
+		PWM(axis);
 		memset(data.TransBuff, 0, 45);
 		axis->pid_process = false;
 		axis->finish = false;
-		process_mode = 0;
+		process_mode = Idle;
 		axis->time_sample = 0;
 		sprintf(data.TransBuff, "ACK C %d_SETPOINT %d", data.need, axis->e_pre);
 		data.need++;
 		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
 	}
-	/*else
-	{	
-		HAL_Delay(300);		
-		sprintf(data.TransBuff, "%d_POS %d", data.need, axis->pos);
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
-	}*/
-
-	
 }
 
 
@@ -222,7 +162,7 @@ void calib(AXIS *axis)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -250,6 +190,10 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 	
+	// Init axis
+	axisInit();
+
+	
 	// Start PWM
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
@@ -267,15 +211,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		if(process_mode == 2 ) // mode gcode control
+		if(process_mode == Gcode ) // mode gcode control
 		{
-			/*
-			// send x y z for debug
-						sprintf(data.TransBuff, "X%f Y%f", x_axis.next, y_axis.next);
-						USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 35);
-						// delay for test without step, when have step, i will delete it.
-						HAL_Delay(500);
-			*/
 			switch(_cncState)
 			{ 				
 				case 0: // move x y with z up
@@ -294,31 +231,35 @@ int main(void)
 			sprintf(data.TransBuff, "ACK R %d_RESUME", data.receive);
 			data.need++;
 			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45); // send command resume
-   		process_mode = 0; // idle mode
+   		process_mode = Idle; // idle mode
 		}
-		if( process_mode == 1) // mode goto home
+		if( process_mode == Home) // mode goto home
 		{
 			// goto x home
 			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == 1)
 			{
-				X_PWM(-0.5);
+				x_axis.pwm = -0.5;
+				PWM(&x_axis);
 				x_axis.home = false;
 			}
 			else
 			{
-				X_PWM(0);
+				x_axis.pwm = 0;
+				PWM(&x_axis);
 				x_axis.home = true;
 			}
 			
 			// goto y home
 			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_14) == 1)
 			{
-				Y_PWM(-0.5);
+				y_axis.pwm = -0.5;
+				PWM(&y_axis);
 				y_axis.home = false;
 			}
 			else
 			{
-				Y_PWM(0);
+				y_axis.pwm = 0;
+				PWM(&y_axis);
 				y_axis.home = true;
 			}
 
@@ -326,12 +267,14 @@ int main(void)
 			// goto z home
 			if( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) == 1)
 			{
-				Z_PWM(-0.6);
+				z_axis.pwm = -0.6;
+				PWM(&z_axis);
 				z_axis.home = false;
 			}
 			else
 			{
-				Z_PWM(0);
+				z_axis.pwm = 0;
+				PWM(&z_axis);
 				z_axis.home = true;
 			}
 			
@@ -340,14 +283,14 @@ int main(void)
 				sprintf(data.TransBuff, "ACK R %d_HOME", data.receive);				
 				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
 				data.need++;
-				process_mode = 0; // idle mode				
+				process_mode = Idle; // idle mode				
 			}
 
 		}
 		// calib mode
-		if( process_mode == 3) 
+		if( process_mode == Calib) 
 		{
-			calib(&z_axis);
+			calib(&y_axis);
 		}
     /* USER CODE END WHILE */
 

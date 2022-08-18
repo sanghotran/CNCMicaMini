@@ -4,8 +4,17 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "stm32f1xx_hal.h"
 
 #define T_SAMPLE 3
+
+enum
+{
+	Idle = 0,
+	Gcode,
+	Home,
+	Calib
+}MODE;
 
 typedef struct
 {
@@ -18,6 +27,13 @@ typedef struct
 	int pos;
 	float pwm;
 	int setpoint;
+	
+	TIM_HandleTypeDef* htim_enc;
+	TIM_HandleTypeDef* htim_motor;
+	uint32_t CHANEL;
+	
+	GPIO_TypeDef* GPIO;
+	uint16_t PIN;
 	
 	bool finish;
 	

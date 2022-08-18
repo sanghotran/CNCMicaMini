@@ -41,7 +41,7 @@ extern AXIS z_axis;
 
 extern DATA data;
 
-uint8_t process_mode = 0;
+extern uint8_t process_mode;
 
 uint8_t _cncState = 4;
 
@@ -256,7 +256,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 							_cncState = 3;
 							break;
 					}	
-			 process_mode = 2; // mode gcode control motor
+			 process_mode = Gcode; // mode gcode control motor
 			}
 			else
 				sprintf(data.TransBuff, "ACK R %d_RESUME", data.receive);
@@ -269,7 +269,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 					x_axis.home = false;
 					y_axis.home = false;
 					z_axis.home = false;
-					process_mode = 1; // mode goto home
+					process_mode = Home; // mode goto home
 					break;
 				case 'P':
 					sprintf(data.TransBuff, "ACK STP %d_STOP", data.receive);
@@ -306,9 +306,8 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 			break;
 		// command calib 
 		case 'C':
-			sscanf(data.ReceiveBuff, "%d C %d", &temp, &z_axis.setpoint);
-			process_mode = 3; // mode calib
-			//sprintf(data.TransBuff, "ACK C %d_SETPOINT %d", data.receive, x_axis.setpoint);
+			sscanf(data.ReceiveBuff, "%d C %d", &temp, &y_axis.setpoint);
+			process_mode = Calib; // mode calib
 			break;
 		// skip other Gcode		
 		default:

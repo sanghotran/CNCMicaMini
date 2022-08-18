@@ -50,12 +50,6 @@
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
 
-void readEncoder(TIM_HandleTypeDef htim, int *Pos)
-{
-	*Pos = (int16_t)(htim.Instance->CNT);
-	//htim.Instance->CNT=0;
-}
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -203,41 +197,13 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 	
 	// PID X axis
-	if(x_axis.pid_process)
-	{
-		x_axis.time_sample++;
-		if( x_axis.time_sample >= T_SAMPLE )
-		{
-			readEncoder(htim1, &x_axis.pos);
-			PID_control(x_axis.setpoint, &x_axis);
-			x_axis.time_sample = 0;			
-		}
-	}
+	sample(&x_axis);
 	
-		// PID Y axis
-	if(y_axis.pid_process)
-	{
-		y_axis.time_sample++;
-		if( y_axis.time_sample >= T_SAMPLE )
-		{
-			readEncoder(htim2, &y_axis.pos);
-			y_axis.pos *= -1;
-			PID_control(y_axis.setpoint, &y_axis);
-			y_axis.time_sample = 0;			
-		}
-	}
+	// PID Y axis
+	sample(&y_axis);
 	
-		// PID Z axis
-	if(z_axis.pid_process)
-	{
-		z_axis.time_sample++;
-		if( z_axis.time_sample >= T_SAMPLE )
-		{
-			readEncoder(htim4, &z_axis.pos);
-			PID_control(z_axis.setpoint, &z_axis);
-			z_axis.time_sample = 0;			
-		}
-	}
+	// PID Z axis
+	sample(&z_axis);
 
 
   /* USER CODE END SysTick_IRQn 0 */

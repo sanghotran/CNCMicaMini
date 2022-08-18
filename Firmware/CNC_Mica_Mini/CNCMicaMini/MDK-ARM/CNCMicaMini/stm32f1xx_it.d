@@ -34,4 +34,5 @@ cncmicamini\stm32f1xx_it.o: ..\CNC_lib\Inc/MyStruct.h
 cncmicamini\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 cncmicamini\stm32f1xx_it.o: ..\CNC_lib\Inc/MotorControl.h
 cncmicamini\stm32f1xx_it.o: ..\CNC_lib\Inc/MyMath.h
+cncmicamini\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 cncmicamini\stm32f1xx_it.o: ../Core/Inc/stm32f1xx_it.h

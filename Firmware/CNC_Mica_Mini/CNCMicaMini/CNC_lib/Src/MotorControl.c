@@ -1,5 +1,51 @@
 #include "Inc/MotorControl.h"
-#include <math.h>
+
+void PWM(AXIS *axis)
+{
+	float duty = axis->pwm;
+	if (duty > 1) duty = 1;
+	else if(duty ==0)  duty = 0;
+	else if (duty < -1) duty = -1;
+	int16_t pwm = duty*100;
+		
+	if (pwm > 0)
+		{
+			__HAL_TIM_SetCompare(axis->htim_motor, axis->CHANEL, 100 - pwm);
+			HAL_GPIO_WritePin(axis->GPIO, axis->PIN, GPIO_PIN_SET);
+		}
+	else if (pwm == 0)
+		{
+			__HAL_TIM_SetCompare(axis->htim_motor, axis->CHANEL, 0);
+			HAL_GPIO_WritePin(axis->GPIO, axis->PIN, GPIO_PIN_RESET);
+		}
+	else if (pwm < 0)
+		{
+			pwm *= -1;
+			__HAL_TIM_SetCompare(axis->htim_motor, axis->CHANEL, pwm);
+			HAL_GPIO_WritePin(axis->GPIO, axis->PIN, GPIO_PIN_RESET);
+
+		}
+}
+
+void readEncoder(TIM_HandleTypeDef* htim, int *Pos)
+{
+	*Pos = (int16_t)(htim->Instance->CNT);
+	//htim.Instance->CNT=0;
+}
+
+void sample(AXIS * axis)
+{
+	if(axis->pid_process)
+	{
+		axis->time_sample++;
+		if( axis->time_sample >= T_SAMPLE )
+		{
+			readEncoder(axis->htim_enc, &axis->pos);
+			PID_control(axis->setpoint, axis);
+			axis->time_sample = 0;			
+		}
+	}
+}
 
 void PID_control(int sp, AXIS *pid)
 {

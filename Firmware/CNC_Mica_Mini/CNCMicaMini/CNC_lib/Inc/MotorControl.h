@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include "MyMath.h"
 #include "MyStruct.h"
+#include "stm32f1xx_hal.h"
+#include <math.h>
 
 #define PI 3.1415926535897932384626433832795
 #define HALF_PI 1.5707963267948966192313216916398
@@ -19,6 +21,12 @@
 #define RIGHT true
 	
 #define LINE_MAX 2 // max line lengh (mm) when draw circle
+
+void PWM(AXIS *axis);
+
+void readEncoder(TIM_HandleTypeDef* htim, int *Pos);
+
+void sample(AXIS *axis);
 
 void PID_control(int sp, AXIS *pid);
 
