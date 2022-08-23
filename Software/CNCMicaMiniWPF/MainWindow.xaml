@@ -431,7 +431,7 @@
                 <!-- Setting For Start CNC-->
                 <Grid Margin=" 0 460 0 0"
                       Visibility="{Binding IsSettingCNCPageShow}">
-                    <!-- HOME-->
+                    <!-- HOME button-->
                     <Grid Margin="160 140 160 10"
                                   Cursor="Hand"
                                   PreviewMouseDown="Home">
@@ -473,6 +473,17 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
+                    </Grid>
+                    <!-- Thickness-->
+                    <Grid Margin="0 0 320 60">
+                        <TextBlock Text="Thickness" FontSize="30"
+                                           TextAlignment="Center"
+                                           FontFamily="{StaticResource futuralFont}"/>
+                        <TextBox Margin="20 50 20 50"
+                                         x:Name="thickness"
+                                         TextAlignment="Center"
+                                         FontSize="25"
+                                         FontFamily="{StaticResource futuralFont}"/>
                     </Grid>
                 </Grid>
                 <!-- Setting-->

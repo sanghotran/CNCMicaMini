@@ -64,6 +64,7 @@ AXIS y_axis;
 AXIS z_axis;
 
 uint8_t process_mode = Idle;
+int thickness = 0;
 
 DATA data;
 
@@ -305,7 +306,7 @@ int main(void)
 				y_axis.htim_enc->Instance->CNT = 0;
 				z_axis.htim_enc->Instance->CNT = 0;
 				
-				sprintf(data.TransBuff, "ACK H %d_HOME", data.receive);				
+				sprintf(data.TransBuff, "ACK H %d_HOME %d", data.receive, thickness);				
 				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
 				data.need++;
 				

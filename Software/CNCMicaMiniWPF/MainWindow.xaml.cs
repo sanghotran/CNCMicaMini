@@ -235,6 +235,7 @@ namespace CNCMicaMiniWPF
         string Calib_data;
         int point;
         int send_count;
+
         string debug_data;
         bool debug_flag = false;
 
@@ -641,7 +642,7 @@ namespace CNCMicaMiniWPF
                 return;
             if (IsStarted)
                 return;
-            SendData("H", send_count);
+            SendData("H " + thickness.Text , send_count);
         }
         #endregion
 

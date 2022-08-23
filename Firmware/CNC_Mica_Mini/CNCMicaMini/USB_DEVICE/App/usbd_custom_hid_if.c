@@ -49,6 +49,7 @@ extern AXIS z_axis;
 extern DATA data;
 
 extern uint8_t process_mode;
+extern int thickness;
 
 uint8_t _cncState = 4;
 
@@ -286,6 +287,8 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 				x_axis.home = false;
 				y_axis.home = false;
 				z_axis.home = false;
+				
+				sscanf(data.ReceiveBuff, "%d H %d", &temp, &thickness);
 				process_mode = Home; // mode goto home
 				break;
 			
