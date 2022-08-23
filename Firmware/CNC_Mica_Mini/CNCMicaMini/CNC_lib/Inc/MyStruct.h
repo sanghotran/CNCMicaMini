@@ -49,8 +49,8 @@ typedef struct
 typedef struct
 {
 	char TransBuff[45];
-	char ReceiveBuff[27];
-	char Command[3];
+	char ReceiveBuff[127];
+	char Command[55];
 	
 	int receive;
 	int need;

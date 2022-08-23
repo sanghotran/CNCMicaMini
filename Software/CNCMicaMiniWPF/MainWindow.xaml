@@ -218,7 +218,7 @@
                     </Image>
                     <ScrollViewer Margin="25 25 25 25"
                                   VerticalScrollBarVisibility="Hidden">
-                        <TextBlock x:Name="Gcode" FontSize="22" Foreground="Red">
+                        <TextBlock x:Name="Gcode" FontSize="12" Foreground="Red">
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>

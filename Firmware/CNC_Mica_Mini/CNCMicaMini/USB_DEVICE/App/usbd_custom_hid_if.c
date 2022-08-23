@@ -218,17 +218,17 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
   /* USER CODE BEGIN 6 */
 	
 	// memem set buff
-	memset(data.ReceiveBuff, 0, 27);
-	memset(data.Command, 0, 3);
+	memset(data.ReceiveBuff, 0, 127);
+	memset(data.Command, 0, 55);
 	memset(data.TransBuff, 0, 45);
 	
 	
 	USBD_CUSTOM_HID_HandleTypeDef* hhid = (USBD_CUSTOM_HID_HandleTypeDef*)hUsbDeviceFS.pClassData;
-	for(uint8_t i = 0; i < 27; i++)
+	for(uint8_t i = 0; i < 127; i++)
 	{
 		data.ReceiveBuff[i] =  hhid -> Report_buf[i];
 	}  
-	memset(hhid ->Report_buf , 0, 65);
+	memset(hhid ->Report_buf , 0, 127);
 	
 	// spilit command and data form GUI
 	sscanf(data.ReceiveBuff, "%d %s ", &data.receive, data.Command);
@@ -236,7 +236,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	// check data from GUI, If false send NAK
 	if( data.receive != data.need)
 	{
-		sprintf(data.TransBuff, "NAK %d", data.need);
+		sprintf(data.TransBuff, "NAK %d_%s %d", data.need, data.Command, data.receive);
 		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS,(uint8_t *)data.TransBuff, 45);
 		return(USBD_OK);
 	}	
@@ -330,7 +330,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	}
 
 	// check process for skip send ack
-	if( process_mode != 0)
+	if( process_mode != Idle)
 		return(USBD_OK);
 	// increase recieve count
 	data.need++;

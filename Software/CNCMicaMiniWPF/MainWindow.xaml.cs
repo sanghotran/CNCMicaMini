@@ -340,10 +340,18 @@ namespace CNCMicaMiniWPF
                             SendData("P", send_count);
                             return;
                         }
+                        while (!GcodeBuff[point].Contains("G0"))
+                        {
+                            point++;
+                            if (point == GcodeBuff.Length)
+                            {
+                                IsStarted = false;
+                                SendData("STP", send_count);
+                                return;
+                            }
+                        }
                         SendData(GcodeBuff[point], send_count);
-                        point++;
-                        if (point == GcodeBuff.Length)
-                            IsStarted = false;
+                        point++;                        
                     }
                     else
                     {
@@ -353,7 +361,6 @@ namespace CNCMicaMiniWPF
 
                 if (ReceiveData[1] == "STP")
                     send_count = 0;
-
                 return;
             }
 
