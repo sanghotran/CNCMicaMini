@@ -206,6 +206,18 @@ namespace CNCMicaMiniWPF
                 OnPropertyChanged();
             }
         }
+
+        private Visibility _IsSettingCNCPageShow;
+        public Visibility IsSettingCNCPageShow
+        {
+            get => _IsSettingCNCPageShow;
+            set
+            {
+                _IsSettingCNCPageShow = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region fields
@@ -528,9 +540,15 @@ namespace CNCMicaMiniWPF
         private void Setting(object sender, MouseButtonEventArgs e)
         {
             if (IsSettingPageShow == Visibility.Visible)
+            {
                 IsSettingPageShow = Visibility.Hidden;
+                IsSettingCNCPageShow = Visibility.Visible;
+            }
             else
+            {
                 IsSettingPageShow = Visibility.Visible;
+                IsSettingCNCPageShow = Visibility.Hidden;
+            }
         }
         private void Calib(object sender, MouseButtonEventArgs e)
         {
@@ -617,7 +635,14 @@ namespace CNCMicaMiniWPF
             Calib_data = "C " + setpoint.Text;
             SendData(Calib_data, send_count);
         }
-
+        private void Home(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsConnected)
+                return;
+            if (IsStarted)
+                return;
+            SendData("H", send_count);
+        }
         #endregion
 
 

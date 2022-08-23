@@ -285,7 +285,7 @@ int main(void)
 				x_axis.htim_enc->Instance->CNT = 0;
 				y_axis.htim_enc->Instance->CNT = 0;
 				z_axis.htim_enc->Instance->CNT = 0;
-				process_mode = Home_1cm; // idle mode				
+				process_mode = Home_1cm; // to protect switch, goto home 1cm mode				
 			}
 
 		}
@@ -305,7 +305,7 @@ int main(void)
 				y_axis.htim_enc->Instance->CNT = 0;
 				z_axis.htim_enc->Instance->CNT = 0;
 				
-				sprintf(data.TransBuff, "ACK R %d_HOME", data.receive);				
+				sprintf(data.TransBuff, "ACK H %d_HOME", data.receive);				
 				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
 				data.need++;
 				

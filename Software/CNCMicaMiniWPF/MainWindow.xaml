@@ -428,6 +428,53 @@
                                    TextWrapping="Wrap" Foreground="Green"/>
                     </ScrollViewer>
                 </Grid>
+                <!-- Setting For Start CNC-->
+                <Grid Margin=" 0 460 0 0"
+                      Visibility="{Binding IsSettingCNCPageShow}">
+                    <!-- HOME-->
+                    <Grid Margin="160 140 160 10"
+                                  Cursor="Hand"
+                                  PreviewMouseDown="Home">
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Source" Value="Images/graybutton.png"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                            <Setter Property="Source" Value="Images/greenbutton.png"/>
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsStarted}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Source" Value="Images/redbutton.png"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <TextBlock FontFamily="{StaticResource futuralFont}"
+                                           TextAlignment="Center">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="HOME"/>
+                                    <Setter Property="FontSize" Value="30"/>
+                                    <Setter Property="Margin" Value="0 5 0 0"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsStarted}" Value="True">
+                                            <Setter Property="FontSize" Value="25"/>
+                                            <Setter Property="Margin" Value="0 2 0 0"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                            <Setter Property="Margin" Value="0 7 0 0"/>
+                                            <Setter Property="FontSize" Value="25"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </Grid>
                 <!-- Setting-->
                 <Grid Margin="0 400 0 0">
                     <!-- Setting button-->
