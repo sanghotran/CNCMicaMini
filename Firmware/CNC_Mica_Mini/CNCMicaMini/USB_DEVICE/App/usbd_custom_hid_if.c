@@ -236,7 +236,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 	// check data from GUI, If false send NAK
 	if( data.receive != data.need)
 	{
-		sprintf(data.TransBuff, "NAK %d_%s %d", data.need, data.Command, data.receive);
+		sprintf(data.TransBuff, "NAK %d_%d", data.need, data.receive);
 		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS,(uint8_t *)data.TransBuff, 45);
 		return(USBD_OK);
 	}	
