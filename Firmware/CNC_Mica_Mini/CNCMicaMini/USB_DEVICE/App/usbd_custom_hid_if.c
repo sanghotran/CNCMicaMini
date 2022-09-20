@@ -248,10 +248,11 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 		case 'G':
 			if(data.Command[1] == '0')
 			{
-				sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f",&temp, &temp, &x_axis.next, &y_axis.next);
+				//sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f",&temp, &temp, &x_axis.next, &y_axis.next);
 				switch( data.Command[2])
 					{
 						case '0': //
+							sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f",&temp, &temp, &x_axis.next, &y_axis.next);
 							_cncState = 0; 
 							break;
 						case '1': //

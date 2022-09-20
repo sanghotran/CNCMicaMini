@@ -340,7 +340,7 @@ namespace CNCMicaMiniWPF
                             SendData("P", send_count);
                             return;
                         }
-                        while (!GcodeBuff[point].Contains("G0"))
+                        while (!(GcodeBuff[point].Contains("G0") && GcodeBuff[point].Contains("X")))
                         {
                             point++;
                             if (point == GcodeBuff.Length)

@@ -32,15 +32,11 @@ void PID_control(int sp, AXIS *pid);
 
 void HOME(AXIS *axis);
 
-void move_to(int *x_last, int *y_last, float x, float y, int scale_factor, float x_step_per_mm, float y_step_per_mm);
+void move(AXIS *axis, float pos);
 
-void draw_line(int x1, int y1, int x2, int y2);
+void moveGcode(AXIS *pAxis);
 
-void move_x(bool direction);
-
-void move_y(bool direction);
-
-void draw_arc_cw(float x, float y, float i, float j, int *x_last, int *y_last, int scale_factor, float x_step_per_mm, float y_step_per_mm);
+void drawLine(AXIS *pXAxis, AXIS *pYAxis);
 
 
 #endif /* __MOTORCONTROL_H */

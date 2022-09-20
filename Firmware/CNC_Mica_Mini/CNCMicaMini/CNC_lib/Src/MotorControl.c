@@ -62,7 +62,7 @@ void HOME(AXIS *axis)
 {
 	if( HAL_GPIO_ReadPin(axis->GPIO_HOME, axis->PIN_HOME) == 1)
 		{
-			axis->pwm = -0.5;
+			axis->pwm = -0.6;
 			PWM(axis);
 			axis->home = false;
 		}
@@ -73,120 +73,92 @@ void HOME(AXIS *axis)
 			axis->home = true;
 		}
 }
-
-void move_to(int *x_last, int *y_last, float x, float y, int scale_factor, float x_step_per_mm, float y_step_per_mm)
+void move(AXIS *axis, float pos)
 {
-	int x1 = *x_last;
-	int y1 = *y_last;
-	int x2 = round(x * scale_factor * x_step_per_mm);
-	int y2 = round(y * scale_factor * y_step_per_mm);
-	draw_line(x1, y1, x2, y2);
-	*x_last = x2;
-	*y_last = y2;
+	axis->setpoint = (int)(pos*axis->mm_pulse);
+	axis->pid_process = true;
+	PWM(axis);	
+	if( axis->finish)
+	{
+		axis->pwm = 0;
+		PWM(axis);
+		axis->pid_process = false;		
+		axis->time_sample = 0;		
+	}
 }
-
-void draw_line(int x1, int y1, int x2, int y2)
+void moveGcode(AXIS *pAxis)
 {
-	int dx = x2 - x1;
-	int dy = y2 - y1;
+	pAxis->setpoint = (int)(pAxis->last * pAxis->mm_pulse);
+	pAxis->pid_process = true;
+	while( pAxis->pid_process)
+	{
+		PWM(pAxis);	
+		if( pAxis->finish)
+		{
+			pAxis->pwm = 0;
+			PWM(pAxis);
+			pAxis->pid_process = false;		
+			pAxis->time_sample = 0;		
+			pAxis->finish = false;
+		}
+	}
+}
+void drawLine(AXIS *pXAxis, AXIS *pYAxis)
+{
+	// declare variable
+	int dx = round(pXAxis->next - pXAxis->last);
+	int dy = round(pYAxis->next - pYAxis->last);
 	int longest = int_max(int_abs(dx), int_abs(dy));
 	int shortest = int_min(int_abs(dx), int_abs(dy));
 	int error = - longest;
+	int slope = shortest<<1;
+	int max = longest<<1;
 	int threshold = 0;
-	int maximum = (longest << 1);
-	int slop = (shortest << 1);
-	bool swap_XY = true;
+	bool swapXY = true;
 	
-	if(int_abs(dx) >= int_abs(dy))
-		swap_XY = false;
+	// swap x and y if dy > dx
+	if(int_abs(dx) > int_abs(dy))
+		swapXY = false;
+	
+	// Bresenham Algorithm
 	for(int i = 0; i < longest; i++)
 	{
-		if(swap_XY)
+		if(swapXY)
 		{
-			if(dy < 0)
-				move_y(DOWN);
+			if( dy > 0)
+				pYAxis->last ++;
 			else
-				move_y(UP);
+				pYAxis->last --;
+			moveGcode(pYAxis);
 		}
 		else
 		{
-			if(dx < 0)
-				move_x(LEFT);
+			if( dx > 0)
+				pXAxis->last ++;
 			else
-				move_x(RIGHT);
+				pXAxis->last --;
+			moveGcode(pXAxis);
 		}
-		
-		error += slop;
-		if(error > threshold)
-			error = - maximum;
-		if(swap_XY)
+		error = error + slope;
+		if(error >= threshold)
 		{
-			if(dx < 0)
-				move_x(LEFT);
+			error = error - max;
+			if(!swapXY)
+			{
+				if( dy > 0)
+					pYAxis->last ++;
+				else
+					pYAxis->last --;
+				moveGcode(pYAxis);
+			}
 			else
-				move_x(RIGHT);
-		}
-		else
-		{
-			if(dy < 0)
-				move_y(DOWN);
-			else
-				move_y(UP);
+			{
+				if( dx > 0)
+					pXAxis->last ++;
+				else
+					pXAxis->last --;
+				moveGcode(pXAxis);
+			}
 		}
 	}
 }
-
-void move_x(bool direction)
-{
-	
-}
-
-void move_y(bool direction)
-{
-	
-}
-
-void draw_arc_cw(float x, float y, float i, float j, int *x_last, int *y_last, int scale_factor, float x_step_per_mm, float y_step_per_mm)
-{
-	if((i < -100) || (i > 100) || (j < - 100) || (j > 100))
-		move_to(x_last, y_last, x, y, scale_factor, x_step_per_mm, y_step_per_mm);
-	else
-	{
-		float dx = x - *x_last;
-		float dy = y - *y_last;
-		float chord = sqrt(dx * dx + dy * dy);
-		float radius = sqrt( i * i + j * j);
-		float alpha = 2 * asin(chord / ( 2 * radius));
-		float arc = alpha * radius;
-		
-		int segments = 1;
-		float beta;
-		if(arc > LINE_MAX)
-		{
-			segments = (int)(arc / LINE_MAX);
-			beta = alpha / segments;
-		}
-		else
-			beta = alpha;
-		
-		float current_angle = atan2(-j, -i);
-		if( current_angle <= 0)
-			current_angle += 2 * PI;
-		
-		float next_angle = current_angle;
-		float circle_x = *x_last + i;
-		float circle_y = *y_last + j;
-		float new_x, new_y;
-		for( int segment = 1; segment < segments; segment++)
-		{
-			next_angle += beta;
-			if(next_angle > 2 * PI)
-				next_angle -= 2 * PI;
-			new_x = circle_x + radius*cos(next_angle);
-			new_y = circle_y + radius*sin(next_angle);
-			move_to(x_last, y_last, new_x,new_y, scale_factor, x_step_per_mm, y_step_per_mm);
-		}
-		move_to(x_last, y_last, x, y, scale_factor, x_step_per_mm, y_step_per_mm);
-	}
-}
-

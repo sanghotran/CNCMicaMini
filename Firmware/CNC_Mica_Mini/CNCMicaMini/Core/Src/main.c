@@ -83,7 +83,7 @@ static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
 void axisInit(void);
-void move(AXIS *axis, float pos);
+//void move(AXIS *axis, float pos);
 
 
 /* USER CODE END PFP */
@@ -169,7 +169,7 @@ void axisInit()
 }
 
 
-void move(AXIS *axis, float pos)
+/*void move(AXIS *axis, float pos)
 {
 	axis->setpoint = (int)(pos*axis->mm_pulse);
 	axis->pid_process = true;
@@ -180,13 +180,13 @@ void move(AXIS *axis, float pos)
 		PWM(axis);
 		axis->pid_process = false;		
 		axis->time_sample = 0;
-		/*memset(data.TransBuff, 0, 45);
+		 memset(data.TransBuff, 0, 45);
 		sprintf(data.TransBuff, "ACK C %d_SETPOINT %d", data.need, axis->e_pre);
 		data.need++;
 		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
-		*/
+		
 	}
-}
+}*/
 
 
 /* USER CODE END 0 */
@@ -252,7 +252,7 @@ int main(void)
 			switch(_cncState)
 			{ 				
 				case 0: // move x y with z up
-					
+					drawLine(&x_axis, &y_axis);
 					break;
 				
 				case 1: // move x y with z down
@@ -305,6 +305,10 @@ int main(void)
 				x_axis.htim_enc->Instance->CNT = 0;
 				y_axis.htim_enc->Instance->CNT = 0;
 				z_axis.htim_enc->Instance->CNT = 0;
+				
+				x_axis.last = 0;
+				y_axis.last = 0;
+				z_axis.last = 0;
 				
 				sprintf(data.TransBuff, "ACK H %d_HOME %d", data.receive, thickness);				
 				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);

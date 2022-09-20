@@ -43,6 +43,7 @@ typedef struct
 	bool home;
 	
 	float next;
+	float last;
 
 } AXIS;
 
