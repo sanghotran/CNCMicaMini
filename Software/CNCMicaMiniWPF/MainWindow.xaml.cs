@@ -228,6 +228,10 @@ namespace CNCMicaMiniWPF
 
         private Thread DebugThread;
 
+        private const int maxCNCGrid = 600;
+        private const int maxCNC = 200;
+        private const int pixelCNC = maxCNCGrid / maxCNC;
+
         string[] GcodeBuff;
         string ResendBuff;
         string[] ReceiveData;
@@ -252,6 +256,16 @@ namespace CNCMicaMiniWPF
         public PID x_PID;
         public PID y_PID;
         public PID z_PID;
+
+        public struct Draw
+        {
+            public double xLast;
+            public double yLast;
+            public double xNext;
+            public double yNext;
+            public string[] buff;           
+        }
+        public Draw draw;
 
         #endregion
 
@@ -389,7 +403,56 @@ namespace CNCMicaMiniWPF
                 }
             }
         }
+        private void drawFromGcode()
+        {
+            for (int i = 0; i < GcodeBuff.Length; i++)
+            {
+                while (!(GcodeBuff[i].Contains("G0") && GcodeBuff[i].Contains("X")))
+                {
+                    i++;
+                    if (i == GcodeBuff.Length)
+                    {
+                        return;
+                    }
+                }
+                draw.buff = GcodeBuff[i].Split(' ');
+                gcodeProcess();
+            }
 
+        }
+        private void gcodeProcess()
+        {
+            switch (draw.buff[0])
+            {
+                case "G00":
+                    draw.xLast = Convert.ToDouble(draw.buff[1].Replace("X", string.Empty));
+                    draw.yLast = Convert.ToDouble(draw.buff[2].Replace("Y", string.Empty));
+                    break;
+                case "G01":
+                    draw.xNext = Convert.ToDouble(draw.buff[1].Replace("X", string.Empty));
+                    draw.yNext = Convert.ToDouble(draw.buff[2].Replace("Y", string.Empty));
+                    drawLine();
+                    break;
+                case "G02":
+                    break;
+                case "G03":
+                    break;
+            }
+        }
+        private void drawLine()
+        {
+            Line gcodeLine = new Line();
+            gcodeLine.Visibility = Visibility.Visible;
+            gcodeLine.StrokeThickness = 2;
+            gcodeLine.Stroke = System.Windows.Media.Brushes.Black;
+            gcodeLine.X1 = draw.xLast * pixelCNC;
+            gcodeLine.Y1 = maxCNCGrid - draw.yLast * pixelCNC;
+            gcodeLine.X2 = draw.xNext * pixelCNC;
+            gcodeLine.Y2 = maxCNCGrid - draw.yNext * pixelCNC;
+            CNCGrid.Children.Add(gcodeLine);
+            draw.xLast = draw.xNext;
+            draw.yLast = draw.yNext;
+        }
         #endregion
 
         #region events
@@ -539,6 +602,8 @@ namespace CNCMicaMiniWPF
                 Gcode.Text = data;
                 GcodeBuff = Gcode.Text.Split('\n');                
                 IsGcodeSelected = true;
+                CNCGrid.Children.Clear();
+                drawFromGcode();
             }
         }
         private void Ok_Warning(object sender, MouseButtonEventArgs e)

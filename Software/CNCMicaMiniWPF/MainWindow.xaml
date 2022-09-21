@@ -32,6 +32,7 @@
         <Grid
               Margin="575,80,30,30">
             <Image Source="Images/Iredframeneon.png"/>
+            <Grid x:Name="CNCGrid" Margin="52.5 25 52.5 25"/>
         </Grid>
         <!-- Software's Name-->
         <Grid Margin="700 30 200 690">
