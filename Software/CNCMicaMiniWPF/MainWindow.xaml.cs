@@ -229,8 +229,9 @@ namespace CNCMicaMiniWPF
         private Thread DebugThread;
 
         private const int maxCNCGrid = 600;
-        private const int maxCNC = 200;
+        private const int maxCNC = 100;
         private const int pixelCNC = maxCNCGrid / maxCNC;
+        private const int lineMax = 2;
 
         string[] GcodeBuff;
         string ResendBuff;
@@ -263,6 +264,8 @@ namespace CNCMicaMiniWPF
             public double yLast;
             public double xNext;
             public double yNext;
+            public double I;
+            public double J;
             public string[] buff;           
         }
         public Draw draw;
@@ -431,15 +434,25 @@ namespace CNCMicaMiniWPF
                 case "G01":
                     draw.xNext = Convert.ToDouble(draw.buff[1].Replace("X", string.Empty));
                     draw.yNext = Convert.ToDouble(draw.buff[2].Replace("Y", string.Empty));
-                    drawLine();
+                    drawLine(draw.xNext, draw.yNext);
                     break;
                 case "G02":
+                    draw.xNext = Convert.ToDouble(draw.buff[1].Replace("X", string.Empty));
+                    draw.yNext = Convert.ToDouble(draw.buff[2].Replace("Y", string.Empty));
+                    draw.I = Convert.ToDouble(draw.buff[4].Replace("I", string.Empty));
+                    draw.J = Convert.ToDouble(draw.buff[5].Replace("J", string.Empty));
+                    drawArcCw();
                     break;
                 case "G03":
+                    draw.xNext = Convert.ToDouble(draw.buff[1].Replace("X", string.Empty));
+                    draw.yNext = Convert.ToDouble(draw.buff[2].Replace("Y", string.Empty));
+                    draw.I = Convert.ToDouble(draw.buff[4].Replace("I", string.Empty));
+                    draw.J = Convert.ToDouble(draw.buff[5].Replace("J", string.Empty));
+                    drawArcCcw();
                     break;
             }
         }
-        private void drawLine()
+        private void drawLine(double xNext, double yNext)
         {
             Line gcodeLine = new Line();
             gcodeLine.Visibility = Visibility.Visible;
@@ -447,11 +460,113 @@ namespace CNCMicaMiniWPF
             gcodeLine.Stroke = System.Windows.Media.Brushes.Black;
             gcodeLine.X1 = draw.xLast * pixelCNC;
             gcodeLine.Y1 = maxCNCGrid - draw.yLast * pixelCNC;
-            gcodeLine.X2 = draw.xNext * pixelCNC;
-            gcodeLine.Y2 = maxCNCGrid - draw.yNext * pixelCNC;
+            gcodeLine.X2 = xNext * pixelCNC;
+            gcodeLine.Y2 = maxCNCGrid - yNext * pixelCNC;
             CNCGrid.Children.Add(gcodeLine);
-            draw.xLast = draw.xNext;
-            draw.yLast = draw.yNext;
+            draw.xLast = xNext;
+            draw.yLast = yNext;
+        }
+        private void drawArcCw()
+        {
+            if(draw.I < -100 || draw.I > 100 || draw.J < -100 || draw.J >100)
+            {
+                drawLine(draw.xNext, draw.yNext);
+                return;
+            }
+            // declare variable
+            double circleX = draw.xLast + draw.I;
+            double circleY = draw.yLast + draw.J;
+            double xNew;
+            double yNew;
+
+            // caculate arc
+            double dx = draw.xLast - draw.xNext;
+            double dy = draw.yLast - draw.yNext;
+            double chord = Math.Sqrt(dx * dx + dy * dy);
+            double radius = Math.Sqrt(draw.I * draw.I + draw.J * draw.J);
+            double alpha = 2 * Math.Asin(chord / (2 * radius));
+            double arc = alpha * radius;
+            double beta;
+
+            // sub divide alpha
+            int segments = 1;
+            if (arc > lineMax)
+            {
+                segments = Convert.ToInt32(arc / lineMax);
+                beta = alpha / segments;
+            }
+            else
+                beta = alpha;
+
+            // caculate current angle
+            double currentAngle = Math.Atan2(-draw.J, -draw.I);
+            if (currentAngle <= 0)
+                currentAngle = currentAngle + 2 * Math.PI;
+
+            // plot arc cw
+            double nextAngle = currentAngle;
+            for( int segment = 1; segment < segments; segment ++)
+            {
+                nextAngle = nextAngle - beta;
+                if( nextAngle < 0)
+                    nextAngle = nextAngle + 2 * Math.PI;
+                xNew = circleX + radius * Math.Cos(nextAngle);
+                yNew = circleY + radius * Math.Sin(nextAngle);
+                drawLine(xNew, yNew);
+            }
+            // draw final line
+            drawLine(draw.xNext, draw.yNext);
+        }
+        private void drawArcCcw()
+        {
+            if (draw.I < -100 || draw.I > 100 || draw.J < -100 || draw.J > 100)
+            {
+                drawLine(draw.xNext, draw.yNext);
+                return;
+            }
+            // declare variable
+            double circleX = draw.xLast + draw.I;
+            double circleY = draw.yLast + draw.J;
+            double xNew;
+            double yNew;
+
+            // caculate arc
+            double dx = draw.xLast - draw.xNext;
+            double dy = draw.yLast - draw.yNext;
+            double chord = Math.Sqrt(dx * dx + dy * dy);
+            double radius = Math.Sqrt(draw.I * draw.I + draw.J * draw.J);
+            double alpha = 2 * Math.Asin(chord / (2 * radius));
+            double arc = alpha * radius;
+            double beta;
+
+            // sub divide alpha
+            int segments = 1;
+            if (arc > lineMax)
+            {
+                segments = Convert.ToInt32(arc / lineMax);
+                beta = alpha / segments;
+            }
+            else
+                beta = alpha;
+
+            // caculate current angle
+            double currentAngle = Math.Atan2(-draw.J, -draw.I);
+            if (currentAngle <= 0)
+                currentAngle = currentAngle + 2 * Math.PI;
+
+            // plot arc cw
+            double nextAngle = currentAngle;
+            for (int segment = 1; segment < segments; segment++)
+            {
+                nextAngle = nextAngle + beta;
+                if (nextAngle > 2 * Math.PI)
+                    nextAngle = nextAngle - 2 * Math.PI;
+                xNew = circleX + radius * Math.Cos(nextAngle);
+                yNew = circleY + radius * Math.Sin(nextAngle);
+                drawLine(xNew, yNew);
+            }
+            // draw final line
+            drawLine(draw.xNext, draw.yNext);
         }
         #endregion
 
