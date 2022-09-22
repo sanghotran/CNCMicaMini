@@ -109,14 +109,6 @@ void moveGcode(AXIS *pAxis)
 		}
 	}
 }
-void delayForSendCoor(void)
-{
-	for(int i = 0; i < DELAY_FOR_SEND_COOR; i++)
-	{
-		i+=0;
-	}
-		
-}
 void drawLine(AXIS *pXAxis, AXIS *pYAxis)
 {
 	// declare variable

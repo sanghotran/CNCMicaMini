@@ -35,8 +35,9 @@ enum
 	Idle = 0,
 	Gcode,
 	Home,
-	Home_1cm,
-	Calib
+	Calib,
+	Drill,
+	Home_1cm
 }CNC_Mode_main;
 /* USER CODE END PTD */
 
@@ -67,6 +68,8 @@ uint8_t process_mode = Idle;
 int thickness = 0;
 float I;
 float J;
+
+bool drill_status = false;
 
 DATA data;
 
@@ -156,7 +159,7 @@ void axisInit()
 	
 	x_axis.Kp = 0.8;
 	y_axis.Kp = 1.1;
-	z_axis.Kp = 0.5;
+	z_axis.Kp = 0.7;
 	
 	x_axis.Ki = 0.0001;
 	y_axis.Ki = 0.0001;
@@ -227,6 +230,31 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		// mode drill control
+		if(process_mode == Drill)
+		{
+			if( drill_status != z_axis.drill)
+			{
+				if(z_axis.drill)
+				{
+					z_axis.last = 1;
+					move(&z_axis, thickness);
+				}
+				else
+				{
+					z_axis.last = 0;
+					move(&z_axis, 0);
+				}
+				if(z_axis.finish)
+				{
+					z_axis.finish = false;
+					process_mode = Gcode;
+					drill_status = z_axis.drill;
+				}
+			}
+			else
+				process_mode = Gcode;
+		}
 		// mode gcode control
 		if(process_mode == Gcode ) 
 		{
@@ -236,28 +264,24 @@ int main(void)
 					while(!(x_axis.finish && y_axis.finish))
 					{
 						move(&x_axis, x_axis.next);
-				    move(&y_axis, y_axis.next);								
+				    move(&y_axis, y_axis.next);	
 					}
 					x_axis.finish = false;
 					y_axis.finish = false;
 					x_axis.last = x_axis.next;
 					y_axis.last = y_axis.next;
-					z_axis.last = 0;
 					break;
 				
-				case 1: // move x y with z down
+				case 1: // move x y with z down					
 					drawLine(&x_axis, &y_axis);
-					z_axis.last = 1;
 					break; 
 				
 				case 2: // move x y with z down circle
 					drawLine(&x_axis, &y_axis);
-					z_axis.last = 1;
 					break;
 				
 				case 3: // move x y wih z down circle 
 					drawLine(&x_axis, &y_axis);
-				  z_axis.last = 1;
 					break;
 			}
 			sprintf(data.TransBuff, "ACK R %d_RESUME_X%f Y%f Z%f", data.receive, x_axis.last, y_axis.last, z_axis.last);
@@ -297,14 +321,14 @@ int main(void)
 				x_axis.finish = false;
 				y_axis.finish = false;
 				z_axis.finish = false;
-				
+
 				x_axis.htim_enc->Instance->CNT = 0;
 				y_axis.htim_enc->Instance->CNT = 0;
 				z_axis.htim_enc->Instance->CNT = 0;
 				
-				x_axis.last = 0;
-				y_axis.last = 0;
-				z_axis.last = 0;
+				x_axis.pos = 0;
+				y_axis.pos = 0;
+				z_axis.pos = 0;
 				
 				sprintf(data.TransBuff, "ACK H %d_HOME %d", data.receive, thickness);				
 				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);

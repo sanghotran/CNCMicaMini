@@ -44,7 +44,6 @@ void drawLine(AXIS *pXAxis, AXIS *pYAxis);
 
 //void drawArcCcw(AXIS *pXAxis, AXIS *pYAxis, float i, float j);
 
-void delayForSendCoor(void);
 
 
 #endif /* __MOTORCONTROL_H */

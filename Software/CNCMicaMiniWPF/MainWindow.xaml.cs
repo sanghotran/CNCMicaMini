@@ -333,11 +333,6 @@ namespace CNCMicaMiniWPF
             {
                 ShowData = input.Split('_');
 
-                // don't print and draw on CNC frame;
-                CNCDraw.buff = ShowData[2].Split(' ');
-                draw_flag = true;
-                drawFromCNC();
-
                 // print to log
                 log_data = ShowData[0] + '\n';
                 log_flag = true;
@@ -345,6 +340,11 @@ namespace CNCMicaMiniWPF
                 // print to debug
                 debug_data = ShowData[1] + ShowData[2] + '\n';
                 debug_flag = true;
+
+                // don't print and draw on CNC frame;
+                CNCDraw.buff = ShowData[2].Split(' ');
+                draw_flag = true;
+                drawFromCNC();
             }
             catch
             {

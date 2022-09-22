@@ -41,6 +41,8 @@ typedef struct
 	
 	bool pid_process;
 	
+	bool drill;
+	
 	bool home;
 	
 	float next;

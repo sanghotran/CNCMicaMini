@@ -38,7 +38,8 @@ enum
 	Idle = 0,
 	Gcode,
 	Home,
-	Calib
+	Calib,
+	Drill
 }CNC_Mode_usb;
 
 
@@ -255,22 +256,26 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 					{
 						case '0': //
 							sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f",&temp, &temp, &x_axis.next, &y_axis.next);
+						  z_axis.drill = false;
 							_cncState = 0; 
 							break;
 						case '1': //
 							sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f",&temp, &temp, &x_axis.next, &y_axis.next);
+						z_axis.drill = true;
 							_cncState = 1;
 							break;
 						case '2': //
 							sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f Z%d I%f J%f" ,&temp, &temp, &x_axis.next, &y_axis.next, &temp, &I, &J);
+						z_axis.drill = true;
 							_cncState = 2;
 							break;
 						case '3': //
 							sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f Z%d I%f J%f" ,&temp, &temp, &x_axis.next, &y_axis.next, &temp, &I, &J);
+						z_axis.drill = true;
 							_cncState = 3;
 							break;
 					}	
-			 process_mode = Gcode; // mode gcode control motor
+			 process_mode = Drill; // mode gcode control motor
 			}
 			else
 				sprintf(data.TransBuff, "ACK R %d_RESUME", data.receive);
@@ -299,7 +304,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 				break;
 			
 		// command set PID 
-		case 'I':
+		/*case 'I':
 			switch( data.Command[1])
 			{
 				case 'X':
@@ -315,7 +320,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 					sprintf(data.TransBuff, "ACK F %d_PID Z %.2f %.4f %.2f",data.receive, z_axis.Kp, z_axis.Ki, z_axis.Kd);
 					break;
 			}
-			break;
+			break;*/
 		// command pause CNC
 		case 'P': 
 			sprintf(data.TransBuff, "ACK P %d_PAUSE", data.receive);
