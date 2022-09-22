@@ -348,7 +348,8 @@ namespace CNCMicaMiniWPF
             }
             catch
             {
-
+                debug_data = ShowData[1];
+                debug_flag = true;
             }
 
             // check ACK from CNC

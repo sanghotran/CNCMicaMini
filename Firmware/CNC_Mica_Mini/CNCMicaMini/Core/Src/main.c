@@ -65,7 +65,7 @@ AXIS y_axis;
 AXIS z_axis;
 
 uint8_t process_mode = Idle;
-int thickness = 0;
+float thickness = 0;
 float I;
 float J;
 
@@ -158,7 +158,7 @@ void axisInit()
 	z_axis.PIN_HOME = GPIO_PIN_15;
 	
 	x_axis.Kp = 0.8;
-	y_axis.Kp = 1.1;
+	y_axis.Kp = 1.3;
 	z_axis.Kp = 0.7;
 	
 	x_axis.Ki = 0.0001;
@@ -330,7 +330,7 @@ int main(void)
 				y_axis.pos = 0;
 				z_axis.pos = 0;
 				
-				sprintf(data.TransBuff, "ACK H %d_HOME %d", data.receive, thickness);				
+				sprintf(data.TransBuff, "ACK H %d_HOME %f", data.receive, thickness);				
 				USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
 				data.need++;
 				

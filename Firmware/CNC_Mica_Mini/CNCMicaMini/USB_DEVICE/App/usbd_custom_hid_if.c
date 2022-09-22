@@ -50,7 +50,7 @@ extern AXIS z_axis;
 extern DATA data;
 
 extern uint8_t process_mode;
-extern int thickness;
+extern float thickness;
 extern float I;
 extern float J;
 
@@ -299,7 +299,7 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 				y_axis.home = false;
 				z_axis.home = false;
 				
-				sscanf(data.ReceiveBuff, "%d H %d", &temp, &thickness);
+				sscanf(data.ReceiveBuff, "%d H %f", &temp, &thickness);
 				process_mode = Home; // mode goto home
 				break;
 			
