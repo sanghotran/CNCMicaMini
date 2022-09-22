@@ -34,5 +34,11 @@ cncmicamini\stm32f1xx_it.o: ..\CNC_lib\Inc/MotorControl.h
 cncmicamini\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 cncmicamini\stm32f1xx_it.o: ..\CNC_lib\Inc/MyMath.h
 cncmicamini\stm32f1xx_it.o: ..\CNC_lib\Inc/MyStruct.h
+cncmicamini\stm32f1xx_it.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h
+cncmicamini\stm32f1xx_it.o: ../USB_DEVICE/Target/usbd_conf.h
+cncmicamini\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+cncmicamini\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+cncmicamini\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+cncmicamini\stm32f1xx_it.o: ../Core/Inc/main.h
 cncmicamini\stm32f1xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 cncmicamini\stm32f1xx_it.o: ../Core/Inc/stm32f1xx_it.h

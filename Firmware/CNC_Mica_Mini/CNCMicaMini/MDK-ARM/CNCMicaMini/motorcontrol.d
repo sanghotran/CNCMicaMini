@@ -33,4 +33,11 @@ cncmicamini\motorcontrol.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_ti
 cncmicamini\motorcontrol.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h
 cncmicamini\motorcontrol.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h
 cncmicamini\motorcontrol.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
+cncmicamini\motorcontrol.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h
+cncmicamini\motorcontrol.o: ../USB_DEVICE/Target/usbd_conf.h
+cncmicamini\motorcontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+cncmicamini\motorcontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+cncmicamini\motorcontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+cncmicamini\motorcontrol.o: ../Core/Inc/main.h
+cncmicamini\motorcontrol.o: ..\CNC_lib\Inc/MotorControl.h
 cncmicamini\motorcontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

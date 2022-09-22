@@ -324,11 +324,6 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 		case 'R':		
 			sprintf(data.TransBuff, "ACK R %d_RESUME", data.receive);
 			break;
-		// command calib 
-		case 'C':
-			sscanf(data.ReceiveBuff, "%d C %f", &temp, &z_axis.next);
-			process_mode = Calib; // mode calib
-			break;
 		// skip other Gcode		
 		default:
 			sprintf(data.TransBuff, "ACK R %d_SKIP", data.receive);

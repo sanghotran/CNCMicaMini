@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
+#include "usbd_def.h"
 
 #define T_SAMPLE 3
 
@@ -57,5 +58,6 @@ typedef struct
 	int receive;
 	int need;
 } DATA;
+
 
 #endif

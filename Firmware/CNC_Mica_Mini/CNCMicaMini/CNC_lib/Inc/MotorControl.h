@@ -6,6 +6,7 @@
 #include "MyStruct.h"
 #include "stm32f1xx_hal.h"
 #include <math.h>
+#include <stdio.h>
 
 #define PI 3.1415926535897932384626433832795
 #define HALF_PI 1.5707963267948966192313216916398
@@ -18,6 +19,8 @@
 #define MAX_SPEED 90
 
 #define ERROR 25
+
+#define DELAY_FOR_SEND_COOR 1440000
 	
 #define LINE_MAX 2 // max line lengh (mm) when draw circle
 
@@ -37,9 +40,11 @@ void moveGcode(AXIS *pAxis);
 
 void drawLine(AXIS *pXAxis, AXIS *pYAxis);
 
-void drawArcCw(AXIS *pXAxis, AXIS *pYAxis, float i, float j);
+//void drawArcCw(AXIS *pXAxis, AXIS *pYAxis, float i, float j);
 
-void drawArcCcw(AXIS *pXAxis, AXIS *pYAxis, float i, float j);
+//void drawArcCcw(AXIS *pXAxis, AXIS *pYAxis, float i, float j);
+
+void delayForSendCoor(void);
 
 
 #endif /* __MOTORCONTROL_H */

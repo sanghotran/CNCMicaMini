@@ -85,6 +85,7 @@ static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
 void axisInit(void);
+//void drawLine(AXIS *pXAxis, AXIS *pYAxis, DATA *pdata,USBD_HandleTypeDef *usbd );
 //void move(AXIS *axis, float pos);
 
 
@@ -154,7 +155,7 @@ void axisInit()
 	z_axis.PIN_HOME = GPIO_PIN_15;
 	
 	x_axis.Kp = 0.8;
-	y_axis.Kp = 1;
+	y_axis.Kp = 1.1;
 	z_axis.Kp = 0.5;
 	
 	x_axis.Ki = 0.0001;
@@ -169,7 +170,6 @@ void axisInit()
 	y_axis.mm_pulse = 333.3333;
 	z_axis.mm_pulse = 500;
 }
-
 /* USER CODE END 0 */
 
 /**
@@ -242,21 +242,25 @@ int main(void)
 					y_axis.finish = false;
 					x_axis.last = x_axis.next;
 					y_axis.last = y_axis.next;
+					z_axis.last = 0;
 					break;
 				
 				case 1: // move x y with z down
 					drawLine(&x_axis, &y_axis);
+					z_axis.last = 1;
 					break; 
 				
 				case 2: // move x y with z down circle
 					drawLine(&x_axis, &y_axis);
+					z_axis.last = 1;
 					break;
 				
 				case 3: // move x y wih z down circle 
 					drawLine(&x_axis, &y_axis);
+				  z_axis.last = 1;
 					break;
 			}
-			sprintf(data.TransBuff, "ACK R %d_RESUME", data.receive);
+			sprintf(data.TransBuff, "ACK R %d_RESUME_X%f Y%f Z%f", data.receive, x_axis.last, y_axis.last, z_axis.last);
 			data.need++;
 			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45); // send command resume
    		process_mode = Idle; // idle mode
@@ -308,11 +312,6 @@ int main(void)
 				
 				process_mode = Idle;
 			}
-		}
-		// calib mode
-		if( process_mode == Calib) 
-		{
-			move(&z_axis, z_axis.next);
 		}
     /* USER CODE END WHILE */
 

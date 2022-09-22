@@ -247,6 +247,8 @@ namespace CNCMicaMiniWPF
         string log_data;
         bool log_flag = false;
 
+        bool draw_flag = false;
+
         public struct PID
         {
             public string Kp;
@@ -269,6 +271,7 @@ namespace CNCMicaMiniWPF
             public string[] buff;           
         }
         public Draw draw;
+        public Draw CNCDraw;
 
         #endregion
 
@@ -330,12 +333,17 @@ namespace CNCMicaMiniWPF
             {
                 ShowData = input.Split('_');
 
+                // don't print and draw on CNC frame;
+                CNCDraw.buff = ShowData[2].Split(' ');
+                draw_flag = true;
+                drawFromCNC();
+
                 // print to log
                 log_data = ShowData[0] + '\n';
                 log_flag = true;
 
                 // print to debug
-                debug_data = ShowData[1] + '\n';
+                debug_data = ShowData[1] + ShowData[2] + '\n';
                 debug_flag = true;
             }
             catch
@@ -403,6 +411,12 @@ namespace CNCMicaMiniWPF
                 {
                     log_flag = false;
                     log.Dispatcher.Invoke(() => log.Text += log_data); ;
+                }
+
+                if( draw_flag)
+                {
+                    draw_flag = false;
+                    //drawFromCNC();
                 }
             }
         }
@@ -567,6 +581,36 @@ namespace CNCMicaMiniWPF
             }
             // draw final line
             drawLine(draw.xNext, draw.yNext);
+        }
+        private void drawLineCNC(double xNext, double yNext)
+        {
+            Line gcodeLine = new Line();
+            gcodeLine.Visibility = Visibility.Visible;
+            gcodeLine.StrokeThickness = 2;
+            gcodeLine.Stroke = System.Windows.Media.Brushes.Red;
+            gcodeLine.X1 = CNCDraw.xLast * pixelCNC;
+            gcodeLine.Y1 = maxCNCGrid - CNCDraw.yLast * pixelCNC;
+            gcodeLine.X2 = xNext * pixelCNC;
+            gcodeLine.Y2 = maxCNCGrid - yNext * pixelCNC;
+            CNCGrid.Children.Add(gcodeLine);
+            CNCDraw.xLast = xNext;
+            CNCDraw.yLast = yNext;
+        }
+        private void drawFromCNC()
+        {
+            if (Convert.ToDouble(CNCDraw.buff[2].Replace("Z", string.Empty)) == 1) 
+            {
+                double xNew = Convert.ToDouble(CNCDraw.buff[0].Replace("X", string.Empty));
+                double yNew = Convert.ToDouble(CNCDraw.buff[1].Replace("Y", string.Empty));
+                drawLineCNC(xNew, yNew);
+            }
+            if (Convert.ToDouble(CNCDraw.buff[2].Replace("Z", string.Empty)) == 0)
+            {
+                double xNew = Convert.ToDouble(CNCDraw.buff[0].Replace("X", string.Empty));
+                double yNew = Convert.ToDouble(CNCDraw.buff[1].Replace("Y", string.Empty));
+                CNCDraw.xLast = xNew;
+                CNCDraw.yLast = yNew;
+            }
         }
         #endregion
 

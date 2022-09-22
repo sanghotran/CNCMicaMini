@@ -1,6 +1,6 @@
 Dependencies for Project 'CNCMicaMini', Target 'CNCMicaMini': (DO NOT MODIFY !)
 F (startup_stm32f103xb.s)(0x62F7759A)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include--pd "__UVISION_VERSION SETA 525" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1"--list startup_stm32f103xb.lst --xref -o cncmicamini\startup_stm32f103xb.o --depend cncmicamini\startup_stm32f103xb.d)
-F (../Core/Src/main.c)(0x632BC320)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\main.o --omf_browse cncmicamini\main.crf --depend cncmicamini\main.d)
+F (../Core/Src/main.c)(0x632BE4EE)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\main.o --omf_browse cncmicamini\main.crf --depend cncmicamini\main.d)
 I (../Core/Inc/main.h)(0x62FDD6B1)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x61A8A8F0)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x62F77591)
@@ -31,17 +31,17 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
-I (../USB_DEVICE/App/usb_device.h)(0x62F7758E)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h)(0x61A8A8C5)
 I (../USB_DEVICE/Target/usbd_conf.h)(0x6304ED93)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599EDB3C)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599EDB3C)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
+I (../USB_DEVICE/App/usb_device.h)(0x62F7758E)
 I (../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc/usbd_customhid.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x61A8A8C5)
@@ -78,10 +78,15 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
+I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h)(0x61A8A8C5)
+I (../USB_DEVICE/Target/usbd_conf.h)(0x6304ED93)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599EDB3C)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../Core/Inc/stm32f1xx_it.h)(0x62F77591)
 F (../Core/Src/stm32f1xx_hal_msp.c)(0x62F77591)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\stm32f1xx_hal_msp.o --omf_browse cncmicamini\stm32f1xx_hal_msp.crf --depend cncmicamini\stm32f1xx_hal_msp.d)
@@ -115,10 +120,15 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
+I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h)(0x61A8A8C5)
+I (../USB_DEVICE/Target/usbd_conf.h)(0x6304ED93)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599EDB3C)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 F (../USB_DEVICE/App/usb_device.c)(0x62F7758E)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\usb_device.o --omf_browse cncmicamini\usb_device.crf --depend cncmicamini\usb_device.d)
 I (../USB_DEVICE/App/usb_device.h)(0x62F7758E)
@@ -157,10 +167,10 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599EDB3C)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (../Core/Inc/main.h)(0x62FDD6B1)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h)(0x61A8A8C5)
@@ -204,16 +214,16 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h)(0x61A8A8C5)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x61A8A8C5)
 I (../USB_DEVICE/App/usbd_desc.h)(0x62F7758F)
-F (../USB_DEVICE/App/usbd_custom_hid_if.c)(0x632B0B05)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\usbd_custom_hid_if.o --omf_browse cncmicamini\usbd_custom_hid_if.crf --depend cncmicamini\usbd_custom_hid_if.d)
+F (../USB_DEVICE/App/usbd_custom_hid_if.c)(0x632BD7F7)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\usbd_custom_hid_if.o --omf_browse cncmicamini\usbd_custom_hid_if.crf --depend cncmicamini\usbd_custom_hid_if.d)
 I (../USB_DEVICE/App/usbd_custom_hid_if.h)(0x62F77590)
 I (../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc/usbd_customhid.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h)(0x61A8A8C5)
@@ -252,10 +262,10 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x61A8A8C5)
@@ -295,10 +305,10 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599EDB3C)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (../Core/Inc/main.h)(0x62FDD6B1)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h)(0x61A8A8C5)
@@ -850,12 +860,12 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h)(0x61A8A8C5)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x61A8A8C5)
 F (../Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c)(0x61A8A8C5)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\usbd_ctlreq.o --omf_browse cncmicamini\usbd_ctlreq.crf --depend cncmicamini\usbd_ctlreq.d)
@@ -895,10 +905,10 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x61A8A8C5)
@@ -939,10 +949,10 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x61A8A8C5)
@@ -984,18 +994,18 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x61A8A8C5)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x61A8A8C5)
-F (..\CNC_lib\Src\MotorControl.c)(0x632BC320)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\motorcontrol.o --omf_browse cncmicamini\motorcontrol.crf --depend cncmicamini\motorcontrol.d)
-I (..\CNC_lib\Inc/MotorControl.h)(0x632B1CFC)
+F (..\CNC_lib\Src\MotorControl.c)(0x632BDDC3)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\motorcontrol.o --omf_browse cncmicamini\motorcontrol.crf --depend cncmicamini\motorcontrol.d)
+I (..\CNC_lib\Inc/MotorControl.h)(0x632BDDE8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
-I (..\CNC_lib\Inc/MyStruct.h)(0x632AD607)
+I (..\CNC_lib\Inc/MyStruct.h)(0x632BCA26)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x61A8A8F0)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x62F77591)
@@ -1025,6 +1035,12 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x61A8A8F0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x61A8A8F0)
+I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h)(0x61A8A8C5)
+I (../USB_DEVICE/Target/usbd_conf.h)(0x6304ED93)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599EDB3C)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599EDB3C)
+I (../Core/Inc/main.h)(0x62FDD6B1)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599EDB3E)
 F (..\CNC_lib\Src\MyMath.c)(0x632B212E)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\CNC_lib-I.\RTE\_CNCMicaMini-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o cncmicamini\mymath.o --omf_browse cncmicamini\mymath.crf --depend cncmicamini\mymath.d)
 I (..\CNC_lib\Inc/MyMath.h)(0x62FB4F1D)
