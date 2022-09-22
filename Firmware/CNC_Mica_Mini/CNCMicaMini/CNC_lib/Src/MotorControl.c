@@ -29,8 +29,8 @@ void PWM(AXIS *axis)
 
 void readEncoder(TIM_HandleTypeDef* htim, int *Pos)
 {
-	*Pos = (int16_t)(htim->Instance->CNT);
-	//htim.Instance->CNT=0;
+	*Pos += (int16_t)(htim->Instance->CNT);
+	htim->Instance->CNT=0;
 }
 
 void sample(AXIS * axis)
@@ -78,8 +78,11 @@ void HOME(AXIS *axis)
 }
 void move(AXIS *axis, float pos)
 {
-	axis->setpoint = (int)(pos*axis->mm_pulse);
-	axis->pid_process = true;
+	if( axis->pid_process == false)
+	{
+		axis->setpoint = (int)(pos*axis->mm_pulse);
+	  axis->pid_process = true;
+	}
 	PWM(axis);	
 	if( axis->finish)
 	{
