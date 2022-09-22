@@ -65,6 +65,8 @@ AXIS z_axis;
 
 uint8_t process_mode = Idle;
 int thickness = 0;
+float I;
+float J;
 
 DATA data;
 
@@ -151,8 +153,8 @@ void axisInit()
 	y_axis.PIN_HOME = GPIO_PIN_14;
 	z_axis.PIN_HOME = GPIO_PIN_15;
 	
-	x_axis.Kp = 0.5;
-	y_axis.Kp = 0.5;
+	x_axis.Kp = 0.8;
+	y_axis.Kp = 1;
 	z_axis.Kp = 0.5;
 	
 	x_axis.Ki = 0.0001;
@@ -167,27 +169,6 @@ void axisInit()
 	y_axis.mm_pulse = 333.3333;
 	z_axis.mm_pulse = 500;
 }
-
-
-/*void move(AXIS *axis, float pos)
-{
-	axis->setpoint = (int)(pos*axis->mm_pulse);
-	axis->pid_process = true;
-	PWM(axis);	
-	if( axis->finish)
-	{
-		axis->pwm = 0;
-		PWM(axis);
-		axis->pid_process = false;		
-		axis->time_sample = 0;
-		 memset(data.TransBuff, 0, 45);
-		sprintf(data.TransBuff, "ACK C %d_SETPOINT %d", data.need, axis->e_pre);
-		data.need++;
-		USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45);
-		
-	}
-}*/
-
 
 /* USER CODE END 0 */
 
@@ -252,16 +233,27 @@ int main(void)
 			switch(_cncState)
 			{ 				
 				case 0: // move x y with z up
-					drawLine(&x_axis, &y_axis);
+					while(!(x_axis.finish && y_axis.finish))
+					{
+						move(&x_axis, x_axis.next);
+				    move(&y_axis, y_axis.next);								
+					}
+					x_axis.finish = false;
+					y_axis.finish = false;
+					x_axis.last = x_axis.next;
+					y_axis.last = y_axis.next;
 					break;
 				
 				case 1: // move x y with z down
+					drawLine(&x_axis, &y_axis);
 					break; 
 				
 				case 2: // move x y with z down circle
+					drawLine(&x_axis, &y_axis);
 					break;
 				
 				case 3: // move x y wih z down circle 
+					drawLine(&x_axis, &y_axis);
 					break;
 			}
 			sprintf(data.TransBuff, "ACK R %d_RESUME", data.receive);

@@ -44,6 +44,7 @@ typedef struct
 	
 	float next;
 	float last;
+	float New;
 
 } AXIS;
 

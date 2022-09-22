@@ -15,10 +15,9 @@
 
 #define TS 0.03
 
-#define DOWN  false
-#define UP 	  true
-#define LEFT  false
-#define RIGHT true
+#define MAX_SPEED 90
+
+#define ERROR 25
 	
 #define LINE_MAX 2 // max line lengh (mm) when draw circle
 
@@ -37,6 +36,10 @@ void move(AXIS *axis, float pos);
 void moveGcode(AXIS *pAxis);
 
 void drawLine(AXIS *pXAxis, AXIS *pYAxis);
+
+void drawArcCw(AXIS *pXAxis, AXIS *pYAxis, float i, float j);
+
+void drawArcCcw(AXIS *pXAxis, AXIS *pYAxis, float i, float j);
 
 
 #endif /* __MOTORCONTROL_H */

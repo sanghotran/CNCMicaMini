@@ -6,7 +6,7 @@ void PWM(AXIS *axis)
 	if (duty > 1) duty = 1;
 	else if(duty ==0)  duty = 0;
 	else if (duty < -1) duty = -1;
-	int16_t pwm = duty*100;
+	int16_t pwm = duty*MAX_SPEED;
 		
 	if (pwm > 0)
 		{
@@ -51,18 +51,21 @@ void PID_control(int sp, AXIS *pid)
 {
 	int e;
 	e = sp - pid->pos;
+	if(int_abs(e) < ERROR)
+	{
+		pid->finish = true;
+		return;
+	}
 	pid->I_part += TS*e;
 	pid->pwm = pid->Kp*e + pid->Ki*pid->I_part + pid->Kd*(e-pid->e_pre)/TS;
 	pid->e_pre = e;
-	if( int_abs(pid->e_pre) < 25)
-		pid->finish = true;
 }
 
 void HOME(AXIS *axis)
 {
 	if( HAL_GPIO_ReadPin(axis->GPIO_HOME, axis->PIN_HOME) == 1)
 		{
-			axis->pwm = -0.6;
+			axis->pwm = -0.7;
 			PWM(axis);
 			axis->home = false;
 		}
