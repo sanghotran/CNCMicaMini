@@ -229,7 +229,7 @@ namespace CNCMicaMiniWPF
         private Thread DebugThread;
 
         private const int maxCNCGrid = 600;
-        private const int maxCNC = 100;
+        private const int maxCNC = 150;
         private const int pixelCNC = maxCNCGrid / maxCNC;
         private const int lineMax = 2;
 

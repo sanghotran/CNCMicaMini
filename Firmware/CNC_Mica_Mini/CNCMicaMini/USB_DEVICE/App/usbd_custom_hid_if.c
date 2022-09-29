@@ -261,17 +261,17 @@ static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 							break;
 						case '1': //
 							sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f",&temp, &temp, &x_axis.next, &y_axis.next);
-						z_axis.drill = true;
+							z_axis.drill = true;
 							_cncState = 1;
 							break;
 						case '2': //
 							sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f Z%d I%f J%f" ,&temp, &temp, &x_axis.next, &y_axis.next, &temp, &I, &J);
-						z_axis.drill = true;
+							z_axis.drill = true;
 							_cncState = 2;
 							break;
 						case '3': //
 							sscanf(data.ReceiveBuff, "%d G0%u X%f Y%f Z%d I%f J%f" ,&temp, &temp, &x_axis.next, &y_axis.next, &temp, &I, &J);
-						z_axis.drill = true;
+							z_axis.drill = true;
 							_cncState = 3;
 							break;
 					}	

@@ -157,8 +157,8 @@ void axisInit()
 	y_axis.PIN_HOME = GPIO_PIN_14;
 	z_axis.PIN_HOME = GPIO_PIN_15;
 	
-	x_axis.Kp = 0.8;
-	y_axis.Kp = 1.3;
+	x_axis.Kp = 1.3;
+	y_axis.Kp = 9;
 	z_axis.Kp = 0.7;
 	
 	x_axis.Ki = 0.0001;
@@ -234,6 +234,7 @@ int main(void)
 		if(process_mode == Drill)
 		{
 			if( drill_status != z_axis.drill)
+			
 			{
 				if(z_axis.drill)
 				{
@@ -248,8 +249,7 @@ int main(void)
 				if(z_axis.finish)
 				{
 					z_axis.finish = false;
-					process_mode = Gcode;
-					drill_status = z_axis.drill;
+				  drill_status = z_axis.drill;		
 				}
 			}
 			else

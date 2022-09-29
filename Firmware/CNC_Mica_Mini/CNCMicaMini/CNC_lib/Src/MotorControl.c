@@ -127,22 +127,22 @@ void drawLine(AXIS *pXAxis, AXIS *pYAxis)
 		swapXY = false;
 	
 	// Bresenham Algorithm
-	for(int i = 0; i < longest; i++)
+	for(int i = 0; i < longest/STEP ; i++)
 	{
 		if(swapXY)
 		{
 			if( dy > 0)
-				pYAxis->last ++;
+				pYAxis->last += STEP;
 			else
-				pYAxis->last --;
+				pYAxis->last -= STEP;
 			moveGcode(pYAxis);
 		}
 		else
 		{
 			if( dx > 0)
-				pXAxis->last ++;
+				pXAxis->last += STEP;
 			else
-				pXAxis->last --;
+				pXAxis->last -= STEP;
 			moveGcode(pXAxis);
 		}
 		error = error + slope;
@@ -152,17 +152,17 @@ void drawLine(AXIS *pXAxis, AXIS *pYAxis)
 			if(!swapXY)
 			{
 				if( dy > 0)
-					pYAxis->last ++;
+					pYAxis->last += STEP;
 				else
-					pYAxis->last --;
+					pYAxis->last -= STEP;
 				moveGcode(pYAxis);
 			}
 			else
 			{
 				if( dx > 0)
-					pXAxis->last ++;
+					pXAxis->last += STEP;
 				else
-					pXAxis->last --;
+					pXAxis->last -= STEP;
 				moveGcode(pXAxis);
 			}
 		}

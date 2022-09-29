@@ -16,11 +16,11 @@
 
 #define TS 0.03
 
-#define MAX_SPEED 90
+#define MAX_SPEED 100
 
-#define ERROR 25
+#define ERROR 10
 
-#define DELAY_FOR_SEND_COOR 1440000
+#define STEP 0.5
 	
 #define LINE_MAX 2 // max line lengh (mm) when draw circle
 
