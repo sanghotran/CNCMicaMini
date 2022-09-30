@@ -157,15 +157,15 @@ void axisInit()
 	y_axis.PIN_HOME = GPIO_PIN_14;
 	z_axis.PIN_HOME = GPIO_PIN_15;
 	
-	x_axis.Kp = 1.3;
-	y_axis.Kp = 9;
+	x_axis.Kp = 1;
+	y_axis.Kp = 13;
 	z_axis.Kp = 0.7;
 	
 	x_axis.Ki = 0.0001;
 	y_axis.Ki = 0.0001;
 	z_axis.Ki = 0.0001;
 	
-	x_axis.Kd = 0.01;
+	x_axis.Kd = 0.1;
 	y_axis.Kd = 0.01;
 	z_axis.Kd = 0.01;
 	
@@ -233,6 +233,11 @@ int main(void)
 		// mode drill control
 		if(process_mode == Drill)
 		{
+			// avoid intterupt accident 
+			x_axis.pwm = 0;
+		  PWM(&x_axis);
+			y_axis.pwm = 0;
+		  PWM(&y_axis);
 			if( drill_status != z_axis.drill)
 			
 			{
