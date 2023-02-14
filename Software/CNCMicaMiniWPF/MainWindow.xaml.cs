@@ -313,7 +313,7 @@ namespace CNCMicaMiniWPF
             }
         }
         private void ProcessReceiveData(string input)
-        {         
+        {
             // auto scroll to end of debug
             if (DebugScroll.VerticalOffset == DebugScroll.ScrollableHeight)
             {
@@ -353,42 +353,49 @@ namespace CNCMicaMiniWPF
             }
 
             // check ACK from CNC
-            if ( ReceiveData[0] == "ACK")
+            try
             {
-                send_count++;
-                // Check Command form CNC
-                if (ReceiveData[1] == "R")
+                if (ReceiveData[0] == "ACK")
                 {
-                    if (IsStarted)
+                    send_count++;
+                    // Check Command form CNC
+                    if (ReceiveData[1] == "R")
                     {
-                        if (IsPause)
+                        if (IsStarted)
                         {
-                            SendData("P", send_count);
-                            return;
-                        }
-                        while (!(GcodeBuff[point].Contains("G0") && GcodeBuff[point].Contains("X")))
-                        {
-                            point++;
-                            if (point == GcodeBuff.Length)
+                            if (IsPause)
                             {
-                                IsStarted = false;
-                                SendData("STP", send_count);
+                                SendData("P", send_count);
                                 return;
                             }
+                            while (!(GcodeBuff[point].Contains("G0") && GcodeBuff[point].Contains("X")))
+                            {
+                                point++;
+                                if (point == GcodeBuff.Length)
+                                {
+                                    IsStarted = false;
+                                    SendData("STP", send_count);
+                                    return;
+                                }
+                            }
+                            SendData(GcodeBuff[point], send_count);
+                            point++;
                         }
-                        SendData(GcodeBuff[point], send_count);
-                        point++;                        
+                        else
+                        {
+                            SendData("STP", send_count);
+                        }
                     }
-                    else
-                    {
-                        SendData("STP", send_count);
-                    }
-                }
 
-                if (ReceiveData[1] == "STP")
-                    send_count = 0;
-                return;
+                    if (ReceiveData[1] == "STP")
+                        send_count = 0;
+                    return;
+                }
             }
+            catch 
+            {
+                
+            }          
 
             // check NAK from CNC
             if (ReceiveData[0] == "NAK")
@@ -599,7 +606,7 @@ namespace CNCMicaMiniWPF
         }
         private void drawFromCNC()
         {
-            if (Convert.ToDouble(CNCDraw.buff[2].Replace("Z", string.Empty)) == 1) 
+            if (Convert.ToDouble(CNCDraw.buff[2].Replace("Z", string.Empty)) != 0) 
             {
                 double xNew = Convert.ToDouble(CNCDraw.buff[0].Replace("X", string.Empty));
                 double yNew = Convert.ToDouble(CNCDraw.buff[1].Replace("Y", string.Empty));

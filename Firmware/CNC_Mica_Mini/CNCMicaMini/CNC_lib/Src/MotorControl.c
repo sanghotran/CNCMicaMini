@@ -50,15 +50,16 @@ void sample(AXIS * axis)
 void PID_control(int sp, AXIS *pid)
 {
 	int e;
-	e = sp - pid->pos;
-	if(int_abs(e) < ERROR)
-	{
-		pid->finish = true;
-		return;
-	}
+	e = sp - pid->pos;	
 	pid->I_part += TS*e;
 	pid->pwm = pid->Kp*e + pid->Ki*pid->I_part + pid->Kd*(e-pid->e_pre)/TS;
 	pid->e_pre = e;
+	if(int_abs(e) < ERROR)
+	{
+		pid->finish = true;
+		pid->pwm = 0;
+		//pid->pid_process = false;
+	}
 }
 
 void HOME(AXIS *axis)

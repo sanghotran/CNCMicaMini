@@ -157,20 +157,20 @@ void axisInit()
 	y_axis.PIN_HOME = GPIO_PIN_14;
 	z_axis.PIN_HOME = GPIO_PIN_15;
 	
-	x_axis.Kp = 1;
-	y_axis.Kp = 13;
+	x_axis.Kp = 2;
+	y_axis.Kp = 20;
 	z_axis.Kp = 0.7;
 	
 	x_axis.Ki = 0.0001;
 	y_axis.Ki = 0.0001;
 	z_axis.Ki = 0.0001;
 	
-	x_axis.Kd = 0.1;
-	y_axis.Kd = 0.01;
-	z_axis.Kd = 0.01;
+	x_axis.Kd = 0.15;
+	y_axis.Kd = 0.2;
+	z_axis.Kd = 0.02;
 	
-	x_axis.mm_pulse = 142.8571;
-	y_axis.mm_pulse = 333.3333;
+	x_axis.mm_pulse = 249.8886;//142.8571;
+	y_axis.mm_pulse = 495.1475;//333.3333;
 	z_axis.mm_pulse = 500;
 }
 /* USER CODE END 0 */
@@ -234,11 +234,14 @@ int main(void)
 		if(process_mode == Drill)
 		{
 			// avoid intterupt accident 
-			x_axis.pwm = 0;
-		  PWM(&x_axis);
-			y_axis.pwm = 0;
-		  PWM(&y_axis);
-			if( drill_status != z_axis.drill)
+			//x_axis.pwm = 0;
+		  //PWM(&x_axis);
+			//y_axis.pwm = 0;
+		  //PWM(&y_axis);
+			
+			
+			
+			/*if( drill_status != z_axis.drill)
 			
 			{
 				if(z_axis.drill)
@@ -254,11 +257,29 @@ int main(void)
 				if(z_axis.finish)
 				{
 					z_axis.finish = false;
-				  drill_status = z_axis.drill;		
+				  drill_status = z_axis.drill;
+					HAL_Delay(200);		
 				}
 			}
 			else
-				process_mode = Gcode;
+				process_mode = Gcode;*/
+				
+				if(drill_status != z_axis.drill)
+				{
+					if(z_axis.drill)
+						z_axis.next = thickness;
+					else
+						z_axis.next = 0;					
+					while(!z_axis.finish)
+					{
+						move(&z_axis, z_axis.next);
+					}
+					z_axis.finish = false;
+					drill_status = z_axis.drill;
+					process_mode = Gcode;		
+				}
+				else
+					process_mode = Gcode;		
 		}
 		// mode gcode control
 		if(process_mode == Gcode ) 
@@ -289,7 +310,7 @@ int main(void)
 					drawLine(&x_axis, &y_axis);
 					break;
 			}
-			sprintf(data.TransBuff, "ACK R %d_RESUME_X%f Y%f Z%f", data.receive, x_axis.last, y_axis.last, z_axis.last);
+			sprintf(data.TransBuff, "ACK R %d_RESUME_X%f Y%f Z%f", data.receive, x_axis.last, y_axis.last, z_axis.next);
 			data.need++;
 			USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *)data.TransBuff, 45); // send command resume
    		process_mode = Idle; // idle mode
@@ -311,6 +332,11 @@ int main(void)
 				x_axis.htim_enc->Instance->CNT = 0;
 				y_axis.htim_enc->Instance->CNT = 0;
 				z_axis.htim_enc->Instance->CNT = 0;
+				
+				x_axis.pos = 0;
+				y_axis.pos = 0;
+				z_axis.pos = 0;
+				
 				process_mode = Home_1cm; // to protect switch, goto home 1cm mode				
 			}
 
